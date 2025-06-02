@@ -115,7 +115,7 @@ const ifFunc = [ifEnergyRise, ifEnerInGroundMoreOrg, ifObsracleFront, ifObsracle
 // ^^^ объявляем массив для if-функций ^^^
 
 // 1X массив: cmd-ые функции генома ([функции])
-const cmdFunc = [];
+const cmdFunc = [cmdSkipTurn, cmdTransformIntoSeed, cmdTransformIntoSeedAndMove, cmdMoveEnerInGroundLeft, cmdMoveEnerInGroundRight, cmdMoveEnerInGroundFront, cmdMoveOrgInGroundLeft, cmdMoveOrgInGroundRight, cmdMoveOrgInGroundFront, cmdTransformEnerIntoOrg3x3, cmdRestHP];
 // ^^^ объявляем массив для cmd-функций ^^^
 
 
@@ -701,8 +701,48 @@ function ifHPCellLessP12(i, j, P){ // если ХП клетки меньше P 
 }
 
 // --- cmd-ые функции ---
-function cmdSkipTurn(i, j){
+function cmdSkipTurn(i, j){ // пропустить ход
+    //
+}
 
+function cmdTransformIntoSeed(i, j){ // превратиться в семечко
+    //
+}
+
+function cmdTransformIntoSeedAndMove(i, j){ // превратится в семечко и переместиться
+    //
+}
+
+function cmdMoveEnerInGroundLeft(i, j){ // переместить энергию из почвы налево
+    //
+}
+
+function cmdMoveEnerInGroundRight(i, j){ // переместить энергию из почвы направо
+    //
+}
+
+function cmdMoveEnerInGroundFront(i, j){ // переместить энергию из почвы вперёд
+    //
+}
+
+function cmdMoveOrgInGroundLeft(i, j){ // переместить органику из почвы налево
+    //
+}
+
+function cmdMoveOrgInGroundRight(i, j){ // переместить органику из почвы направо
+    //
+}
+
+function cmdMoveOrgInGroundFront(i, j){ // переместить органику из почвы вперёд
+    //
+}
+
+function cmdTransformEnerIntoOrg3x3(i, j){ // преобразовать энергию в органику в квадрате 3x3
+    //
+}
+
+function cmdRestHP(i, j){ // восстановить ХП
+    //
 }
 
 
