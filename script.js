@@ -194,6 +194,9 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
             if(direct === 0 && i != 0){
                 return i - 1, j, 3, 1;
             }
+            else{
+                isBreak = 1;
+            }
             if(direct === 1 && j != mapW){
                 return i, j + 1, 0, 2;
             }
@@ -282,6 +285,8 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
             }
         }
     }
+
+    return -1; // возвращает -1 в случае если нужная клетка находится за границами карты
 }
 
 function createSprout(i, j, direct){ // создание отростка
@@ -290,6 +295,9 @@ function createSprout(i, j, direct){ // создание отростка
     let directOfParent;
     let energyTo;
     iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
 
     if(mapCell[iC][jC][2] === 0){ // если координата создаваемой клетки пуста
         if(mapCell[i][j][1] >= energyToCreateSprout){ // если хватает энергии для создания отростка
@@ -314,6 +322,9 @@ function createManaMiner(i, j, direct){ // создание манновика
     let energyTo;
     iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
     
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+    
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateManaMiner){
             mapCell[iC][iC][2] = 3;
@@ -333,6 +344,9 @@ function createOrgMiner(i, j, direct){ // создание органика
     let energyTo;
     iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
     
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateOrgMiner){
             mapCell[iC][iC][2] = 4;
@@ -352,6 +366,9 @@ function createEnerMiner(i, j, direct){ // создание энергика
     let energyTo;
     iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
     
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateEnerMiner){
             mapCell[iC][iC][2] = 5;
@@ -370,6 +387,9 @@ function createMeleeFighter(i, j, direct){ // создание ближника
     let directOfParent;
     let energyTo;
     iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
     
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateMeleeFighter){
@@ -393,6 +413,9 @@ function createDistantFighter(i, j, direct){ // создание дальник�
     let energyTo;
     iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
     
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateDistantFighter){
             mapCell[iC][iC][2] = 8;
@@ -428,7 +451,14 @@ function ifEnerInGroundMoreOrg(i, j){ // если энергии в почве �
 }
 
 function ifObsracleFront(i, j){ // если препятствие спереди
-    if(i != 0 && mapCell[i-1][j][2] != 0){
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 1);
+
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+    
+    if(mapCell[iC][jC][2] != 0){
         return 1;
     }
     else{
@@ -437,7 +467,14 @@ function ifObsracleFront(i, j){ // если препятствие сперед�
 }
 
 function ifObsracleLeft(i, j){ // если препятствие слева
-    if(j != 9 && mapCell[i][j-1][2] != 0){
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 0);
+    
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
+    if(mapCell[iC][jC][2] != 0){
         return 1;
     }
     else{
@@ -446,7 +483,14 @@ function ifObsracleLeft(i, j){ // если препятствие слева
 }
 
 function ifObsracleRight(i, j){ // если препятствие справа
-    if(j != mapW && mapCell[i][j+1][2] != 0){
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 2);
+    
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
+    if(mapCell[iC][jC][2] != 0){
         return 1;
     }
     else{
@@ -455,16 +499,56 @@ function ifObsracleRight(i, j){ // если препятствие справа
 }
 
 function ifNotObsracle(i, j){ // если с трёх сторон препятствий нет
-    if(i != 0 && j != 0 && j != mapW && mapCell[i-1][j][2] === 0 && mapCell[i][j-1][2] === 0 && mapCell[i][j+1][2] === 0){
-        return 1;
+    if(mapCell[i][j][9] === -1 || mapCell[i][j][9] === 3){ // если родителя нет или он располагается снизу
+        if(i != 0 && j != 0 && j != mapW && mapCell[i-1][j][2] === 0 && mapCell[i][j-1][2] === 0 && mapCell[i][j+1][2] === 0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
     }
-    else{
-        return 0;
+    if(mapCell[i][j][9] === 0){ // если родитель слева
+        if(i != 0 && j != 0 && j != mapW && mapCell[i][j+1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    if(mapCell[i][j][9] === 1){ // если родитель спереди
+        if(i != 0 && j != 0 && j != mapW && mapCell[i+1][j][2] === 0 && mapCell[i][j+1][2] === 0 && mapCell[i][j-1][2] === 0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    if(mapCell[i][j][9] === 2){ // если родитель справа
+        if(i != 0 && j != 0 && j != mapW && mapCell[i][j-1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
     }
 }
 
 function ifOrgRightMoreOrgLeft(i, j){ // если органики справа больше чем органики слева
-    if(j != 0 && j != mapW && mapGround[i][j+1][1] > mapGround[i][j-1][1]){
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 0);
+    
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
+    let iCq;
+    let jCq;
+    iCq, jCq = specifyDirect(i, j, 2);
+    
+    if(iCq === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+    
+    if(mapGround[iC][jC][1] > mapGround[iCq][jCq][1]){
         return 1;
     }
     else{
@@ -473,7 +557,21 @@ function ifOrgRightMoreOrgLeft(i, j){ // если органики справа 
 }
 
 function ifOrgLeftMoreOrgRight(i, j){ // если органики слева больше чем органики справа
-    if(j != 0 && j != mapW && mapGround[i][j-1][1] > mapGround[i][j+1][1]){
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 0);
+    
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
+    let iCq;
+    let jCq;
+    iCq, jCq = specifyDirect(i, j, 2);
+    
+    if(iCq === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+    
+    if(mapGround[iCq][jCq][1] > mapGround[iC][jC][1]){
         return 1;
     }
     else{
@@ -482,7 +580,21 @@ function ifOrgLeftMoreOrgRight(i, j){ // если органики слева б
 }
 
 function ifOrgFrontMoreOrgLeft(i, j){ // если органики спереди больше чем органики слева
-    if(i != 0 && j != 9 && mapGround[i-1][j][1] > mapGround[i][j-1][1]){
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 1);
+    
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
+    let iCq;
+    let jCq;
+    iCq, jCq = specifyDirect(i, j, 0);
+    
+    if(iCq === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+    
+    if(mapGround[iC][jC][1] > mapGround[iCq][jCq][1]){
         return 1;
     }
     else{
@@ -491,7 +603,21 @@ function ifOrgFrontMoreOrgLeft(i, j){ // если органики сперед�
 }
 
 function ifOrgFrontMoreOrgRight(i, j){ // если органики спереди больше чем органики справа
-    if(i != 0 && j != mapW && mapGround[i-1][j][1] > mapGround[i][j+1][1]){
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 1);
+    
+    if(iC === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
+    let iCq;
+    let jCq;
+    iCq, jCq = specifyDirect(i, j, 2);
+    
+    if(iCq === -1) // если клетка за границами карты, прерываем функцию
+        return -1;
+
+    if(mapGround[iC][jC][1] > mapGround[iCq][jCq][1]){
         return 1;
     }
     else{
@@ -575,7 +701,9 @@ function ifHPCellLessP12(i, j, P){ // если ХП клетки меньше P 
 }
 
 // --- cmd-ые функции ---
-// --
+function cmdSkipTurn(i, j){
+
+}
 
 
 // ======== ГЛАВНЫЙ ЦИКЛ ========
