@@ -32,10 +32,15 @@ function rand(min, max){
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+// пустая клетка
+const emptyCell = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 // ======== ХАРАКТЕРИСТИКИ КЛЕТОК ========
-const hpPeaceCells = 100; // нач. и макс. HP мирных клеток {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
-const hpWarCells = 250; // нач. и макс. HP боевых клеток {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+const hpPeaceCells = 100; // нач. и макс. ХП мирных клеток {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+const hpWarCells = 250; // нач. и макс. ХП боевых клеток {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+const hpPlusPerTurn = 5; // восстановление хп в ход {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+const energyForCmdRestHp = 20; // трата энергии на восстановление ХП в cmd функции {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+const rateHpRestInCmd = 2; // коэффицент восполнения ХП в cmd функции (на это число будет делится макс. ХП клетки) {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 
 const maxEneryTrans = 1000; // макс. энергия стебля (транспортной клетки) {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 const maxEnerySprout = 500; // макс. энергия отростка {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
@@ -61,7 +66,15 @@ const energyToDistantCombat = 75; // трата энергии на выстре
 const damageOfMeleeCombat = 25; // урон от удара ближника {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 const damageOfDistantCombat = 25; // урон от выстрела дальника {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 
-const energyToTransformIntoSeed = 100; // энергия для становления семенем
+const energyToTransformIntoSeed = 100; // энергия для становления семенем {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+const minTurnsAsSeed = 1; // минимальное кол-во ходов как семя
+// (!!!) компилируемость клетки для семени является счетчиком ходов для становлением отростком (!!!)
+const maxTurnsAsSeed = 20; // максимальное кол-во ходов как семя
+const rateEnergyToMoveSeedByCell = 5; // коэффицент (для кол-во переместившихся ходов) затрачиваемой энергии для перемещения семени {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+
+const energyForTransformEnerIntoOrg3x3 = 100; // энергия за трансформацию всей энергии в 3x3 квадрате в органику {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+const energyForMoveEnerOrOrg = 25; // энергия за перемещение всей энергии или органики из одной клетки в другую {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+
 
 // ======== МАССИВЫ ДАННЫХ ========
 
@@ -305,7 +318,7 @@ function createSprout(i, j, direct){ // создание отростка
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateSprout; // вычитаем энергию на создание
             mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3); // передаем созданному отростку треть энергии
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3); // вычитаем переданную энергию
-            mapCell[iC][jC][4] = 0; // устанавливаем чтобы клетка не компилировалась в этом ходу
+            mapCell[iC][jC][4] = 1; // устанавливаем чтобы клетка не компилировалась в этом ходу
             mapCell[iC][jC][9] = directOfParent; // устанавливаем для создаваемой клетки направление к родителю
 
             mapCell[i][j][2] = 2; // меняем данную клетку на стебель
@@ -329,7 +342,7 @@ function createManaMiner(i, j, direct){ // создание манновика
         if(mapCell[i][j][1] >= energyToCreateManaMiner){
             mapCell[iC][iC][2] = 3;
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateManaMiner;
-            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
 
             mapCell[i][j][2] = 2;
@@ -351,7 +364,7 @@ function createOrgMiner(i, j, direct){ // создание органика
         if(mapCell[i][j][1] >= energyToCreateOrgMiner){
             mapCell[iC][iC][2] = 4;
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateOrgMiner;
-            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
 
             mapCell[i][j][2] = 2;
@@ -373,7 +386,7 @@ function createEnerMiner(i, j, direct){ // создание энергика
         if(mapCell[i][j][1] >= energyToCreateEnerMiner){
             mapCell[iC][iC][2] = 5;
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateEnerMiner;
-            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
 
             mapCell[i][j][2] = 2;
@@ -397,7 +410,7 @@ function createMeleeFighter(i, j, direct){ // создание ближника
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateMeleeFighter;
             mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
-            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
 
             mapCell[i][j][2] = 2;
@@ -422,7 +435,7 @@ function createDistantFighter(i, j, direct){ // создание дальник�
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateDistantFighter;
             mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
-            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
 
             mapCell[i][j][2] = 2;
@@ -688,7 +701,6 @@ function ifEnemyNear(i, j){ // если в соседней клетке ест�
     else{
         return 0;
     }
-
 }
 
 function ifHPCellLessP12(i, j, P){ // если ХП клетки меньше P / 2
@@ -702,47 +714,203 @@ function ifHPCellLessP12(i, j, P){ // если ХП клетки меньше P 
 
 // --- cmd-ые функции ---
 function cmdSkipTurn(i, j){ // пропустить ход
-    //
+    mapCell[i][j][4] = 1;
 }
 
 function cmdTransformIntoSeed(i, j){ // превратиться в семечко
-    //
+    if(mapCell[i][j][1] > energyToTransformIntoSeed){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyToTransformIntoSeed;
+        mapCell[i][j][2] = 6;
+        mapCell[i][j][9] = -1;
+        mapCell[i][j][4] = rand(minTurnsAsSeed, maxTurnsAsSeed);
+    }
 }
 
 function cmdTransformIntoSeedAndMove(i, j){ // превратится в семечко и переместиться
-    //
+    if(mapCell[i][j][1] > energyToTransformIntoSeed){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyToTransformIntoSeed;
+        mapCell[i][j][2] = 6;
+        mapCell[i][j][9] = -1;
+        mapCell[i][j][4] = rand(minTurnsAsSeed, maxTurnsAsSeed);
+
+        let moveDirection = rand(0, 3);
+        let maxMove = rand(1, 32);
+        if(moveDirection === 0){
+            for(let a = 1; a < maxMove; a++){
+                if(j < a || mapCell[i][j-a][2] != 0){
+                    if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
+                        map[i][j][1] = map[i][j][1] - a * rateEnergyToMoveSeedByCell;
+                        mapCell[i][j-a+1] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
+                        mapCell[i][j] = emptyCell; // очищаем (приравниваем к пустой) клетку на прошлой позиции
+
+                        break;
+                    }
+                }
+            }
+        }
+        if(moveDirection === 1){
+            for(let a = 1; a < maxMove; a++){
+                if(i > a || mapCell[i+a][j][2] != 0){
+                    if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
+                        map[i][j][1] = map[i][j][1] - a * rateEnergyToMoveSeedByCell;
+                        mapCell[i+a-1][j] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
+                        mapCell[i][j] = emptyCell; // очищаем (приравниваем к пустой) клетку на прошлой позиции
+
+                        break;
+                    }
+                }
+            }
+        }
+        if(moveDirection === 2){
+            for(let a = 1; a < maxMove; a++){
+                if(j > a || mapCell[i][j+a][2] != 0){
+                    if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
+                        map[i][j][1] = map[i][j][1] - a * rateEnergyToMoveSeedByCell;
+                        mapCell[i][j+a-1] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
+                        mapCell[i][j] = emptyCell; // очищаем (приравниваем к пустой) клетку на прошлой позиции
+
+                        break;
+                    }
+                }
+            }
+        }
+        if(moveDirection === 3){
+            for(let a = 1; a < maxMove; a++){
+                if(i < a || mapCell[i-a][j][2] != 0){
+                    if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
+                        map[i][j][1] = map[i][j][1] - a * rateEnergyToMoveSeedByCell;
+                        mapCell[i-a+1][j] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
+                        mapCell[i][j] = emptyCell; // очищаем (приравниваем к пустой) клетку на прошлой позиции
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 function cmdMoveEnerInGroundLeft(i, j){ // переместить энергию из почвы налево
-    //
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 0);
+    
+    if(iC === -1)
+        return -1;
+    
+    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
+        mapGround[iC][jC][0] = mapGround[iC][jC][0] + mapGround[i][j][0];
+        mapGround[i][j][0] = 0;
+    }
 }
 
 function cmdMoveEnerInGroundRight(i, j){ // переместить энергию из почвы направо
-    //
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 2);
+    
+    if(iC === -1)
+        return -1;
+
+    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
+        mapGround[iC][jC][0] = mapGround[iC][jC][0] + mapGround[i][j][0];
+        mapGround[i][j][0] = 0;
+    }
 }
 
 function cmdMoveEnerInGroundFront(i, j){ // переместить энергию из почвы вперёд
-    //
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 1);
+    
+    if(iC === -1)
+        return -1;
+
+    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
+        mapGround[iC][jC][0] = mapGround[iC][jC][0] + mapGround[i][j][0];
+        mapGround[i][j][0] = 0;
+    }
 }
 
 function cmdMoveOrgInGroundLeft(i, j){ // переместить органику из почвы налево
-    //
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 0);
+    
+    if(iC === -1)
+        return -1;
+
+    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
+        mapGround[iC][jC][1] = mapGround[iC][jC][1] + mapGround[i][j][1];
+        mapGround[i][j][1] = 0;
+    }
 }
 
 function cmdMoveOrgInGroundRight(i, j){ // переместить органику из почвы направо
-    //
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 2);
+    
+    if(iC === -1)
+        return -1;
+
+    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
+        mapGround[iC][jC][1] = mapGround[iC][jC][1] + mapGround[i][j][1];
+        mapGround[i][j][1] = 0;
+    }
 }
 
 function cmdMoveOrgInGroundFront(i, j){ // переместить органику из почвы вперёд
-    //
+    let iC;
+    let jC;
+    iC, jC = specifyDirect(i, j, 1);
+    
+    if(iC === -1)
+        return -1;
+
+    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
+        mapGround[iC][jC][1] = mapGround[iC][jC][1] + mapGround[i][j][1];
+        mapGround[i][j][1] = 0;
+    }
 }
 
 function cmdTransformEnerIntoOrg3x3(i, j){ // преобразовать энергию в органику в квадрате 3x3
-    //
+    if(mapCell[i][j][1] > energyForTransformEnerIntoOrg3x3){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyForTransformEnerIntoOrg3x3;
+        for(let a = 0; a < 3; a++){
+            for(let b = 0; b < 3; b++){
+                if(i+1-a >= 0 && i+1-a < mapH && j+1-b >= 0 && j+1-b < mapW){
+                    mapGround[i+1-a][j+1-b][1] = mapGround[i+1-a][j+1-b][1] + mapGround[i+1-a][j+1-b][0];
+                    mapGround[i+1-a][j+1-b][0] = 0;
+                }
+            }
+        }
+    }
 }
 
-function cmdRestHP(i, j){ // восстановить ХП
-    //
+function cmdRestHP(i, j){ // восстановить ХП (половину)
+    if(mapCell[i][j][1] > energyForCmdRestHp){
+        mapCell[i][j][1] = mapCell[i][j][1] - energyForCmdRestHp;
+
+        if(mapCell[i][j][2] < 7){ // если тип клетки не боевой
+            mapCell[i][j][0] = mapCell[i][j][0] + hpPeaceCells / rateHpRestInCmd;
+            if(mapCell[i][j][0] > hpPeaceCells){
+                mapCell[i][j][0] = hpPeaceCells;
+            }
+        }
+        else{
+            mapCell[i][j][0] = mapCell[i][j][0] + hpWarCells / rateHpRestInCmd;
+            if(mapCell[i][j][0] > hpPeaceCells){
+                mapCell[i][j][0] = hpPeaceCells;
+            }
+        }
+    }
 }
 
 
@@ -783,7 +951,9 @@ const period = setInterval(() => {
 
     for(let i = 0; i < mapH; i++){
         for(let j = 0; j < mapW; j++){
-            mapCell[i][j][4] = 1; // возвращаем итерацию для следующего хода всех не итерируемых в этом ходу клеток 
+            if(mapCell[i][j][4] != 0){
+                mapCell[i][j][4] = mapCell[i][j][4] - 1; // возвращаем итерацию для следующего хода всех не итерируемых в этом ходу клеток и отбавляем таймер спячки для семян
+            }
         }
     }
 }, speedOfUpd);
