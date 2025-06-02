@@ -190,47 +190,47 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
     if(mapCell[i][j][9] != -1){ // если есть родитель
         if(mapCell[i][j][9] === 0){ // если родитель слева
             if(direct === 0){
-                return i - 1, j;
+                return i - 1, j, 3, 1;
             }
             if(direct === 1){
-                return i, j + 1;
+                return i, j + 1, 0, 2;
             }
             if(direct === 2){
-                return i + 1, j;
+                return i + 1, j, 1, 3;
             }
         }
         if(mapCell[i][j][9] === 1){ // если родитель спереди
             if(direct === 0){
-                return i, j + 1;
+                return i, j + 1, 0, 2;
             }
             if(direct === 1){
-                return i + 1, j;
+                return i + 1, j, 1, 3;
             }
             if(direct === 2){
-                return i, j - 1;
+                return i, j - 1, 2, 0;
             }
         }
         if(mapCell[i][j][9] === 2){ // если родитель справа
             if(direct === 0){
-                return i + 1, j;
+                return i + 1, j, 1, 3;
             }
             if(direct === 1){
-                return i, j - 1;
+                return i, j - 1, 2, 0;
             }
             if(direct === 2){
-                return i - 1, j;
+                return i - 1, j, 3, 1;
             }
         }
         if(mapCell[i][j][9] === 3){ // если родитель сзади
             rightDirect.push(0, 1, 2, 3);
             if(direct === 0){
-                return i, j - 1;
+                return i, j - 1, 2, 0;
             }
             if(direct === 1){
-                return i - 1;
+                return i - 1, 3, 1, 3;
             }
             if(direct === 2){
-                return i, j + 1;
+                return i, j + 1, 0, 2;
             }
         }
     }
@@ -238,47 +238,46 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
         let randPer = rand(0, 3);
         if(randPer === 0){ // если родитель слева
             if(direct === 0){
-                return i - 1, j;
+                return i - 1, j, 3, 1;
             }
             if(direct === 1){
-                return i, j + 1;
+                return i, j + 1, 0, 2;
             }
             if(direct === 2){
-                return i + 1, j;
+                return i + 1, j, 1, 3;
             }
         }
         if(randPer === 1){ // если родитель спереди
             if(direct === 0){
-                return i, j + 1;
+                return i, j + 1, 0, 2;
             }
             if(direct === 1){
-                return i + 1, j;
+                return i + 1, j, 1, 3;
             }
             if(direct === 2){
-                return i, j - 1;
+                return i, j - 1, 2, 0;
             }
         }
         if(randPer === 2){ // если родитель справа
             if(direct === 0){
-                return i + 1, j;
+                return i + 1, j, 1, 3;
             }
             if(direct === 1){
-                return i, j - 1;
+                return i, j - 1, 2, 0;
             }
             if(direct === 2){
-                return i - 1, j;
+                return i - 1, j, 3, 1;
             }
         }
         if(randPer === 3){ // если родитель сзади
-            rightDirect.push(0, 1, 2, 3);
             if(direct === 0){
-                return i, j - 1;
+                return i, j - 1, 2, 0;
             }
             if(direct === 1){
-                return i - 1;
+                return i - 1, 3, 1, 3;
             }
             if(direct === 2){
-                return i, j + 1;
+                return i, j + 1, 0, 2;
             }
         }
     }
@@ -287,39 +286,131 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
 function createSprout(i, j, direct){ // создание отростка
     let iC;
     let jC;
-    iC, jC = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки
+    let directOfParent;
+    let energyTo;
+    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
 
     if(mapCell[iC][jC][2] === 0){ // если координата создаваемой клетки пуста
         if(mapCell[i][j][1] >= energyToCreateSprout){ // если хватает энергии для создания отростка
             mapCell[iC][iC][2] = 1; // изменяем тип клетки на отросток
-            mapCell[iC][iC][2] = 1;
+            mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateSprout; // вычитаем энергию на создание
+            mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3); // передаем созданному отростку треть энергии
+            mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3); // вычитаем переданную энергию
+            mapCell[iC][jC][4] = 0; // устанавливаем чтобы клетка не компилировалась в этом ходу
+            mapCell[iC][jC][9] = directOfParent; // устанавливаем для создаваемой клетки направление к родителю
+
+            mapCell[i][j][2] = 2; // меняем данную клетку на стебель
+            mapCell[i][j][energyTo + 5] = 1; // передаем энергию по указанному направлению
         }
 
     }
 }
 
 function createManaMiner(i, j, direct){ // создание манновика
-    //
+    let iC;
+    let jC;
+    let directOfParent;
+    let energyTo;
+    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    
+    if(mapCell[iC][jC][2] === 0){
+        if(mapCell[i][j][1] >= energyToCreateManaMiner){
+            mapCell[iC][iC][2] = 3;
+            mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateManaMiner;
+            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][9] = directOfParent;
+
+            mapCell[i][j][2] = 2;
+        }
+    }
 }
 
 function createOrgMiner(i, j, direct){ // создание органика
-    //
+    let iC;
+    let jC;
+    let directOfParent;
+    let energyTo;
+    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    
+    if(mapCell[iC][jC][2] === 0){
+        if(mapCell[i][j][1] >= energyToCreateOrgMiner){
+            mapCell[iC][iC][2] = 4;
+            mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateOrgMiner;
+            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][9] = directOfParent;
+
+            mapCell[i][j][2] = 2;
+        }
+    }
 }
 
 function createEnerMiner(i, j, direct){ // создание энергика
-    //
+    let iC;
+    let jC;
+    let directOfParent;
+    let energyTo;
+    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    
+    if(mapCell[iC][jC][2] === 0){
+        if(mapCell[i][j][1] >= energyToCreateEnerMiner){
+            mapCell[iC][iC][2] = 5;
+            mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateEnerMiner;
+            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][9] = directOfParent;
+
+            mapCell[i][j][2] = 2;
+        }
+    }
 }
 
 function createMeleeFighter(i, j, direct){ // создание ближника
-    //
+    let iC;
+    let jC;
+    let directOfParent;
+    let energyTo;
+    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    
+    if(mapCell[iC][jC][2] === 0){
+        if(mapCell[i][j][1] >= energyToCreateMeleeFighter){
+            mapCell[iC][iC][2] = 7;
+            mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateMeleeFighter;
+            mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
+            mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
+            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][9] = directOfParent;
+
+            mapCell[i][j][2] = 2;
+            mapCell[i][j][energyTo + 5] = 1;
+        }
+    }
 }
 
 function createDistantFighter(i, j, direct){ // создание дальника
-    //
+    let iC;
+    let jC;
+    let directOfParent;
+    let energyTo;
+    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    
+    if(mapCell[iC][jC][2] === 0){
+        if(mapCell[i][j][1] >= energyToCreateDistantFighter){
+            mapCell[iC][iC][2] = 8;
+            mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateDistantFighter;
+            mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
+            mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
+            mapCell[iC][jC][4] = 0;
+            mapCell[iC][jC][9] = directOfParent;
+
+            mapCell[i][j][2] = 2;
+            mapCell[i][j][energyTo + 5] = 1;
+        }
+    }
 }
 
 // --- if-ые функции ---
-// --
+function ifEnergyRise(i, j){ // если кол-во энергии клетки растет
+
+}
 
 // --- cmd-ые функции ---
 // --
@@ -357,6 +448,12 @@ const period = setInterval(() => {
             if(mapCell[i][j][2] === 8){ // если тип клетки - дальник
                 //
             }
+        }
+    }
+
+    for(let i = 0; i < mapH; i++){
+        for(let j = 0; j < mapW; j++){
+            mapCell[i][j][4] = 1; // возвращаем итерацию для следующего хода всех не итерируемых в этом ходу клеток 
         }
     }
 }, speedOfUpd);
