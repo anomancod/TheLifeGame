@@ -4,8 +4,8 @@ let mapTable = document.createElement('table');
 
 let speedOfUpd = 500; // скорость обновления карты
 
-const mapW = 48; // высота карты(таблицы)
-const mapH = 48; // ширина карты(таблицы)
+const mapH = 48; // высота карты(таблицы)
+const mapW = 48; // ширина карты(таблицы)
 
 for(let i = 0; i < mapH; i++){
     const row = document.createElement('tr');
@@ -65,13 +65,13 @@ const energyToTransformIntoSeed = 100; // энергия для становле
 
 // ======== МАССИВЫ ДАННЫХ ========
 
-// 3X массив: клетки ([mapH]x[mapW]x[10])
+// 3X массив: клетки ([mapH]x[mapW]x[11])
 const mapCell = [];
 for(let i = 0; i < mapH; i++){
     const r0 = [];
     for(let j = 0; j < mapW; j++){
         const r1 = [];
-        for(let t = 0; t < 11; t++){
+        for(let t = 0; t < 12; t++){
             r1.push(0);
         }
         r0.push(r1);
@@ -79,7 +79,7 @@ for(let i = 0; i < mapH; i++){
     mapCell.push(r0);    
 }
 
-// 3X массив: почва ([mapH]x[mapW]x[1])
+// 3X массив: почва ([mapH]x[mapW]x[1{0 - энергия, 1 - органика}])
 const mapGround = [];
 for(let i = 0; i < mapH; i++){
     const r0 = [];
@@ -111,10 +111,12 @@ for(let i = 0; i < countOfFractions; i++){
 }
 
 // 1X массив: if-ые функции генома ([функции])
-const ifFunc = []; // объявляем массив для if-функций
+const ifFunc = [ifEnergyRise, ifEnerInGroundMoreOrg, ifObsracleFront, ifObsracleLeft, ifObsracleRight, ifNotObsracle, ifOrgRightMoreOrgLeft, ifOrgLeftMoreOrgRight, ifOrgFrontMoreOrgLeft, ifOrgFrontMoreOrgRight, ifOrgInGroundMoreP2, ifOrgInGround3x3MoreP18, ifRandom0to255MoreP, ifEnemyNear, ifHPCellLessP12];
+// ^^^ объявляем массив для if-функций ^^^
 
 // 1X массив: cmd-ые функции генома ([функции])
-const cmdFunc = []; // объявляем массив для cmd-функций
+const cmdFunc = [];
+// ^^^ объявляем массив для cmd-функций ^^^
 
 
 // ======== ФУНКЦИИ ГЕНОМА ========
@@ -148,10 +150,10 @@ function mainGenome(i, j){
     }
     if(gen[3] < 105 || gen[5] < 105){ // если хотя бы одно из условий задано
         if(gen[3] < 105){ // если первое условие задано
-            let resFirstIf = ifFunc[Math.ceil(gen[3]/7) - 1](i, j, gen[4]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - выпол., 1 - не выпол.)
+            let resFirstIf = ifFunc[Math.ceil(gen[3]/7) - 1](i, j, gen[4]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
         }
         if(gen[5] < 105){ // если второе условие задано
-            let resSecondIf = ifFunc[Math.ceil(gen[3]/7) - 1](i, j, gen[5]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - выпол., 1 - не выпол.)
+            let resSecondIf = ifFunc[Math.ceil(gen[3]/7) - 1](i, j, gen[5]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
         }
 
         if(resFirstIf + resSecondIf === 2){ // если 2 условия выполнились
@@ -189,47 +191,46 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
     let rightDirect; // 0 - слева; 1 - сверху; 2 - справа; 3 - снизу;
     if(mapCell[i][j][9] != -1){ // если есть родитель
         if(mapCell[i][j][9] === 0){ // если родитель слева
-            if(direct === 0){
+            if(direct === 0 && i != 0){
                 return i - 1, j, 3, 1;
             }
-            if(direct === 1){
+            if(direct === 1 && j != mapW){
                 return i, j + 1, 0, 2;
             }
-            if(direct === 2){
+            if(direct === 2 && i != mapH){
                 return i + 1, j, 1, 3;
             }
         }
         if(mapCell[i][j][9] === 1){ // если родитель спереди
-            if(direct === 0){
+            if(direct === 0 && j != mapW){
                 return i, j + 1, 0, 2;
             }
-            if(direct === 1){
+            if(direct === 1 && i != mapH){
                 return i + 1, j, 1, 3;
             }
-            if(direct === 2){
+            if(direct === 2 && j != 0){
                 return i, j - 1, 2, 0;
             }
         }
         if(mapCell[i][j][9] === 2){ // если родитель справа
-            if(direct === 0){
+            if(direct === 0 && i != mapH){
                 return i + 1, j, 1, 3;
             }
-            if(direct === 1){
+            if(direct === 1 && j != 0){
                 return i, j - 1, 2, 0;
             }
-            if(direct === 2){
+            if(direct === 2 && i != 0){
                 return i - 1, j, 3, 1;
             }
         }
         if(mapCell[i][j][9] === 3){ // если родитель сзади
-            rightDirect.push(0, 1, 2, 3);
-            if(direct === 0){
+            if(direct === 0 && j != 0){
                 return i, j - 1, 2, 0;
             }
-            if(direct === 1){
+            if(direct === 1 && i != 0){
                 return i - 1, 3, 1, 3;
             }
-            if(direct === 2){
+            if(direct === 2 && j != mapW){
                 return i, j + 1, 0, 2;
             }
         }
@@ -237,46 +238,46 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
     else{ // если нет родителя
         let randPer = rand(0, 3);
         if(randPer === 0){ // если родитель слева
-            if(direct === 0){
+            if(direct === 0 && i != 0){
                 return i - 1, j, 3, 1;
             }
-            if(direct === 1){
+            if(direct === 1 && j != mapW){
                 return i, j + 1, 0, 2;
             }
-            if(direct === 2){
+            if(direct === 2 && i != mapH){
                 return i + 1, j, 1, 3;
             }
         }
         if(randPer === 1){ // если родитель спереди
-            if(direct === 0){
+            if(direct === 0 && j != mapW){
                 return i, j + 1, 0, 2;
             }
-            if(direct === 1){
+            if(direct === 1 && i != mapH){
                 return i + 1, j, 1, 3;
             }
-            if(direct === 2){
+            if(direct === 2 && j != 0){
                 return i, j - 1, 2, 0;
             }
         }
         if(randPer === 2){ // если родитель справа
-            if(direct === 0){
+            if(direct === 0 && i != mapH){
                 return i + 1, j, 1, 3;
             }
-            if(direct === 1){
+            if(direct === 1 && j != 0){
                 return i, j - 1, 2, 0;
             }
-            if(direct === 2){
+            if(direct === 2 && i != 0){
                 return i - 1, j, 3, 1;
             }
         }
         if(randPer === 3){ // если родитель сзади
-            if(direct === 0){
+            if(direct === 0 && j != 0){
                 return i, j - 1, 2, 0;
             }
-            if(direct === 1){
+            if(direct === 1 && i != 0){
                 return i - 1, 3, 1, 3;
             }
-            if(direct === 2){
+            if(direct === 2 && j != mapW){
                 return i, j + 1, 0, 2;
             }
         }
@@ -409,7 +410,168 @@ function createDistantFighter(i, j, direct){ // создание дальник�
 
 // --- if-ые функции ---
 function ifEnergyRise(i, j){ // если кол-во энергии клетки растет
+    if(mapCell[i][j][11] < mapCell[i][j][1]){ // если энергии в предыдущий ход больше чем энергии в этот ход
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
 
+function ifEnerInGroundMoreOrg(i, j){ // если энергии в почве больше чем органики
+    if(mapGround[i][j][0] > mapGround[i][j][1]){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifObsracleFront(i, j){ // если препятствие спереди
+    if(i != 0 && mapCell[i-1][j][2] != 0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifObsracleLeft(i, j){ // если препятствие слева
+    if(j != 9 && mapCell[i][j-1][2] != 0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifObsracleRight(i, j){ // если препятствие справа
+    if(j != mapW && mapCell[i][j+1][2] != 0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifNotObsracle(i, j){ // если с трёх сторон препятствий нет
+    if(i != 0 && j != 0 && j != mapW && mapCell[i-1][j][2] === 0 && mapCell[i][j-1][2] === 0 && mapCell[i][j+1][2] === 0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifOrgRightMoreOrgLeft(i, j){ // если органики справа больше чем органики слева
+    if(j != 0 && j != mapW && mapGround[i][j+1][1] > mapGround[i][j-1][1]){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifOrgLeftMoreOrgRight(i, j){ // если органики слева больше чем органики справа
+    if(j != 0 && j != mapW && mapGround[i][j-1][1] > mapGround[i][j+1][1]){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifOrgFrontMoreOrgLeft(i, j){ // если органики спереди больше чем органики слева
+    if(i != 0 && j != 9 && mapGround[i-1][j][1] > mapGround[i][j-1][1]){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifOrgFrontMoreOrgRight(i, j){ // если органики спереди больше чем органики справа
+    if(i != 0 && j != mapW && mapGround[i-1][j][1] > mapGround[i][j+1][1]){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifOrgInGroundMoreP2(i, j, P){ // если органики в почве больше P * 2
+    if(mapGround[i][j][2] > P*2){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+function ifOrgInGround3x3MoreP18(i, j, P){ // если органики в почве в квадрате 3x3 больше чем P * 18
+    if(i != 0 && i != mapH && j != 0 && j != mapW){
+        orgIn3x3 = mapGround[i-1][j-1][2] + mapGround[i-1][j][2] + mapGround[i-1][j+1][2] + mapGround[i][j-1][2] + mapGround[i][j][2] + mapGround[i][j+1][2] + mapGround[i+1][j-1][2] + mapGround[i+1][j][2] + mapGround[i+1][j+1][2];
+        if(orgIn3x3 > P * 18){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+}
+
+function ifRandom0to255MoreP(i, j, P){ // если рандомное число от 0 до 255 больше P
+    if(rand(0, 255) > P){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+} 
+
+function ifEnemyNear(i, j){ // если в соседней клетке есть враг
+    let counter = 0;
+    if(i != 0 && j != 0 && mapCell[i-1][j-1][3] != mapCell[i][j][3]){
+        counter = 1;
+    }
+    if(i != 0 && mapCell[i-1][j][3] != mapCell[i][j][3]){
+        counter = 1;
+    }
+    if(i != 0 && j != mapW && mapCell[i-1][j+1][3] != mapCell[i][j][3]){
+        counter = 1;
+    }
+    if(j != 0 && mapCell[i][j-1][3] != mapCell[i][j][3]){
+        counter = 1;
+    }
+    if(j != mapW && mapCell[i][j+1][3] != mapCell[i][j][3]){
+        counter = 1;
+    }
+    if(i != mapH && j != 0 && mapCell[i+1][j-1][3] != mapCell[i][j][3]){
+        counter = 1;
+    }
+    if(i != mapH && mapCell[i+1][j][3] != mapCell[i][j][3]){
+        counter = 1;
+    }
+    if(i != mapH && j != mapW && mapCell[i+1][j+1][3] != mapCell[i][j][3]){
+        counter = 1;
+    }
+
+    if(counter === 1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+
+}
+
+function ifHPCellLessP12(i, j, P){ // если ХП клетки меньше P / 2
+    if(mapCell[i][j][0] < P / 2){
+        return 1;
+    }
+    else{
+        return 0;
+    }
 }
 
 // --- cmd-ые функции ---
