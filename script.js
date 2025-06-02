@@ -131,6 +131,8 @@ const ifFunc = [ifEnergyRise, ifEnerInGroundMoreOrg, ifObsracleFront, ifObsracle
 const cmdFunc = [cmdSkipTurn, cmdTransformIntoSeed, cmdTransformIntoSeedAndMove, cmdMoveEnerInGroundLeft, cmdMoveEnerInGroundRight, cmdMoveEnerInGroundFront, cmdMoveOrgInGroundLeft, cmdMoveOrgInGroundRight, cmdMoveOrgInGroundFront, cmdTransformEnerIntoOrg3x3, cmdRestHP];
 // ^^^ объявляем массив для cmd-функций ^^^
 
+// 1X массив: цвета фракций ([цвета{кол-во = кол-ву фракций; индекс цвета = индекс фракции}])
+const fractionColors = ['red', 'blue', 'green', 'yellow']
 
 // ======== ФУНКЦИИ ГЕНОМА ========
 
@@ -920,10 +922,23 @@ const period = setInterval(() => {
         for(let j = 0; j < mapW; j++)
         {
             if(mapCell[i][j][2] === 0){ // если тип клетки - пустая
-                //
+                if(mapCell[i][j][4] != 0){
+                    mapTable.rows[i].cells[j].textContent = '';
+                }
+                else{
+                    mapCell[i][j][4] = mapCell[i][j][4] - 1;
+                }
             }
             if(mapCell[i][j][2] === 1){ // если тип клетки - отросток
-                //
+                if(mapCell[i][j][4] != 0){
+                    mapTable.rows[i].cells[j].textContent = '@';
+                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+                    //
+                }
+                else{
+                    mapCell[i][j][4] = mapCell[i][j][4] - 1;
+                }
             }
             if(mapCell[i][j][2] === 2){ // если тип клетки - стебель
                 //
@@ -949,11 +964,11 @@ const period = setInterval(() => {
         }
     }
 
-    for(let i = 0; i < mapH; i++){
-        for(let j = 0; j < mapW; j++){
-            if(mapCell[i][j][4] != 0){
-                mapCell[i][j][4] = mapCell[i][j][4] - 1; // возвращаем итерацию для следующего хода всех не итерируемых в этом ходу клеток и отбавляем таймер спячки для семян
-            }
-        }
-    }
+    //for(let i = 0; i < mapH; i++){ ### ВЫНЕСТИ В 0-Й ШАГ ИТЕРАЦИИ КЛЕТКИ (ПРОВЕРКУ КОМПИЛЯЦИИ) ###
+    //    for(let j = 0; j < mapW; j++){
+    //        if(mapCell[i][j][4] != 0){
+    //            mapCell[i][j][4] = mapCell[i][j][4] - 1; // возвращаем итерацию для следующего хода всех не итерируемых в этом ходу клеток и отбавляем таймер спячки для семян
+    //        }
+    //    }
+    //}
 }, speedOfUpd);
