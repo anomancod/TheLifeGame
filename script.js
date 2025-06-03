@@ -122,8 +122,7 @@ for(let i = 0; i < countOfFractions; i++){
     for(let j = 0; j < countOfGenoms; j++){
         const r1 = [];
         for(let t = 0; t < 15; t++){
-            r1.push(0);
-            // здесь нужно сделать рандом от 0 до 255 включительно, пока пускай везде просто будет 0
+            r1.push(rand(0, 255));
         }
         r0.push(r1);
     }
@@ -1046,6 +1045,8 @@ const period = setInterval(() => {
                     mapTable.rows[i].cells[j].textContent = '@';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
+                    mapCell[i][j][11] = mapCell[i][j][1]; // заполняем энергию в предыдущий ход
+
                     // вычет энергии, ХП клетки и проверка на смерть (если надо - смерть)
                     mapCell[i][j][1] = mapCell[i][j][1] - energyConsumSprout; // трата энергии в ход
                     if(mapCell[i][j][1] <= 0){
@@ -1349,3 +1350,20 @@ const period = setInterval(() => {
         }
     }
 }, speedOfUpd);
+
+
+// ======== НАЧАЛЬНЫЕ ПАРАМЕТРЫ ========
+
+// --- Тест №1 ---
+mapCell[14][14][0] = hpPeaceCells;
+mapCell[14][14][1] = maxEnerySprout;
+mapCell[14][14][2] = 1;
+mapCell[14][14][3] = 0;
+mapCell[14][14][4] = 0;
+mapCell[14][14][5] = 0;
+mapCell[14][14][6] = 0;
+mapCell[14][14][7] = 0;
+mapCell[14][14][8] = 0;
+mapCell[14][14][9] = -1;
+mapCell[14][14][10] = 0;
+mapCell[14][14][11] = 0;
