@@ -219,7 +219,7 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
             else{
                 isBreak = 1;
             }
-            if(direct === 1 && j != mapW){
+            if(direct === 1 && j != mapW-1){
                 return i, j + 1, 0, 2;
             }
             if(direct === 2 && i != mapH){
@@ -227,10 +227,10 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
             }
         }
         if(mapCell[i][j][9] === 1){ // если родитель спереди
-            if(direct === 0 && j != mapW){
+            if(direct === 0 && j != mapW-1){
                 return i, j + 1, 0, 2;
             }
-            if(direct === 1 && i != mapH){
+            if(direct === 1 && i != mapH-1){
                 return i + 1, j, 1, 3;
             }
             if(direct === 2 && j != 0){
@@ -238,7 +238,7 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
             }
         }
         if(mapCell[i][j][9] === 2){ // если родитель справа
-            if(direct === 0 && i != mapH){
+            if(direct === 0 && i != mapH-1){
                 return i + 1, j, 1, 3;
             }
             if(direct === 1 && j != 0){
@@ -255,7 +255,7 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
             if(direct === 1 && i != 0){
                 return i - 1, 3, 1, 3;
             }
-            if(direct === 2 && j != mapW){
+            if(direct === 2 && j != mapW-1){
                 return i, j + 1, 0, 2;
             }
         }
@@ -266,18 +266,18 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
             if(direct === 0 && i != 0){
                 return i - 1, j, 3, 1;
             }
-            if(direct === 1 && j != mapW){
+            if(direct === 1 && j != mapW-1){
                 return i, j + 1, 0, 2;
             }
-            if(direct === 2 && i != mapH){
+            if(direct === 2 && i != mapH-1){
                 return i + 1, j, 1, 3;
             }
         }
         if(randPer === 1){ // если родитель спереди
-            if(direct === 0 && j != mapW){
+            if(direct === 0 && j != mapW-1){
                 return i, j + 1, 0, 2;
             }
-            if(direct === 1 && i != mapH){
+            if(direct === 1 && i != mapH-1){
                 return i + 1, j, 1, 3;
             }
             if(direct === 2 && j != 0){
@@ -285,7 +285,7 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
             }
         }
         if(randPer === 2){ // если родитель справа
-            if(direct === 0 && i != mapH){
+            if(direct === 0 && i != mapH-1){
                 return i + 1, j, 1, 3;
             }
             if(direct === 1 && j != 0){
@@ -302,7 +302,7 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
             if(direct === 1 && i != 0){
                 return i - 1, 3, 1, 3;
             }
-            if(direct === 2 && j != mapW){
+            if(direct === 2 && j != mapW-1){
                 return i, j + 1, 0, 2;
             }
         }
@@ -525,7 +525,7 @@ function ifObsracleRight(i, j){ // если препятствие справа
 
 function ifNotObsracle(i, j){ // если с трёх сторон препятствий нет
     if(mapCell[i][j][9] === -1 || mapCell[i][j][9] === 3){ // если родителя нет или он располагается снизу
-        if(i != 0 && j != 0 && j != mapW && mapCell[i-1][j][2] === 0 && mapCell[i][j-1][2] === 0 && mapCell[i][j+1][2] === 0){
+        if(i != 0 && j != 0 && j != mapW-1 && mapCell[i-1][j][2] === 0 && mapCell[i][j-1][2] === 0 && mapCell[i][j+1][2] === 0){
             return 1;
         }
         else{
@@ -533,7 +533,7 @@ function ifNotObsracle(i, j){ // если с трёх сторон препят�
         }
     }
     if(mapCell[i][j][9] === 0){ // если родитель слева
-        if(i != 0 && j != 0 && j != mapW && mapCell[i][j+1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
+        if(i != 0 && j != 0 && j != mapW-1 && i != mapH+1 && mapCell[i][j+1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
             return 1;
         }
         else{
@@ -541,7 +541,7 @@ function ifNotObsracle(i, j){ // если с трёх сторон препят�
         }
     }
     if(mapCell[i][j][9] === 1){ // если родитель спереди
-        if(i != 0 && j != 0 && j != mapW && mapCell[i+1][j][2] === 0 && mapCell[i][j+1][2] === 0 && mapCell[i][j-1][2] === 0){
+        if(i != 0 && j != 0 && j != mapW-1 && i != mapH+1 && mapCell[i+1][j][2] === 0 && mapCell[i][j+1][2] === 0 && mapCell[i][j-1][2] === 0){
             return 1;
         }
         else{
@@ -549,7 +549,7 @@ function ifNotObsracle(i, j){ // если с трёх сторон препят�
         }
     }
     if(mapCell[i][j][9] === 2){ // если родитель справа
-        if(i != 0 && j != 0 && j != mapW && mapCell[i][j-1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
+        if(i != 0 && j != 0 && j != mapW-1 && i != mapH+1 && mapCell[i][j-1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
             return 1;
         }
         else{
@@ -660,7 +660,7 @@ function ifOrgInGroundMoreP2(i, j, P){ // если органики в почв�
 }
 
 function ifOrgInGround3x3MoreP18(i, j, P){ // если органики в почве в квадрате 3x3 больше чем P * 18
-    if(i != 0 && i != mapH && j != 0 && j != mapW){
+    if(i != 0 && i != mapH-1 && j != 0 && j != mapW-1){
         orgIn3x3 = mapGround[i-1][j-1][2] + mapGround[i-1][j][2] + mapGround[i-1][j+1][2] + mapGround[i][j-1][2] + mapGround[i][j][2] + mapGround[i][j+1][2] + mapGround[i+1][j-1][2] + mapGround[i+1][j][2] + mapGround[i+1][j+1][2];
         if(orgIn3x3 > P * 18){
             return 1;
@@ -688,22 +688,22 @@ function ifEnemyNear(i, j){ // если в соседней клетке ест�
     if(i != 0 && mapCell[i-1][j][3] != mapCell[i][j][3]){
         counter = 1;
     }
-    if(i != 0 && j != mapW && mapCell[i-1][j+1][3] != mapCell[i][j][3]){
+    if(i != 0 && j != mapW-1 && mapCell[i-1][j+1][3] != mapCell[i][j][3]){
         counter = 1;
     }
     if(j != 0 && mapCell[i][j-1][3] != mapCell[i][j][3]){
         counter = 1;
     }
-    if(j != mapW && mapCell[i][j+1][3] != mapCell[i][j][3]){
+    if(j != mapW-1 && mapCell[i][j+1][3] != mapCell[i][j][3]){
         counter = 1;
     }
-    if(i != mapH && j != 0 && mapCell[i+1][j-1][3] != mapCell[i][j][3]){
+    if(i != mapH-1 && j != 0 && mapCell[i+1][j-1][3] != mapCell[i][j][3]){
         counter = 1;
     }
-    if(i != mapH && mapCell[i+1][j][3] != mapCell[i][j][3]){
+    if(i != mapH-1 && mapCell[i+1][j][3] != mapCell[i][j][3]){
         counter = 1;
     }
-    if(i != mapH && j != mapW && mapCell[i+1][j+1][3] != mapCell[i][j][3]){
+    if(i != mapH-1 && j != mapW-1 && mapCell[i+1][j+1][3] != mapCell[i][j][3]){
         counter = 1;
     }
 
@@ -947,11 +947,11 @@ function cellDeath(i, j, relate){ // смерть
             mapCell[i][j-1][9] === -1; // устанавливаем что нет родителя
             mapCell[i-1][j][7] = 0; // передаем что энергию передавать более не надо
         }
-        if(i != mapH && mapCell[i+1][j][9] === 3){ // снизу
+        if(i != mapH-1 && mapCell[i+1][j][9] === 3){ // снизу
             mapCell[i+1][j][9] === -1; // устанавливаем что нет родителя
             mapCell[i-1][j][6] = 0; // передаем что энергию передавать более не надо
         }
-        if(j != mapW && mapCell[i][j+1][9] === 3){ // справа
+        if(j != mapW-1 && mapCell[i][j+1][9] === 3){ // справа
             mapCell[i][j+1][9] === -1; // устанавливаем что нет родителя
             mapCell[i-1][j][5] = 0; // передаем что энергию передавать более не надо
         }
@@ -1202,10 +1202,36 @@ const period = setInterval(() => {
                 else{ // иначе отбавляем этот таймер на единицу
                     mapCell[i][j][4] = mapCell[i][j][4] - 1;
                 }
+                // графика
+                mapTable.rows[i].cells[j].textContent = '*';
+                mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+                // семя ничего не тратит будучи семенем (разве что по нему может проходить урон)
             }
             if(mapCell[i][j][2] === 7){ // если тип клетки - ближник
                 if(mapCell[i][j][4] != 0){
-                    //
+                    // графика
+                    mapTable.rows[i].cells[j].textContent = 'б';
+                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+                    // хп, энергия и прочее
+                    mapCell[i][j][1] = mapCell[i][j][1] - energyConsumWar; // трата энергии в ход
+                    if(mapCell[i][j][1] <= 0){
+                        mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
+                    }
+                    cellDeath(i, j, 0);
+
+                    // механики
+                    if(mapCell[i][j][1] >= energyToMeleeCombat){ // если хватает энергии для атаки
+                        mapCell[i][j][1] = mapCell[i][j][1] - energyToMeleeCombat; // тратим энергию за атаку
+                        for(let a = 0; a < 3; a++){
+                            for(let b = 0; b < 3; b++){
+                                if(i-1+a >= 0 && i-1+a < mapH && j-1+a >= 0 && j-1+a < mapH && mapCell[i-1+a][j-1+a][2] != 0 && mapCell[i-1+a][j-1+a][3] != mapCell[i][j][3]){ // если не выходит за карту, атакуемая клетка не пустая и атакуемая клетка другой фракции
+                                    mapCell[i-1+a][j-1+a][0] = mapCell[i-1+a][j-1+a][0] - damageOfMeleeCombat; // то наносим урон
+                                }
+                            }
+                        }
+                    }
                 }
                 else{
                     mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
