@@ -126,7 +126,7 @@ for(let i = 0; i < countOfFractions; i++){
         }
         r0.push(r1);
     }
-    mapCell.push(r0);    
+    genoms.push(r0);    
 }
 
 // 1X массив: if-ые функции генома ([функции])
