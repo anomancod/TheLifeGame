@@ -2,7 +2,7 @@
 const tableCon = document.getElementById('tableCon');
 let mapTable = document.createElement('table');
 
-let speedOfUpd = 500; // скорость обновления карты
+let speedOfUpd = 1500; // скорость обновления карты
 
 const mapH = 48; // высота карты(таблицы)
 const mapW = 48; // ширина карты(таблицы)
@@ -1239,7 +1239,108 @@ const period = setInterval(() => {
             }
             if(mapCell[i][j][2] === 8){ // если тип клетки - дальник
                 if(mapCell[i][j][4] != 0){
-                    //
+                    mapTable.rows[i].cells[j].textContent = '#';
+                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+                    // хп, энергия и прочее
+                    mapCell[i][j][1] = mapCell[i][j][1] - energyConsumWar; // трата энергии в ход
+                    if(mapCell[i][j][1] <= 0){
+                        mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
+                    }
+                    cellDeath(i, j, 0);
+
+                    // механики
+                    if(mapCell[i][j][1] >= energyToDistantCombat){ // если хватает энергии для атаки
+                        let attackDirect = rand(0, 3);
+                        if(attackDirect === 0){ // стреляем налево
+                            let stopper = 0;
+                            let distant = 1;
+                            while(stopper === 0){
+                                if(j-distant < 0 || mapCell[i][j-distant][2] != 0){ // если следующая клетка за картой или она не пустая
+                                    if(j-distant < 0){ // если клетка за границей карты - просто прерываем цикл, выстрела не будет
+                                        stopper = 1;
+                                    }
+                                    if(mapCell[i][j-distant][3] === mapCell[i][j][3]){ // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
+                                        stopper = 1;
+                                    }
+                                    // теперь же, когда мы уверены что клетка есть и она не нашей фракции
+                                    mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
+                                    mapCell[i][j-distant][0] = mapCell[i][j-distant][0] - damageOfDistantCombat; // наносим урон
+                                    for(let a = 1; a < distant; a++){
+                                        mapTable.rows[i].cells[j-a].textContent = '<'; // рисуем красивую полосу стрельбы
+                                        mapTable.rows[i].cells[j-a].style.color = fractionColors[mapCell[i][j][3]];
+                                    }
+                                }
+                                distant++;
+                            }
+                        }
+                        if(attackDirect === 1){ // стреляем вперед
+                            let stopper = 0;
+                            let distant = 1;
+                            while(stopper === 0){
+                                if(i-distant < 0 || mapCell[i-distant][j][2] != 0){ // если следующая клетка за картой или она не пустая
+                                    if(i-distant < 0){ // если клетка за границей карты - просто прерываем цикл, выстрела не будет
+                                        stopper = 1;
+                                    }
+                                    if(mapCell[i-distant][j][3] === mapCell[i][j][3]){ // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
+                                        stopper = 1;
+                                    }
+                                    // теперь же, когда мы уверены что клетка есть и она не нашей фракции
+                                    mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
+                                    mapCell[i-distant][j][0] = mapCell[i-distant][j][0] - damageOfDistantCombat; // наносим урон
+                                    for(let a = 1; a < distant; a++){
+                                        mapTable.rows[i-a].cells[j].textContent = '^'; // рисуем красивую полосу стрельбы
+                                        mapTable.rows[i-a].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+                                    }
+                                }
+                                distant++;
+                            }
+                        }
+                        if(attackDirect === 2){ // стреляем направо
+                            let stopper = 0;
+                            let distant = 1;
+                            while(stopper === 0){
+                                if(j+distant >= mapW || mapCell[i][j+distant][2] != 0){ // если следующая клетка за картой или она не пустая
+                                    if(j+distant >= mapW){ // если клетка за границей карты - просто прерываем цикл, выстрела не будет
+                                        stopper = 1;
+                                    }
+                                    if(mapCell[i][j+distant][3] === mapCell[i][j][3]){ // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
+                                        stopper = 1;
+                                    }
+                                    // теперь же, когда мы уверены что клетка есть и она не нашей фракции
+                                    mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
+                                    mapCell[i][j+distant][0] = mapCell[i][j+distant][0] - damageOfDistantCombat; // наносим урон
+                                    for(let a = 1; a < distant; a++){
+                                        mapTable.rows[i].cells[j+a].textContent = '>'; // рисуем красивую полосу стрельбы
+                                        mapTable.rows[i].cells[j+a].style.color = fractionColors[mapCell[i][j][3]];
+                                    }
+                                }
+                                distant++;
+                            }
+                        }
+                        if(attackDirect === 3){ // стреляем вниз
+                            let stopper = 0;
+                            let distant = 1;
+                            while(stopper === 0){
+                                if(i+distant >= mapH || mapCell[i+distant][j][2] != 0){ // если следующая клетка за картой или она не пустая
+                                    if(i+distant >= mapH){ // если клетка за границей карты - просто прерываем цикл, выстрела не будет
+                                        stopper = 1;
+                                    }
+                                    if(mapCell[i+distant][j][3] === mapCell[i][j][3]){ // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
+                                        stopper = 1;
+                                    }
+                                    // теперь же, когда мы уверены что клетка есть и она не нашей фракции
+                                    mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
+                                    mapCell[i+distant][j][0] = mapCell[i+distant][j][0] - damageOfDistantCombat; // наносим урон
+                                    for(let a = 1; a < distant; a++){
+                                        mapTable.rows[i+a].cells[j].textContent = 'V'; // рисуем красивую полосу стрельбы
+                                        mapTable.rows[i+a].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+                                    }
+                                }
+                                distant++;
+                            }
+                        }
+                    }
                 }
                 else{
                     mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
