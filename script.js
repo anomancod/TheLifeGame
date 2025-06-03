@@ -181,7 +181,7 @@ function mainGenome(i, j){
 
         if(resFirstIf + resSecondIf === 2){ // если 2 условия выполнились
             if(gen[9] < 33) { // если первая команда задана
-                cmdFunc[Math.ceil(gen[9]/3) - 1](i, j);
+                cmdFunc[Math.ceil(gen[9]/3)](i, j);
                 let resRa = rand(0, 1);
                 if(resRa === 0){
                     mapCell[i][j][10] = Math.ceil(gen[10]/32); // меняем номер строчки-гена
@@ -196,7 +196,7 @@ function mainGenome(i, j){
         }
         else{ // если хотя бы одно условие не выполнилось
             if(gen[12] < 33) { // если вторая команда задана
-                cmdFunc[Math.ceil(gen[12]/3) - 1](i, j);
+                cmdFunc[Math.ceil(gen[12]/3)](i, j);
                 let resRa = rand(0, 1);
                 if(resRa === 0){
                     mapCell[i][j][10] = Math.ceil(gen[13]/32); // меняем номер строчки-гена
