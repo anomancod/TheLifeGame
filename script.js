@@ -152,20 +152,15 @@ function mainGenome(i, j){
             if(gen[0+a] < 95){ // если ответвление есть
                 if(gen[0+a] < 30){ // *отросток
                     createSprout(i, j, a);
-                }
-                if(gen[0+a] < 45){ // *манновик
+                } else if(gen[0+a] < 45){ // *манновик
                     createManaMiner(i, j, a);
-                }
-                if(gen[0+a] < 60){ // *органик
+                } else if(gen[0+a] < 60){ // *органик
                     createOrgMiner(i, j, a);
-                }
-                if(gen[0+a] < 75){ // *энергик
+                } else if(gen[0+a] < 75){ // *энергик
                     createEnerMiner(i, j, a);
-                }
-                if(gen[0+a] < 85){ // *ближняя боевая клетка
+                } else if(gen[0+a] < 85){ // *ближняя боевая клетка
                     createMeleeFighter(i, j, a);
-                }
-                if(gen[0+a] < 95){ // *дальняя боевая клетка
+                } else if(gen[0+a] < 95){ // *дальняя боевая клетка
                     createDistantFighter(i, j, a);
                 }
             }
@@ -216,9 +211,6 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
         if(mapCell[i][j][9] === 0){ // если родитель слева
             if(direct === 0 && i != 0){
                 return i - 1, j, 3, 1;
-            }
-            else{
-                isBreak = 1;
             }
             if(direct === 1 && j != mapW-1){
                 return i, j + 1, 0, 2;
@@ -324,9 +316,9 @@ function createSprout(i, j, direct){ // создание отростка
 
     if(mapCell[iC][jC][2] === 0){ // если координата создаваемой клетки пуста
         if(mapCell[i][j][1] >= energyToCreateSprout){ // если хватает энергии для создания отростка
-            mapCell[iC][iC][2] = 1; // изменяем тип клетки на отросток
+            mapCell[iC][jC][2] = 1; // изменяем тип клетки на отросток
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateSprout; // вычитаем энергию на создание
-            mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3); // передаем созданному отростку треть энергии
+            mapCell[iC][jC][1] = Math.round(mapCell[i][j][1] / 3); // передаем созданному отростку треть энергии
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3); // вычитаем переданную энергию
             mapCell[iC][jC][4] = 1; // устанавливаем чтобы клетка не компилировалась в этом ходу
             mapCell[iC][jC][9] = directOfParent; // устанавливаем для создаваемой клетки направление к родителю
@@ -534,7 +526,7 @@ function ifNotObsracle(i, j){ // если с трёх сторон препят�
         }
     }
     if(mapCell[i][j][9] === 0){ // если родитель слева
-        if(i != 0 && j != 0 && j != mapW-1 && i != mapH+1 && mapCell[i][j+1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
+        if(i != 0 && j != 0 && j != mapW-1 && i != mapH-1 && mapCell[i][j+1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
             return 1;
         }
         else{
@@ -542,7 +534,7 @@ function ifNotObsracle(i, j){ // если с трёх сторон препят�
         }
     }
     if(mapCell[i][j][9] === 1){ // если родитель спереди
-        if(i != 0 && j != 0 && j != mapW-1 && i != mapH+1 && mapCell[i+1][j][2] === 0 && mapCell[i][j+1][2] === 0 && mapCell[i][j-1][2] === 0){
+        if(i != 0 && j != 0 && j != mapW-1 && i != mapH-1 && mapCell[i+1][j][2] === 0 && mapCell[i][j+1][2] === 0 && mapCell[i][j-1][2] === 0){
             return 1;
         }
         else{
@@ -550,7 +542,7 @@ function ifNotObsracle(i, j){ // если с трёх сторон препят�
         }
     }
     if(mapCell[i][j][9] === 2){ // если родитель справа
-        if(i != 0 && j != 0 && j != mapW-1 && i != mapH+1 && mapCell[i][j-1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
+        if(i != 0 && j != 0 && j != mapW-1 && i != mapH-1 && mapCell[i][j-1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
             return 1;
         }
         else{
@@ -652,7 +644,7 @@ function ifOrgFrontMoreOrgRight(i, j){ // если органики сперед
 }
 
 function ifOrgInGroundMoreP2(i, j, P){ // если органики в почве больше P * 2
-    if(mapGround[i][j][2] > P*2){
+    if(mapGround[i][j][1] > P*2){
         return 1;
     }
     else{
@@ -662,7 +654,7 @@ function ifOrgInGroundMoreP2(i, j, P){ // если органики в почв�
 
 function ifOrgInGround3x3MoreP18(i, j, P){ // если органики в почве в квадрате 3x3 больше чем P * 18
     if(i != 0 && i != mapH-1 && j != 0 && j != mapW-1){
-        orgIn3x3 = mapGround[i-1][j-1][2] + mapGround[i-1][j][2] + mapGround[i-1][j+1][2] + mapGround[i][j-1][2] + mapGround[i][j][2] + mapGround[i][j+1][2] + mapGround[i+1][j-1][2] + mapGround[i+1][j][2] + mapGround[i+1][j+1][2];
+        orgIn3x3 = mapGround[i-1][j-1][1] + mapGround[i-1][j][1] + mapGround[i-1][j+1][1] + mapGround[i][j-1][1] + mapGround[i][j][1] + mapGround[i][j+1][1] + mapGround[i+1][j-1][1] + mapGround[i+1][j][1] + mapGround[i+1][j+1][1];
         if(orgIn3x3 > P * 18){
             return 1;
         }
@@ -750,9 +742,9 @@ function cmdTransformIntoSeedAndMove(i, j){ // превратится в сем�
         let maxMove = rand(1, 32);
         if(moveDirection === 0){
             for(let a = 1; a < maxMove; a++){
-                if(j < a || mapCell[i][j-a][2] != 0){
+                if(j-a >= 0 || mapCell[i][j-a][2] != 0){
                     if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
-                        map[i][j][1] = map[i][j][1] - a * rateEnergyToMoveSeedByCell;
+                        mapCell[i][j][1] = mapCell[i][j][1] - a * rateEnergyToMoveSeedByCell;
                         mapCell[i][j-a+1] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
                         mapCell[i][j] = emptyCell; // очищаем (приравниваем к пустой) клетку на прошлой позиции
 
@@ -765,7 +757,7 @@ function cmdTransformIntoSeedAndMove(i, j){ // превратится в сем�
             for(let a = 1; a < maxMove; a++){
                 if(i > a || mapCell[i+a][j][2] != 0){
                     if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
-                        map[i][j][1] = map[i][j][1] - a * rateEnergyToMoveSeedByCell;
+                        mapCell[i][j][1] = mapCell[i][j][1] - a * rateEnergyToMoveSeedByCell;
                         mapCell[i+a-1][j] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
                         mapCell[i][j] = emptyCell; // очищаем (приравниваем к пустой) клетку на прошлой позиции
 
@@ -778,7 +770,7 @@ function cmdTransformIntoSeedAndMove(i, j){ // превратится в сем�
             for(let a = 1; a < maxMove; a++){
                 if(j > a || mapCell[i][j+a][2] != 0){
                     if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
-                        map[i][j][1] = map[i][j][1] - a * rateEnergyToMoveSeedByCell;
+                        mapCell[i][j][1] = mapCell[i][j][1] - a * rateEnergyToMoveSeedByCell;
                         mapCell[i][j+a-1] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
                         mapCell[i][j] = emptyCell; // очищаем (приравниваем к пустой) клетку на прошлой позиции
 
@@ -791,7 +783,7 @@ function cmdTransformIntoSeedAndMove(i, j){ // превратится в сем�
             for(let a = 1; a < maxMove; a++){
                 if(i < a || mapCell[i-a][j][2] != 0){
                     if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
-                        map[i][j][1] = map[i][j][1] - a * rateEnergyToMoveSeedByCell;
+                        mapCell[i][j][1] = mapCell[i][j][1] - a * rateEnergyToMoveSeedByCell;
                         mapCell[i-a+1][j] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
                         mapCell[i][j] = emptyCell; // очищаем (приравниваем к пустой) клетку на прошлой позиции
 
@@ -935,25 +927,25 @@ function cellDeath(i, j, relate){ // смерть
         maxHp = hpPeaceCells;
     }
     else{
-        mapHp = hpWarCells;
+        maxHp = hpWarCells;
     }
 
     if(mapCell[i][j][0] <= 0){ // если ХП клетки меньше или равно 0 (убиваем клетку)
         // процедуры перед смертью клетки
         if(i != 0 && mapCell[i-1][j][9] === 3){ // сверху
-            mapCell[i-1][j][9] === -1; // устанавливаем что нет родителя
+            mapCell[i-1][j][9] = -1; // устанавливаем что нет родителя
             mapCell[i-1][j][8] = 0; // передаем что энергию передавать более не надо
         }
         if(j != 0 && mapCell[i][j-1][9] === 3){ // слева
-            mapCell[i][j-1][9] === -1; // устанавливаем что нет родителя
+            mapCell[i][j-1][9] = -1; // устанавливаем что нет родителя
             mapCell[i-1][j][7] = 0; // передаем что энергию передавать более не надо
         }
         if(i != mapH-1 && mapCell[i+1][j][9] === 3){ // снизу
-            mapCell[i+1][j][9] === -1; // устанавливаем что нет родителя
+            mapCell[i+1][j][9] = -1; // устанавливаем что нет родителя
             mapCell[i-1][j][6] = 0; // передаем что энергию передавать более не надо
         }
         if(j != mapW-1 && mapCell[i][j+1][9] === 3){ // справа
-            mapCell[i][j+1][9] === -1; // устанавливаем что нет родителя
+            mapCell[i][j+1][9] = -1; // устанавливаем что нет родителя
             mapCell[i-1][j][5] = 0; // передаем что энергию передавать более не надо
         }
 
@@ -1001,22 +993,22 @@ function drawTransCell(i, j){ // отображение формы стебля 
 function transferEnergy(i, j){ // любая передача энергии (для стебля и производственных клеток)
     let sumOfNumLine = mapCell[i][j][5] + mapCell[i][j][6] + mapCell[i][j][7] + mapCell[i][j][8]; // кол-во клеток которым передается энергия
     for(let z = 0; z < sumOfNumLine; z++){ // повторяем столько раз, сколько есть клеток куда передается энергия
-        if(mapCell[i][j][1] > energyConsumTrans){ // если есть энергия которую можно передавать
+        if(mapCell[i][j][1] >= energyConsumTrans){ // если есть энергия которую можно передавать
             if(mapCell[i][j][5] === 1){ // если передаем энергию влево
                 mapCell[i][j-1][1] = mapCell[i][j-1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
+                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
             }
             else if(mapCell[i][j][6] === 1){ // если передаем энергию вверх
                 mapCell[i-1][j][1] = mapCell[i-1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
+                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
             }
             else if(mapCell[i][j][7] === 1){ // если передаем энергию вправо
                 mapCell[i][j+1][1] = mapCell[i][j+1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
+                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
             }
             else if(mapCell[i][j][8] === 1){ // если передаем энергию вниз
                 mapCell[i+1][j][1] = mapCell[i+1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
+                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
             }
         }
     }
