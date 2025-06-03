@@ -997,6 +997,37 @@ function drawTransCell(i, j){ // отображение формы стебля 
     }
 }
 
+function transferEnergy(i, j){ // любая передача энергии (для стебля и производственных клеток)
+    let sumOfNumLine = mapCell[i][j][5] + mapCell[i][j][6] + mapCell[i][j][7] + mapCell[i][j][8]; // кол-во клеток которым передается энергия
+    for(let z = 0; z < sumOfNumLine; z++){ // повторяем столько раз, сколько есть клеток куда передается энергия
+        if(mapCell[i][j][1] > energyConsumTrans){ // если есть энергия которую можно передавать
+            if(mapCell[i][j][5] === 1){ // если передаем энергию влево
+                mapCell[i][j-1][1] = mapCell[i][j-1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
+                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
+            }
+            else if(mapCell[i][j][6] === 1){ // если передаем энергию вверх
+                mapCell[i-1][j][1] = mapCell[i-1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
+                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
+            }
+            else if(mapCell[i][j][7] === 1){ // если передаем энергию вправо
+                mapCell[i][j+1][1] = mapCell[i][j+1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
+                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
+            }
+            else if(mapCell[i][j][8] === 1){ // если передаем энергию вниз
+                mapCell[i+1][j][1] = mapCell[i+1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
+                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
+            }
+        }
+    }
+
+    if(sumOfNumLine === 0){
+        return 0;
+    }
+    else{
+        return 1;
+    }
+}
+
 // --- Главный Цикл ---
 const period = setInterval(() => {
     for(let i = 0; i < mapH; i++){ // проходимся по всем элементам массива
@@ -1093,49 +1124,96 @@ const period = setInterval(() => {
                     }
 
                     // непосредственно передача энергии
-                    let sumOfNumLine = mapCell[i][j][5] + mapCell[i][j][6] + mapCell[i][j][7] + mapCell[i][j][8]; // кол-во клеток которым передается энергия
-                    for(let z = 0; z < sumOfNumLine; z++){ // повторяем столько раз, сколько есть клеток куда передается энергия
-                        if(mapCell[i][j][1] > energyConsumTrans){ // если есть энергия которую можно передавать
-                            if(mapCell[i][j][5] === 1){ // если передаем энергию влево
-                                mapCell[i][j-1][1] = mapCell[i][j-1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
-                            }
-                            else if(mapCell[i][j][6] === 1){ // если передаем энергию вверх
-                                mapCell[i-1][j][1] = mapCell[i-1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
-                            }
-                            else if(mapCell[i][j][7] === 1){ // если передаем энергию вправо
-                                mapCell[i][j+1][1] = mapCell[i][j+1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
-                            }
-                            else if(mapCell[i][j][8] === 1){ // если передаем энергию вниз
-                                mapCell[i+1][j][1] = mapCell[i+1 ][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine);; // отнимаем переданную энергию
-                            }
-                        }
-                    }
+                    transferEnergy(i, j);
                 }
                 else{
                     mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
                 }
             }
             if(mapCell[i][j][2] === 3){ // если тип клетки - манновик
-                //
+                if(mapCell[i][j][4] != 0){
+                    // графика
+                    mapTable.rows[i].cells[j].textContent = 'м';
+                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+                    // хп, энергия и прочее
+                    // производственная клетка не тратит энергии
+                    cellDeath(i, j, 0);
+
+                    // механики
+                    mapCell[i][j][1] = mapCell[i][j][1] + manaEnergyPerTurn; // начисляем энергию для её передачи
+                    let prodRes = transferEnergy(i, j);
+                    if(prodRes === 0){ // если некуда передовать энергию - убиваем клетку из-за бесполезности
+                        cellDeath(i, j);
+                    }
+                }
+                else{
+                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+                }
             }
             if(mapCell[i][j][2] === 4){ // если тип клетки - органик
-                //
+                if(mapCell[i][j][4] != 0){
+                    // графика
+                    mapTable.rows[i].cells[j].textContent = 'о';
+                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+                    // хп, энергия и прочее
+                    // производственная клетка не тратит энергии
+                    cellDeath(i, j, 0);
+
+                    // механики
+                    mapCell[i][j][1] = mapCell[i][j][1] + energyFromOrgPerTurn; // начисляем энергию для её передачи
+                    mapGround[i][j][1] = mapGround[i][j][1] - orgForEnerPerTurn; // тратим органику из почвы
+                    let prodRes = transferEnergy(i, j);
+                    if(prodRes === 0){ // если некуда передовать энергию - убиваем клетку из-за бесполезности
+                        cellDeath(i, j);
+                    }
+                }
+                else{
+                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+                }
             }
             if(mapCell[i][j][2] === 5){ // если тип клетки - энергик
-                //
+                if(mapCell[i][j][4] != 0){
+                    // графика
+                    mapTable.rows[i].cells[j].textContent = 'э';
+                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+                    // хп, энергия и прочее
+                    // производственная клетка не тратит энергии
+                    cellDeath(i, j, 0);
+
+                    // механики
+                    mapCell[i][j][1] = mapCell[i][j][1] + energyMinePerTurn; // начисляем энергию для её передачи
+                    mapGround[i][j][1] = mapGround[i][j][1] - energyMinePerTurn; // тратим энергию из почвы
+                    let prodRes = transferEnergy(i, j);
+                    if(prodRes === 0){ // если некуда передовать энергию - убиваем клетку из-за бесполезности
+                        cellDeath(i, j);
+                    }
+                }
+                else{
+                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+                }
             }
             if(mapCell[i][j][2] === 6){ // если тип клетки - семя
-                //
+                mapCell[i][j][4] = mapCell[i][j][4] - 1; // снижаем компиляцию
+
             }
             if(mapCell[i][j][2] === 7){ // если тип клетки - ближник
-                //
+                if(mapCell[i][j][4] != 0){
+                    //
+                }
+                else{
+                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+                }
             }
             if(mapCell[i][j][2] === 8){ // если тип клетки - дальник
-                //
+                if(mapCell[i][j][4] != 0){
+                    //
+                }
+                else{
+                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+                }
             }
         }
     }
