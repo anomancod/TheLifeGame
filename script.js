@@ -210,46 +210,46 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
     if(mapCell[i][j][9] != -1){ // если есть родитель
         if(mapCell[i][j][9] === 0){ // если родитель слева
             if(direct === 0 && i != 0){
-                return i - 1, j, 3, 1;
+                return [i - 1, j, 3, 1];
             }
             if(direct === 1 && j != mapW-1){
-                return i, j + 1, 0, 2;
+                return [i, j + 1, 0, 2];
             }
             if(direct === 2 && i != mapH){
-                return i + 1, j, 1, 3;
+                return [i + 1, j, 1, 3];
             }
         }
         if(mapCell[i][j][9] === 1){ // если родитель спереди
             if(direct === 0 && j != mapW-1){
-                return i, j + 1, 0, 2;
+                return [i, j + 1, 0, 2];
             }
             if(direct === 1 && i != mapH-1){
-                return i + 1, j, 1, 3;
+                return [i + 1, j, 1, 3];
             }
             if(direct === 2 && j != 0){
-                return i, j - 1, 2, 0;
+                return [i, j - 1, 2, 0];
             }
         }
         if(mapCell[i][j][9] === 2){ // если родитель справа
             if(direct === 0 && i != mapH-1){
-                return i + 1, j, 1, 3;
+                return [i + 1, j, 1, 3];
             }
             if(direct === 1 && j != 0){
-                return i, j - 1, 2, 0;
+                return [i, j - 1, 2, 0];
             }
             if(direct === 2 && i != 0){
-                return i - 1, j, 3, 1;
+                return [i - 1, j, 3, 1];
             }
         }
         if(mapCell[i][j][9] === 3){ // если родитель сзади
             if(direct === 0 && j != 0){
-                return i, j - 1, 2, 0;
+                return [i, j - 1, 2, 0];
             }
             if(direct === 1 && i != 0){
-                return i - 1, 3, 1, 3;
+                return [i - 1, 3, 1, 3];
             }
             if(direct === 2 && j != mapW-1){
-                return i, j + 1, 0, 2;
+                return [i, j + 1, 0, 2];
             }
         }
     }
@@ -257,46 +257,46 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
         let randPer = rand(0, 3);
         if(randPer === 0){ // если родитель слева
             if(direct === 0 && i != 0){
-                return i - 1, j, 3, 1;
+                return [i - 1, j, 3, 1];
             }
             if(direct === 1 && j != mapW-1){
-                return i, j + 1, 0, 2;
+                return [i, j + 1, 0, 2];
             }
             if(direct === 2 && i != mapH-1){
-                return i + 1, j, 1, 3;
+                return [i + 1, j, 1, 3];
             }
         }
         if(randPer === 1){ // если родитель спереди
             if(direct === 0 && j != mapW-1){
-                return i, j + 1, 0, 2;
+                return [i, j + 1, 0, 2];
             }
             if(direct === 1 && i != mapH-1){
-                return i + 1, j, 1, 3;
+                return [i + 1, j, 1, 3];
             }
             if(direct === 2 && j != 0){
-                return i, j - 1, 2, 0;
+                return [i, j - 1, 2, 0];
             }
         }
         if(randPer === 2){ // если родитель справа
             if(direct === 0 && i != mapH-1){
-                return i + 1, j, 1, 3;
+                return [i + 1, j, 1, 3];
             }
             if(direct === 1 && j != 0){
-                return i, j - 1, 2, 0;
+                return [i, j - 1, 2, 0];
             }
             if(direct === 2 && i != 0){
-                return i - 1, j, 3, 1;
+                return [i - 1, j, 3, 1];
             }
         }
         if(randPer === 3){ // если родитель сзади
             if(direct === 0 && j != 0){
-                return i, j - 1, 2, 0;
+                return [i, j - 1, 2, 0];
             }
             if(direct === 1 && i != 0){
-                return i - 1, 3, 1, 3;
+                return [i - 1, 3, 1, 3];
             }
             if(direct === 2 && j != mapW-1){
-                return i, j + 1, 0, 2;
+                return [i, j + 1, 0, 2];
             }
         }
     }
@@ -305,11 +305,11 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
 }
 
 function createSprout(i, j, direct){ // создание отростка
-    let iC;
-    let jC;
-    let directOfParent;
-    let energyTo;
-    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    const sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
 
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
@@ -331,11 +331,11 @@ function createSprout(i, j, direct){ // создание отростка
 }
 
 function createManaMiner(i, j, direct){ // создание манновика
-    let iC;
-    let jC;
-    let directOfParent;
-    let energyTo;
-    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    const sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
     
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
@@ -354,11 +354,11 @@ function createManaMiner(i, j, direct){ // создание манновика
 }
 
 function createOrgMiner(i, j, direct){ // создание органика
-    let iC;
-    let jC;
-    let directOfParent;
-    let energyTo;
-    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    const sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
     
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
@@ -377,11 +377,11 @@ function createOrgMiner(i, j, direct){ // создание органика
 }
 
 function createEnerMiner(i, j, direct){ // создание энергика
-    let iC;
-    let jC;
-    let directOfParent;
-    let energyTo;
-    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    const sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
     
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
@@ -400,11 +400,11 @@ function createEnerMiner(i, j, direct){ // создание энергика
 }
 
 function createMeleeFighter(i, j, direct){ // создание ближника
-    let iC;
-    let jC;
-    let directOfParent;
-    let energyTo;
-    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    const sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
     
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
@@ -425,11 +425,11 @@ function createMeleeFighter(i, j, direct){ // создание ближника
 }
 
 function createDistantFighter(i, j, direct){ // создание дальника
-    let iC;
-    let jC;
-    let directOfParent;
-    let energyTo;
-    iC, jC, directOfParent, energyTo = specifyDirect(i, j, direct);
+    const sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
     
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
@@ -469,9 +469,11 @@ function ifEnerInGroundMoreOrg(i, j){ // если энергии в почве �
 }
 
 function ifObsracleFront(i, j){ // если препятствие спереди
-    let iC;
-    let jC;
-    iC, jC = specifyDirect(i, j, 1);
+    const sDMas = specifyDirect(i, j, 1); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
 
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
@@ -485,9 +487,11 @@ function ifObsracleFront(i, j){ // если препятствие сперед�
 }
 
 function ifObsracleLeft(i, j){ // если препятствие слева
-    let iC;
-    let jC;
-    iC, jC = specifyDirect(i, j, 0);
+    const sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
     
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
@@ -501,9 +505,11 @@ function ifObsracleLeft(i, j){ // если препятствие слева
 }
 
 function ifObsracleRight(i, j){ // если препятствие справа
-    let iC;
-    let jC;
-    iC, jC = specifyDirect(i, j, 2);
+    const sDMas = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
     
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
@@ -552,9 +558,11 @@ function ifNotObsracle(i, j){ // если с трёх сторон препят�
 }
 
 function ifOrgRightMoreOrgLeft(i, j){ // если органики справа больше чем органики слева
-    let iC;
-    let jC;
-    iC, jC = specifyDirect(i, j, 0);
+    const sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
     
     if(iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
