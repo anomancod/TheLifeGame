@@ -90,7 +90,7 @@ const mapCell = [];
 for(let i = 0; i < mapH; i++){
     const r0 = [];
     for(let j = 0; j < mapW; j++){
-        const r1 = [];
+        let r1 = []; // let для приравнивания пустой клетки
         for(let t = 0; t < 12; t++){
             r1.push(0);
         }
@@ -1004,6 +1004,7 @@ function cellDeath(i, j, relate){ // смерть
         mapGround[i][j][1] = mapGround[i][j][1] + hpPeaceCells; // передаем почве органику равную макс. ХП данной клетки
 
         mapCell[i][j] = emptyCell; // убиваем клетку
+        console.log(mapCell[i][j]); // проверка на смерть
     }
 
 }
