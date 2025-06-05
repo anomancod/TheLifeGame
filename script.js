@@ -174,7 +174,7 @@ function mainGenome(i, j){
     }
     if(gen[3] < 105 || gen[5] < 105){ // если хотя бы одно из условий задано
         if(gen[3] < 105){ // если первое условие задано
-            resFirstIf = ifFunc[Math.ceil(gen[3]/7)](i, j, gen[4]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
+            resFirstIf = ifFunc[Math.floor(gen[3]/7)](i, j, gen[4]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
             if(resFirstIf === 1){
                 console.log('Отросток['+i+']['+j+'] Успешно');
             }
@@ -183,7 +183,7 @@ function mainGenome(i, j){
             }
         }
         if(gen[5] < 105){ // если второе условие задано
-            resSecondIf = ifFunc[Math.ceil(gen[3]/7)](i, j, gen[5]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
+            resSecondIf = ifFunc[Math.floor(gen[5]/7)](i, j, gen[6]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
              if(resSecondIf === 1){
                 console.log('Отросток['+i+']['+j+'] Успешно');
              }
@@ -194,13 +194,13 @@ function mainGenome(i, j){
 
         if(resFirstIf + resSecondIf === 2){ // если 2 условия выполнились
             if(gen[9] < 33) { // если первая команда задана
-                cmdFunc[Math.ceil(gen[9]/3)](i, j);
+                cmdFunc[Math.floor(gen[9]/3)](i, j);
                 let resRa = rand(0, 1);
                 if(resRa === 0){
-                    mapCell[i][j][10] = Math.ceil(gen[10]/32); // меняем номер строчки-гена
+                    mapCell[i][j][10] = Math.floor(gen[10]/8); // меняем номер строчки-гена
                 }
                 else{
-                    mapCell[i][j][10] = Math.ceil(gen[11]/32); // меняем номер строчки-гена
+                    mapCell[i][j][10] = Math.floor(gen[11]/8); // меняем номер строчки-гена
                 }
             }
             else{ // если первая команда не задана
@@ -209,13 +209,13 @@ function mainGenome(i, j){
         }
         else{ // если хотя бы одно условие не выполнилось
             if(gen[12] < 33) { // если вторая команда задана
-                cmdFunc[Math.ceil(gen[12]/3)](i, j);
+                cmdFunc[Math.floor(gen[12]/3)](i, j);
                 let resRa = rand(0, 1);
                 if(resRa === 0){
-                    mapCell[i][j][10] = Math.ceil(gen[13]/32); // меняем номер строчки-гена
+                    mapCell[i][j][10] = Math.floor(gen[13]/8); // меняем номер строчки-гена
                 }
                 else{
-                    mapCell[i][j][10] = Math.ceil(gen[14]/32); // меняем номер строчки-гена
+                    mapCell[i][j][10] = Math.floor(gen[14]/8); // меняем номер строчки-гена
                 }
             }
         }
