@@ -58,6 +58,7 @@ const energyConsumSprout = 0; // потребление энергии в ход
 const energyConsumTrans = 0; // потребление энергии в ход стеблем (странспортной клеткой) {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 const energyConsumWar = 0; // потребление энергии в ход боевой клеткой {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 // добывающие клетки не тратят энергии
+const minerConstEnergy = 250; // постоянная энергия у майнеров
 
 // ОРГАНИКА ПРИ СМЕРТИ КЛЕТКИ РАВНА МАКС. ХП ЭТОЙ КЛЕТКИ
 
@@ -337,6 +338,7 @@ function createSprout(i, j, direct){ // создание отростка
     if(mapCell[iC][jC][2] === 0){ // если координата создаваемой клетки пуста
         if(mapCell[i][j][1] >= energyToCreateSprout){ // если хватает энергии для создания отростка
             mapCell[iC][jC][2] = 1; // изменяем тип клетки на отросток
+            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateSprout; // вычитаем энергию на создание
             mapCell[iC][jC][1] = Math.round(mapCell[i][j][1] / 3); // передаем созданному отростку треть энергии
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3); // вычитаем переданную энергию
@@ -364,6 +366,8 @@ function createManaMiner(i, j, direct){ // создание манновика
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateManaMiner){
             mapCell[iC][iC][2] = 3;
+            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
+            mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateManaMiner;
             mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
@@ -388,6 +392,8 @@ function createOrgMiner(i, j, direct){ // создание органика
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateOrgMiner){
             mapCell[iC][iC][2] = 4;
+            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
+            mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateOrgMiner;
             mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
@@ -412,6 +418,8 @@ function createEnerMiner(i, j, direct){ // создание энергика
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateEnerMiner){
             mapCell[iC][iC][2] = 5;
+            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
+            mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateEnerMiner;
             mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
@@ -436,6 +444,7 @@ function createMeleeFighter(i, j, direct){ // создание ближника
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateMeleeFighter){
             mapCell[iC][iC][2] = 7;
+            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateMeleeFighter;
             mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
@@ -462,6 +471,7 @@ function createDistantFighter(i, j, direct){ // создание дальник�
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateDistantFighter){
             mapCell[iC][iC][2] = 8;
+            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateDistantFighter;
             mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
@@ -1059,6 +1069,8 @@ function cellDeath(i, j, relate){ // смерть
         mapGround[i][j][0] = mapGround[i][j][0] + mapCell[i][j][1]; // передаем почве энергию клетки
         mapGround[i][j][1] = mapGround[i][j][1] + hpPeaceCells; // передаем почве органику равную макс. ХП данной клетки
 
+        console.log(mapCell[i][j]); // данные перед смертью
+
         // убиваем клетку
         mapCell[i][j][0] = 0;
         mapCell[i][j][1] = 0;
@@ -1072,8 +1084,6 @@ function cellDeath(i, j, relate){ // смерть
         mapCell[i][j][9] = -1;
         mapCell[i][j][10] = 0;
         mapCell[i][j][11] = 0;
-
-        console.log(mapCell[i][j]); // проверка на смерть
     }
 
 }
