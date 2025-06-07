@@ -2,7 +2,7 @@
 const tableCon = document.getElementById('tableCon');
 let mapTable = document.createElement('table');
 
-let speedOfUpd = 1500; // скорость обновления карты
+let speedOfUpd = 1000; // скорость обновления карты
 
 const mapH = 48; // высота карты(таблицы)
 const mapW = 48; // ширина карты(таблицы)
@@ -12,12 +12,12 @@ for(let i = 0; i < mapH; i++){
     for(let j = 0; j < mapW; j++){
         const cell = document.createElement('td');
         cell.textContent = '';
-        cell.style.border = '1px solid black';
+        cell.style.border = '1px solid lightslategrey';
         cell.style.height = '15px';
         cell.style.width = '15px';
         cell.style.textAlign = 'center';
         cell.style.padding = '0px';
-        cell.style.borderColor = 'black';
+        cell.style.borderColor = 'lightslategrey';
         row.appendChild(cell);
     }
     mapTable.appendChild(row);
