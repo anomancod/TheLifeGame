@@ -1166,7 +1166,7 @@ const period = setInterval(() => {
                 }
             }
             if(mapCell[i][j][2] === 1){ // если тип клетки - отросток
-                if(mapCell[i][j][4] != 0){ // если компилируем клетку
+                if(mapCell[i][j][4] === 0){ // если компилируем клетку
                     mapTable.rows[i].cells[j].textContent = '@';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
