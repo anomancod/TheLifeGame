@@ -12,12 +12,12 @@ for(let i = 0; i < mapH; i++){
     for(let j = 0; j < mapW; j++){
         const cell = document.createElement('td');
         cell.textContent = '';
-        cell.style.border = '1px solid lightslategrey';
+        cell.style.border = '1px solid grey';
         cell.style.height = '15px';
         cell.style.width = '15px';
         cell.style.textAlign = 'center';
         cell.style.padding = '0px';
-        cell.style.borderColor = 'lightslategrey';
+        cell.style.borderColor = 'grey';
         row.appendChild(cell);
     }
     mapTable.appendChild(row);
