@@ -1187,7 +1187,7 @@ const period = setInterval(() => {
                 }
             }
             if(mapCell[i][j][2] === 2){ // если тип клетки - стебель
-                if(mapCell[i][j][4] != 0){
+                if(mapCell[i][j][4] === 0){
                     // графическое отображение
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
                     drawTransCell(i, j); // отображаем графическую форму клетки
@@ -1257,7 +1257,7 @@ const period = setInterval(() => {
                 }
             }
             if(mapCell[i][j][2] === 3){ // если тип клетки - манновик
-                if(mapCell[i][j][4] != 0){
+                if(mapCell[i][j][4] === 0){
                     // графика
                     mapTable.rows[i].cells[j].textContent = 'м';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
@@ -1278,7 +1278,7 @@ const period = setInterval(() => {
                 }
             }
             if(mapCell[i][j][2] === 4){ // если тип клетки - органик
-                if(mapCell[i][j][4] != 0){
+                if(mapCell[i][j][4] === 0){
                     // графика
                     mapTable.rows[i].cells[j].textContent = 'о';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
@@ -1300,7 +1300,7 @@ const period = setInterval(() => {
                 }
             }
             if(mapCell[i][j][2] === 5){ // если тип клетки - энергик
-                if(mapCell[i][j][4] != 0){
+                if(mapCell[i][j][4] === 0){
                     // графика
                     mapTable.rows[i].cells[j].textContent = 'э';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
@@ -1335,7 +1335,7 @@ const period = setInterval(() => {
                 // семя ничего не тратит будучи семенем (разве что по нему может проходить урон)
             }
             if(mapCell[i][j][2] === 7){ // если тип клетки - ближник
-                if(mapCell[i][j][4] != 0){
+                if(mapCell[i][j][4] === 0){
                     // графика
                     mapTable.rows[i].cells[j].textContent = 'б';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
@@ -1364,7 +1364,7 @@ const period = setInterval(() => {
                 }
             }
             if(mapCell[i][j][2] === 8){ // если тип клетки - дальник
-                if(mapCell[i][j][4] != 0){
+                if(mapCell[i][j][4] === 0){
                     mapTable.rows[i].cells[j].textContent = '#';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
