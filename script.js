@@ -365,7 +365,7 @@ function createManaMiner(i, j, direct){ // создание манновика
     
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateManaMiner){
-            mapCell[iC][iC][2] = 3;
+            mapCell[iC][jC][2] = 3;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateManaMiner;
@@ -391,7 +391,7 @@ function createOrgMiner(i, j, direct){ // создание органика
 
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateOrgMiner){
-            mapCell[iC][iC][2] = 4;
+            mapCell[iC][jC][2] = 4;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateOrgMiner;
@@ -417,7 +417,7 @@ function createEnerMiner(i, j, direct){ // создание энергика
 
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateEnerMiner){
-            mapCell[iC][iC][2] = 5;
+            mapCell[iC][jC][2] = 5;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateEnerMiner;
@@ -443,7 +443,7 @@ function createMeleeFighter(i, j, direct){ // создание ближника
     
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateMeleeFighter){
-            mapCell[iC][iC][2] = 7;
+            mapCell[iC][jC][2] = 7;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateMeleeFighter;
             mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
@@ -470,7 +470,7 @@ function createDistantFighter(i, j, direct){ // создание дальник�
 
     if(mapCell[iC][jC][2] === 0){
         if(mapCell[i][j][1] >= energyToCreateDistantFighter){
-            mapCell[iC][iC][2] = 8;
+            mapCell[iC][jC][2] = 8;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateDistantFighter;
             mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
@@ -509,6 +509,7 @@ function ifEnerInGroundMoreOrg(i, j){ // если энергии в почве �
 function ifObsracleFront(i, j){ // если препятствие спереди
     console.log('Отросток['+i+']['+j+'] проверяет: Есть ли препятствие спереди');
     let sDMas = specifyDirect(i, j, 1); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
@@ -528,6 +529,7 @@ function ifObsracleFront(i, j){ // если препятствие сперед�
 function ifObsracleLeft(i, j){ // если препятствие слева
     console.log('Отросток['+i+']['+j+'] проверяет: Есть ли препятствие слева');
     let sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
@@ -547,6 +549,7 @@ function ifObsracleLeft(i, j){ // если препятствие слева
 function ifObsracleRight(i, j){ // если препятствие справа
     console.log('Отросток['+i+']['+j+'] проверяет: Есть ли препятствие справа');
     let sDMas = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
@@ -602,6 +605,7 @@ function ifNotObsracle(i, j){ // если с трёх сторон препят�
 function ifOrgRightMoreOrgLeft(i, j){ // если органики справа больше чем органики слева
     console.log('Отросток['+i+']['+j+'] проверяет: Больше ли справа органики чем слева');
     let sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
     
@@ -609,13 +613,14 @@ function ifOrgRightMoreOrgLeft(i, j){ // если органики справа 
         return -1;
 
     let sDMasq = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMasq === -1) return 0;
     let iCq = sDMasq[0];
     let jCq = sDMasq[1];
     
     if(iCq === -1) // если клетка за границами карты, прерываем функцию
         return -1;
     
-    if(mapGround[iC][jC][1] > mapGround[iCq][jCq][1]){
+    if(mapGround[iCq][jCq][1] > mapGround[iC][jC][1]){
         return 1;
     }
     else{
@@ -626,6 +631,7 @@ function ifOrgRightMoreOrgLeft(i, j){ // если органики справа 
 function ifOrgLeftMoreOrgRight(i, j){ // если органики слева больше чем органики справа
     console.log('Отросток['+i+']['+j+'] проверяет: Больше ли слева органики чем справа');
     let sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
     
@@ -633,6 +639,7 @@ function ifOrgLeftMoreOrgRight(i, j){ // если органики слева б
         return -1;
 
     let sDMasq = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMasq === -1) return 0;
     let iCq = sDMasq[0];
     let jCq = sDMasq[1];
     
@@ -650,6 +657,7 @@ function ifOrgLeftMoreOrgRight(i, j){ // если органики слева б
 function ifOrgFrontMoreOrgLeft(i, j){ // если органики спереди больше чем органики слева
     console.log('Отросток['+i+']['+j+'] проверяет: Больше ли спереди органики чем слева');
     let sDMas = specifyDirect(i, j, 1); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
     
@@ -657,6 +665,7 @@ function ifOrgFrontMoreOrgLeft(i, j){ // если органики сперед�
         return -1;
 
     let sDMasq = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMasq === -1) return 0;
     let iCq = sDMasq[0];
     let jCq = sDMasq[1];
     
@@ -674,6 +683,7 @@ function ifOrgFrontMoreOrgLeft(i, j){ // если органики сперед�
 function ifOrgFrontMoreOrgRight(i, j){ // если органики спереди больше чем органики справа
     console.log('Отросток['+i+']['+j+'] проверяет: Больше ли спереди органики чем справа');
     let sDMas = specifyDirect(i, j, 1); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
     
@@ -681,6 +691,7 @@ function ifOrgFrontMoreOrgRight(i, j){ // если органики сперед
         return -1;
 
     let sDMasq = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMasq === -1) return 0;
     let iCq = sDMasq[0];
     let jCq = sDMasq[1];
     
@@ -790,115 +801,32 @@ function cmdTransformIntoSeed(i, j){ // превратиться в семечк
     }
 }
 
-function cmdTransformIntoSeedAndMove(i, j){ // превратится в семечко и переместиться
-    console.log('Отросток['+i+']['+j+'] исполняет: Превратиться в семечко и переместиться');
-    if(mapCell[i][j][1] > energyToTransformIntoSeed){
-        mapCell[i][j][1] = mapCell[i][j][1] - energyToTransformIntoSeed;
+function cmdTransformIntoSeedAndMove(i, j) { // превратится в семечко и переместиться
+    if (mapCell[i][j][1] > energyToTransformIntoSeed) {
+        mapCell[i][j][1] -= energyToTransformIntoSeed;
         mapCell[i][j][2] = 6;
         mapCell[i][j][9] = -1;
         mapCell[i][j][4] = rand(minTurnsAsSeed, maxTurnsAsSeed);
 
         let moveDirection = rand(0, 3);
         let maxMove = rand(1, 32);
-        if(moveDirection === 0){
-            for(let a = 1; a < maxMove; a++){
-                if(j-a >= 0 || mapCell[i][j-a][2] != 0){
-                    if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
-                        mapCell[i][j][1] = mapCell[i][j][1] - a * rateEnergyToMoveSeedByCell;
-                        mapCell[i][j-a+1] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
+        let newI = i, newJ = j;
 
-                        mapCell[i][j][0] = 0; // очищаем (приравниваем к пустой) клетку на прошлой позиции
-                        mapCell[i][j][1] = 0;
-                        mapCell[i][j][2] = 0;
-                        mapCell[i][j][3] = 0;
-                        mapCell[i][j][4] = 0;
-                        mapCell[i][j][5] = 0;
-                        mapCell[i][j][6] = 0;
-                        mapCell[i][j][7] = 0;
-                        mapCell[i][j][8] = 0;
-                        mapCell[i][j][9] = -1;
-                        mapCell[i][j][10] = 0;
-                        mapCell[i][j][11] = 0;
+        for (let a = 1; a <= maxMove; a++) {
+            if (moveDirection === 0 && newJ - 1 >= 0 && mapCell[newI][newJ - 1][2] === 0) newJ--; // влево
+            else if (moveDirection === 1 && newI + 1 < mapH && mapCell[newI + 1][newJ][2] === 0) newI++; // вниз
+            else if (moveDirection === 2 && newJ + 1 < mapW && mapCell[newI][newJ + 1][2] === 0) newJ++; // вправо
+            else if (moveDirection === 3 && newI - 1 >= 0 && mapCell[newI - 1][newJ][2] === 0) newI--; // вверх
+            else break;
 
-                        break;
-                    }
-                }
-            }
+            if (mapCell[i][j][1] < a * rateEnergyToMoveSeedByCell) break;
         }
-        if(moveDirection === 1){
-            for(let a = 1; a < maxMove; a++){
-                if(i > a || mapCell[i+a][j][2] != 0){
-                    if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
-                        mapCell[i][j][1] = mapCell[i][j][1] - a * rateEnergyToMoveSeedByCell;
-                        mapCell[i+a-1][j] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
 
-                        mapCell[i][j][0] = 0; // очищаем (приравниваем к пустой) клетку на прошлой позиции
-                        mapCell[i][j][1] = 0;
-                        mapCell[i][j][2] = 0;
-                        mapCell[i][j][3] = 0;
-                        mapCell[i][j][4] = 0;
-                        mapCell[i][j][5] = 0;
-                        mapCell[i][j][6] = 0;
-                        mapCell[i][j][7] = 0;
-                        mapCell[i][j][8] = 0;
-                        mapCell[i][j][9] = -1;
-                        mapCell[i][j][10] = 0;
-                        mapCell[i][j][11] = 0;
-
-                        break;
-                    }
-                }
-            }
-        }
-        if(moveDirection === 2){
-            for(let a = 1; a < maxMove; a++){
-                if(j > a || mapCell[i][j+a][2] != 0){
-                    if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
-                        mapCell[i][j][1] = mapCell[i][j][1] - a * rateEnergyToMoveSeedByCell;
-                        mapCell[i][j+a-1] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
-                        
-                        mapCell[i][j][0] = 0; // очищаем (приравниваем к пустой) клетку на прошлой позиции
-                        mapCell[i][j][1] = 0;
-                        mapCell[i][j][2] = 0;
-                        mapCell[i][j][3] = 0;
-                        mapCell[i][j][4] = 0;
-                        mapCell[i][j][5] = 0;
-                        mapCell[i][j][6] = 0;
-                        mapCell[i][j][7] = 0;
-                        mapCell[i][j][8] = 0;
-                        mapCell[i][j][9] = -1;
-                        mapCell[i][j][10] = 0;
-                        mapCell[i][j][11] = 0;
-
-                        break;
-                    }
-                }
-            }
-        }
-        if(moveDirection === 3){
-            for(let a = 1; a < maxMove; a++){
-                if(i < a || mapCell[i-a][j][2] != 0){
-                    if(mapCell[i][j][1] > a * rateEnergyToMoveSeedByCell){
-                        mapCell[i][j][1] = mapCell[i][j][1] - a * rateEnergyToMoveSeedByCell;
-                        mapCell[i-a+1][j] = mapCell[i][j]; // копируем (перемещаем) клетку на нужную позицию
-                        
-                        mapCell[i][j][0] = 0; // очищаем (приравниваем к пустой) клетку на прошлой позиции
-                        mapCell[i][j][1] = 0;
-                        mapCell[i][j][2] = 0;
-                        mapCell[i][j][3] = 0;
-                        mapCell[i][j][4] = 0;
-                        mapCell[i][j][5] = 0;
-                        mapCell[i][j][6] = 0;
-                        mapCell[i][j][7] = 0;
-                        mapCell[i][j][8] = 0;
-                        mapCell[i][j][9] = -1;
-                        mapCell[i][j][10] = 0;
-                        mapCell[i][j][11] = 0;
-
-                        break;
-                    }
-                }
-            }
+        if (newI !== i || newJ !== j) {
+            let distance = Math.abs(newI - i) + Math.abs(newJ - j);
+            mapCell[i][j][1] -= distance * rateEnergyToMoveSeedByCell;
+            mapCell[newI][newJ] = [...mapCell[i][j]]; // копируем данные
+            mapCell[i][j] = [0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0]; // очищаем старую позицию
         }
     }
 }
@@ -1345,7 +1273,7 @@ const period = setInterval(() => {
                     if(mapCell[i][j][1] <= 0){
                         mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
                     }
-                    cellDeath(i, j, 0);
+                    cellDeath(i, j, 1);
 
                     // механики
                     if(mapCell[i][j][1] >= energyToMeleeCombat){ // если хватает энергии для атаки
@@ -1373,7 +1301,7 @@ const period = setInterval(() => {
                     if(mapCell[i][j][1] <= 0){
                         mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
                     }
-                    cellDeath(i, j, 0);
+                    cellDeath(i, j, 1);
 
                     // механики
                     if(mapCell[i][j][1] >= energyToDistantCombat){ // если хватает энергии для атаки
