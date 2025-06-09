@@ -18,6 +18,7 @@ for(let i = 0; i < mapH; i++){
         cell.style.textAlign = 'center';
         cell.style.padding = '0px';
         cell.style.borderColor = 'grey';
+        cell.style.fontSize = '12px'
         row.appendChild(cell);
     }
     mapTable.appendChild(row);
@@ -142,7 +143,7 @@ const cmdFunc = [cmdSkipTurn, cmdTransformIntoSeed, cmdTransformIntoSeedAndMove,
 // ^^^ объявляем массив для cmd-функций ^^^
 
 // 1X массив: цвета фракций ([цвета{кол-во = кол-ву фракций; индекс цвета = индекс фракции}])
-const fractionColors = ['red', 'blue', 'green', 'purple']
+const fractionColors = ['lightgreen', 'pink', 'lightblue', 'yellow']
 
 // ======== ФУНКЦИИ ГЕНОМА ========
 
