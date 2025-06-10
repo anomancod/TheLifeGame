@@ -112,11 +112,11 @@ for(let i = 0; i < countOfGenoms; i++){
     expansionTact.push(interArr);
 }
 
-const prodExt = []; // производство-добыча
+const prodExtTact = []; // производство-добыча
 for(let i = 0; i < countOfGenoms; i++){
     const interArr = [];
     let sproutIn = rand(0, 2);
-    interArr[minerIn] = 0; // задаем в случайную клетку отросток
+    interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
     if(tester - sproutIn === 2) {interArr[1] = rand(45, 74); interArr[2] = rand(45, 74);} // задаем незанятые ячейки энергиками или органиками на рандом
     if(tester - sproutIn === 1) {interArr[0] = rand(45, 74); interArr[2] = rand(45, 74);}
@@ -135,14 +135,14 @@ for(let i = 0; i < countOfGenoms; i++){
     interArr[13] = rand(0, 255);
     interArr[14] = rand(0, 255);
 
-    prodExt.push(interArr);
+    prodExtTact.push(interArr);
 }
 
-const prodProd = []; // производство производства
+const prodProdTact = []; // производство производства
 for(let i = 0; i < countOfGenoms; i++){
     const interArr = [];
     let sproutIn = rand(0, 2);
-    interArr[minerIn] = 0; // задаем в случайную клетку отросток
+    interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
     if(tester - sproutIn === 2) {interArr[1] = 35; interArr[2] = 35;} // задаем незанятые ячейки манновиками
     if(tester - sproutIn === 1) {interArr[0] = 35; interArr[2] = 35;}
@@ -161,18 +161,18 @@ for(let i = 0; i < countOfGenoms; i++){
     interArr[13] = rand(0, 255);
     interArr[14] = rand(0, 255);
 
-    prodProd.push(interArr);
+    prodProdTact.push(interArr);
 }
 
-const warMelee = []; // война ближний бой
+const warMeleeTact = []; // война ближний бой
 for(let i = 0; i < countOfGenoms; i++){
     const interArr = [];
-        let sproutIn = rand(0, 2);
-    interArr[minerIn] = 0; // задаем в случайную клетку отросток
+    let sproutIn = rand(0, 2);
+    interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
-    if(tester - sproutIn === 2) {interArr[1] = 35; interArr[2] = 35;} // задаем незанятые ячейки манновиками
-    if(tester - sproutIn === 1) {interArr[0] = 35; interArr[2] = 35;}
-    if(tester - sproutIn === 0) {interArr[0] = 35; interArr[1] = 35;}
+    if(tester - sproutIn === 2) {interArr[1] = 80; interArr[2] = 80;} // задаем незанятые ячейки ближниками
+    if(tester - sproutIn === 1) {interArr[0] = 80; interArr[2] = 80;}
+    if(tester - sproutIn === 0) {interArr[0] = 80; interArr[1] = 80;}
 
     interArr[3] = 105; // не задаем условие 1
     interArr[4] = rand(0, 255);
@@ -187,7 +187,43 @@ for(let i = 0; i < countOfGenoms; i++){
     interArr[13] = rand(0, 255);
     interArr[14] = rand(0, 255);
 
-    prodProd.push(interArr);
+    warMeleeTact.push(interArr);
+}
+
+const warDistantv = []; // война ближний бой
+for(let i = 0; i < countOfGenoms; i++){
+    const interArr = [];
+    let sproutIn = rand(0, 2);
+    interArr[sproutIn] = 0; // задаем в случайную клетку отросток
+    let tester = 2;
+    if(tester - sproutIn === 2) {interArr[1] = 90; interArr[2] = 90;} // задаем незанятые ячейки дальниками
+    if(tester - sproutIn === 1) {interArr[0] = 90; interArr[2] = 90;}
+    if(tester - sproutIn === 0) {interArr[0] = 90; interArr[1] = 90;}
+
+    interArr[3] = 105; // не задаем условие 1
+    interArr[4] = rand(0, 255);
+    interArr[5] = 105; // не задаем условие 2
+    interArr[6] = rand(0, 255);
+    interArr[7] = rand(0, 255);
+    interArr[8] = rand(0, 255);
+    interArr[9] = rand(0, 255);
+    interArr[10] = rand(0, 255);
+    interArr[11] = rand(0, 255);
+    interArr[12] = rand(0, 255);
+    interArr[13] = rand(0, 255);
+    interArr[14] = rand(0, 255);
+
+    warDistantTact.push(interArr);
+}
+
+const developmentTact = []; // развитие
+for(let i = 0; i < countOfGenoms; i++){
+    if(i < 4){ // для 4 геномов
+
+    }
+    else{ // для остальных 28
+
+    }
 }
 
 // ======== МАССИВЫ ДАННЫХ ========
