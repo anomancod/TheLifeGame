@@ -85,6 +85,111 @@ const orgForEnerPerTurn = 200; // кол-во органики тратящей�
 const manaEnergyPerTurn = 100; // кол-во энергии из манны добывающаяся манновиком {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 
 
+// ======== ТАКТИКИ ========
+const expansionTact = []; // экспансия
+for(let i = 0; i < countOfGenoms; i++){
+    const interArr = [];
+    let minerIn = rand(0, 2);
+    interArr[minerIn] = rand(30, 74); // задаем в 1 из 3 ячеек случайный майнер
+    let tester = 2;
+    if(tester - minerIn === 2) {interArr[1] = 0; interArr[2] = 0;} // задаем незанятые ячейки отростками
+    if(tester - minerIn === 1) {interArr[0] = 0; interArr[2] = 0;}
+    if(tester - minerIn === 0) {interArr[0] = 0; interArr[1] = 0;}
+
+    interArr[3] = 105; // не задаем условие 1
+    interArr[4] = rand(0, 255);
+    interArr[5] = 105; // не задаем условие 2
+    interArr[6] = rand(0, 255);
+    interArr[7] = rand(0, 255);
+    interArr[8] = rand(0, 255);
+    interArr[9] = rand(0, 255);
+    interArr[10] = rand(0, 255);
+    interArr[11] = rand(0, 255);
+    interArr[12] = rand(0, 255);
+    interArr[13] = rand(0, 255);
+    interArr[14] = rand(0, 255);
+
+    expansionTact.push(interArr);
+}
+
+const prodExt = []; // производство-добыча
+for(let i = 0; i < countOfGenoms; i++){
+    const interArr = [];
+    let sproutIn = rand(0, 2);
+    interArr[minerIn] = 0; // задаем в случайную клетку отросток
+    let tester = 2;
+    if(tester - sproutIn === 2) {interArr[1] = rand(45, 74); interArr[2] = rand(45, 74);} // задаем незанятые ячейки энергиками или органиками на рандом
+    if(tester - sproutIn === 1) {interArr[0] = rand(45, 74); interArr[2] = rand(45, 74);}
+    if(tester - sproutIn === 0) {interArr[0] = rand(45, 74); interArr[1] = rand(45, 74);}
+
+    interArr[3] = 105; // не задаем условие 1
+    interArr[4] = rand(0, 255);
+    interArr[5] = 105; // не задаем условие 2
+    interArr[6] = rand(0, 255);
+    interArr[7] = rand(0, 255);
+    interArr[8] = rand(0, 255);
+    interArr[9] = rand(0, 255);
+    interArr[10] = rand(0, 255);
+    interArr[11] = rand(0, 255);
+    interArr[12] = rand(0, 255);
+    interArr[13] = rand(0, 255);
+    interArr[14] = rand(0, 255);
+
+    prodExt.push(interArr);
+}
+
+const prodProd = []; // производство производства
+for(let i = 0; i < countOfGenoms; i++){
+    const interArr = [];
+    let sproutIn = rand(0, 2);
+    interArr[minerIn] = 0; // задаем в случайную клетку отросток
+    let tester = 2;
+    if(tester - sproutIn === 2) {interArr[1] = 35; interArr[2] = 35;} // задаем незанятые ячейки манновиками
+    if(tester - sproutIn === 1) {interArr[0] = 35; interArr[2] = 35;}
+    if(tester - sproutIn === 0) {interArr[0] = 35; interArr[1] = 35;}
+
+    interArr[3] = 105; // не задаем условие 1
+    interArr[4] = rand(0, 255);
+    interArr[5] = 105; // не задаем условие 2
+    interArr[6] = rand(0, 255);
+    interArr[7] = rand(0, 255);
+    interArr[8] = rand(0, 255);
+    interArr[9] = rand(0, 255);
+    interArr[10] = rand(0, 255);
+    interArr[11] = rand(0, 255);
+    interArr[12] = rand(0, 255);
+    interArr[13] = rand(0, 255);
+    interArr[14] = rand(0, 255);
+
+    prodProd.push(interArr);
+}
+
+const warMelee = []; // война ближний бой
+for(let i = 0; i < countOfGenoms; i++){
+    const interArr = [];
+        let sproutIn = rand(0, 2);
+    interArr[minerIn] = 0; // задаем в случайную клетку отросток
+    let tester = 2;
+    if(tester - sproutIn === 2) {interArr[1] = 35; interArr[2] = 35;} // задаем незанятые ячейки манновиками
+    if(tester - sproutIn === 1) {interArr[0] = 35; interArr[2] = 35;}
+    if(tester - sproutIn === 0) {interArr[0] = 35; interArr[1] = 35;}
+
+    interArr[3] = 105; // не задаем условие 1
+    interArr[4] = rand(0, 255);
+    interArr[5] = 105; // не задаем условие 2
+    interArr[6] = rand(0, 255);
+    interArr[7] = rand(0, 255);
+    interArr[8] = rand(0, 255);
+    interArr[9] = rand(0, 255);
+    interArr[10] = rand(0, 255);
+    interArr[11] = rand(0, 255);
+    interArr[12] = rand(0, 255);
+    interArr[13] = rand(0, 255);
+    interArr[14] = rand(0, 255);
+
+    prodProd.push(interArr);
+}
+
 // ======== МАССИВЫ ДАННЫХ ========
 
 // 3X массив: клетки ([mapH]x[mapW]x[11])
@@ -133,6 +238,20 @@ for(let i = 0; i < countOfFractions; i++){
     }
     genoms.push(r0);    
 }
+
+// 4X массив: тактики ([countOfFractions]x[Кол-во тактик]x[countOfGenoms]x[14])
+const tactics = [];
+let countOfFractions = 4; // кол-во фракций
+let countOfGenoms = 32; // кол-во геномов в тактике
+
+const playerFrac = []; // тут нужно будет заполнить тактиками
+tactics.push(playerFrac);
+const expFrac = []; // тут нужно будет заполнить тактиками
+tactics.push(expFrac);
+const quaFrac = []; // тут нужно будет заполнить тактиками
+tactics.push(quaFrac);
+const nomadFrac = []; // тут нужно будет заполнить тактиками
+tactics.push(nomadFrac);
 
 // 1X массив: if-ые функции генома ([функции])
 const ifFunc = [ifEnergyRise, ifEnerInGroundMoreOrg, ifObsracleFront, ifObsracleLeft, ifObsracleRight, ifNotObsracle, ifOrgRightMoreOrgLeft, ifOrgLeftMoreOrgRight, ifOrgFrontMoreOrgLeft, ifOrgFrontMoreOrgRight, ifOrgInGroundMoreP2, ifOrgInGround3x3MoreP18, ifRandom0to255MoreP, ifEnemyNear, ifHPCellLessP12];
