@@ -1729,6 +1729,10 @@ const period = setInterval(() => {
     whatAboutTactic(3); // какие тактики у кочевников
 
     // все по счетчикам-факторам
+    for(let i = 0; i < countOfFractions; i++){
+        factCounters[i][2] = 0; // фактор-счетчик кол-ва клеток фракции обнуляем каждый ход (дабы он не дублировался)
+    }
+
     counterForUpdFact += 1; // обновляем счетчик обновления счетчиков факторов
     if(countOfFractions >= turnsForUpdateFact){ // если счетчик равен (или вдруг привысил) кол-во ходов на обновление счетчиков факторов
         for(let i = 0; i < countOfFractions; i++){
