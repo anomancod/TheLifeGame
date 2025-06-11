@@ -395,7 +395,8 @@ const fractionColors = ['lightgreen', 'pink', 'lightblue', 'yellow']
 
 // главная функкция генома
 function mainGenome(i, j){
-    let gen = genoms[mapCell[i][j][3]][mapCell[i][j][10]]; // берем строчку-ген
+    //let gen = genoms[mapCell[i][j][3]][mapCell[i][j][10]]; // берем строчку-ген
+    let gen = tactics[mapCell[i][j][3]][tactRightNow][mapCell[i][j][10]]; // берем строчку-ген как строчку из тактики выбранной фракции в данный момент
     let resFirstIf = 0;
     let resSecondIf = 0;
     if(gen[3] > 104 && gen[5] > 104){ // если 2 условия не заданы
@@ -1224,6 +1225,15 @@ function cellDeath(i, j, relate){ // смерть
 
     if(mapCell[i][j][0] <= 0){ // если ХП клетки меньше или равно 0 (убиваем клетку)
         console.log('Клетка['+i+']['+j+'] Умирает');
+        
+        // счетчик смертей
+        if(mapCell[i][j][1] <= 0){ // если энергия была меньше или равна 0
+            factCounters[mapCell[i][j][3]][0] += 1; // то зачисляем в счетчик "ненасильственных" убийств
+        }
+        else{
+            factCounters[mapCell[i][j][3]][1] += 1; // то зачисляем в счетчик "насильственных" убийств
+        }
+
         // процедуры перед смертью клетки
         if(i != 0 && mapCell[i-1][j][9] === 3){ // сверху
             mapCell[i-1][j][9] = -1; // устанавливаем что нет родителя
@@ -1398,6 +1408,11 @@ const period = setInterval(() => {
             }
             if(mapCell[i][j][2] === 2){ // если тип клетки - стебель
                 if(mapCell[i][j][4] === 0){
+                    // счетчики
+                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+                    factCounters[mapCell[i][j][3]][5] += 1; // кол-во отростков
+                    factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
+
                     // графическое отображение
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
                     drawTransCell(i, j); // отображаем графическую форму клетки
@@ -1468,6 +1483,11 @@ const period = setInterval(() => {
             }
             if(mapCell[i][j][2] === 3){ // если тип клетки - манновик
                 if(mapCell[i][j][4] === 0){
+                    // счетчики
+                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+                    factCounters[mapCell[i][j][3]][3] += 1; // кол-во майнеров
+                    factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
+
                     // графика
                     mapTable.rows[i].cells[j].textContent = 'м';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
@@ -1489,6 +1509,11 @@ const period = setInterval(() => {
             }
             if(mapCell[i][j][2] === 4){ // если тип клетки - органик
                 if(mapCell[i][j][4] === 0){
+                    // счетчики
+                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+                    factCounters[mapCell[i][j][3]][3] += 1; // кол-во майнеров
+                    factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
+
                     // графика
                     mapTable.rows[i].cells[j].textContent = 'о';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
@@ -1511,6 +1536,11 @@ const period = setInterval(() => {
             }
             if(mapCell[i][j][2] === 5){ // если тип клетки - энергик
                 if(mapCell[i][j][4] === 0){
+                    // счетчики
+                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+                    factCounters[mapCell[i][j][3]][3] += 1; // кол-во майнеров
+                    factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
+
                     // графика
                     mapTable.rows[i].cells[j].textContent = 'э';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
@@ -1546,6 +1576,10 @@ const period = setInterval(() => {
             }
             if(mapCell[i][j][2] === 7){ // если тип клетки - ближник
                 if(mapCell[i][j][4] === 0){
+                    // счетчики
+                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+                    factCounters[mapCell[i][j][3]][4] += 1; // кол-во боевых клеток
+
                     // графика
                     mapTable.rows[i].cells[j].textContent = 'б';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
@@ -1575,6 +1609,11 @@ const period = setInterval(() => {
             }
             if(mapCell[i][j][2] === 8){ // если тип клетки - дальник
                 if(mapCell[i][j][4] === 0){
+                    // счетчики
+                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+                    factCounters[mapCell[i][j][3]][4] += 1; // кол-во боевых клеток
+
+                    // графика
                     mapTable.rows[i].cells[j].textContent = '#';
                     mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
