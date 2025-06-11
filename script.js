@@ -1723,6 +1723,12 @@ const period = setInterval(() => {
             }
         }
     }
+    // какие тактики на следующий ход?
+    whatAboutTactic(1); // какие тактики у экспов
+    whatAboutTactic(2); // какие тактики у качественников
+    whatAboutTactic(3); // какие тактики у кочевников
+
+    // все по счетчикам-факторам
     counterForUpdFact += 1; // обновляем счетчик обновления счетчиков факторов
     if(countOfFractions >= turnsForUpdateFact){ // если счетчик равен (или вдруг привысил) кол-во ходов на обновление счетчиков факторов
         for(let i = 0; i < countOfFractions; i++){
