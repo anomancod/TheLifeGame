@@ -1723,6 +1723,16 @@ const period = setInterval(() => {
             }
         }
     }
+    counterForUpdFact += 1; // обновляем счетчик обновления счетчиков факторов
+    if(countOfFractions >= turnsForUpdateFact){ // если счетчик равен (или вдруг привысил) кол-во ходов на обновление счетчиков факторов
+        for(let i = 0; i < countOfFractions; i++){
+            for(let j = 0; j < 7; j++){
+                factCounters[i][j] = 0; // обнуляем все факторы-счетчики всех фракций
+            }
+        }
+        counterForUpdFact = 0; // обнуляем счетчик обновления счетчиков факторов
+    }
+
 }, speedOfUpd);
 
 
