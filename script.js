@@ -1729,16 +1729,19 @@ const period = setInterval(() => {
     whatAboutTactic(3); // какие тактики у кочевников
 
     // все по счетчикам-факторам
-    for(let i = 0; i < countOfFractions; i++){
-        factCounters[i][2] = 0; // фактор-счетчик кол-ва клеток фракции обнуляем каждый ход (дабы он не дублировался)
+    for(let i = 0; i < countOfFractions; i++){ // обнуляем факторы-счетчики для соотношений каждый ход для всех фракций
+        factCounters[i][2] = 0;
+        factCounters[i][3] = 0;
+        factCounters[i][4] = 0;
+        factCounters[i][5] = 0;
+        factCounters[i][6] = 0;
     }
 
-    counterForUpdFact += 1; // обновляем счетчик обновления счетчиков факторов
+    counterForUpdFact += 1; // обновляем счетчик обновления счетчиков факторов смертей
     if(countOfFractions >= turnsForUpdateFact){ // если счетчик равен (или вдруг привысил) кол-во ходов на обновление счетчиков факторов
-        for(let i = 0; i < countOfFractions; i++){
-            for(let j = 0; j < 7; j++){
-                factCounters[i][j] = 0; // обнуляем все факторы-счетчики всех фракций
-            }
+        for(let i = 0; i < countOfFractions; i++){ // обнуляем все факторы-счетчики смертей всех фракций
+            factCounters[i][0] = 0;
+            factCounters[i][1] = 0;
         }
         counterForUpdFact = 0; // обнуляем счетчик обновления счетчиков факторов
     }
