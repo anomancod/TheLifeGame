@@ -1348,10 +1348,10 @@ const minFactors = []; // мин. значения каждого фактора
 const playerArr = [0, 0, 0, 0, 0, 0];
 // 0: мин. кол-во смертей от недостатка энергии для активации этого фактора
 // 1: мин. кол-во смертей от убийств для активации этого фактора
-// 2: мин. кол-во клеток принадлежащих фракции для активации этого фактора
-// 3: мин. разница между добывающими и боевыми клетками для активации этого фактора
-// 4: мин. разница между добывающими и отростковыми клетками для активации этого фактора
-// 5: мин. разница между боевыми и мирными клетками для активации этого фактора
+// 2: макс. кол-во клеток принадлежащих фракции для активации этого фактора
+// 3: макс. соотношение между добывающими и боевыми клетками для активации этого фактора
+// 4: макс. соотношение между добывающими и отростковыми клетками для активации этого фактора
+// 5: макс. соотношение между боевыми и мирными клетками для активации этого фактора
 minFactors.push(playerArr);
 const expArr = [0, 0, 0, 0, 0, 0];
 minFactors.push(expArr);
@@ -1711,19 +1711,93 @@ function whatAboutTactic(fraction){ // функция-механика для с
         // "аварийные тактики"
         if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "насильственных" убийств
             tactRightNow[faction] = 2; // то выбираем тактику "война: ближний бой"
+            return 0;
         }
         if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "не насильственных" убийств
-             tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
+            tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
+            return 0;
         }
 
         // "стабильные" тактики
-        
+        if(factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[faction][4]){ // активен ли фактор соот. доб. и отр.
+            tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
+            return 0;
+        }
+        if(factCounters[fraction][2] <= minFactors[faction][2]){ // активен ли фактор кол-ва клеток для фракции
+            tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
+            return 0;
+        }
+
+        let randFact = rand(0, 1); // рандом 50 на 50
+        if(randFact === 0){
+            if(factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[faction][3]){ // активен ли фактор соот. доб. и боев.
+                tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
+                return 0;
+            }
+            if(factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[faction][5]){ // активен ли фактор соот. боев. и мир.
+                tactRightNow[faction] = 2; // то выбираем тактику "война: ближний бой"
+                return 0;
+            }
+        }
+        if(randFact === 1){
+            tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
+            return 0;
+        }
     }
     if(fraction === 2){ // если фракция - качественники
-        //
+        // "аварийные тактики"
+        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "насильственных" убийств
+            tactRightNow[faction] = 3; // то выбираем тактику "война: ближний бой"
+            return 0;
+        }
+        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "не насильственных" убийств
+            tactRightNow[faction] = 1; // то выбираем тактику "производство: производство"
+            return 0;
+        }
+
+        // "стабильные" тактики
+        if(factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[faction][4]){ // активен ли фактор соот. доб. и отр.
+            tactRightNow[faction] = 1; // то выбираем тактику "производство: производство"
+            return 0;
+        }
+        if(factCounters[fraction][2] <= minFactors[faction][2]){ // активен ли фактор кол-ва клеток для фракции
+            tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
+            return 0;
+        }
+
+        let randFact = rand(0, 100); // рандом ста процентов
+        if(randFact < 40){
+            if(factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[faction][3]){ // активен ли фактор соот. доб. и боев.
+                tactRightNow[faction] = 1; // то выбираем тактику "производство: производство"
+                return 0;
+            }
+            if(factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[faction][5]){ // активен ли фактор соот. боев. и мир.
+                tactRightNow[faction] = 2; // то выбираем тактику "война: дальний бой"
+                return 0;
+            }
+        }
+        else if(randFact < 80){
+            tactRightNow[faction] = 4; // то выбираем тактику "развитие"
+            return 0;
+        }
+        else{
+            tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
+            return 0;
+        }
     }
     if(fraction === 3){ // если фракция - кочевники
-        //
+        // "аварийные тактики"
+        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "насильственных" убийств
+            tactRightNow[faction] = 1; // то выбираем тактику "миграция"
+            return 0;
+        }
+        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "не насильственных" убийств
+            tactRightNow[faction] = 1; // то выбираем тактику "миграция"
+            return 0;
+        }
+
+        // "стабильные" тактики
+        // У КОЧЕВНИКОВ НЕТ СТАБИЛЬНЫХ ТАКТИК
     }
 }
 
