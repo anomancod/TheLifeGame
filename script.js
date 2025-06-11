@@ -84,6 +84,8 @@ const energyFromOrgPerTurn = 300; // энергия добывающаяся в 
 const orgForEnerPerTurn = 200; // кол-во органики тратящейся органиком для производства энергии в ход {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 const manaEnergyPerTurn = 100; // кол-во энергии из манны добывающаяся манновиком {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 
+const plusEnergyIfTransIntoSprout = 500; // доп. энергия при трансформации в отросток {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+
 
 // ======== ТАКТИКИ ========
 const expansionTact = []; // экспансия
@@ -1324,9 +1326,12 @@ function transferEnergy(i, j){ // любая передача энергии (д
     }
 }
 
+// --- Переменные для Главного Цикла ---
+const tactRightNow = [0, 0, 0, 0]; // тактики в данный момент для фракций (0 - игрок; 1 - эксп; 2 - кач; 3 - кочевники)
+
 // --- Главный Цикл ---
 const period = setInterval(() => {
-    for(let i = 0; i < mapH; i++){ // проходимся по всем элементам массива
+    for(let i = 0; i < mapH; i++){ // проходимся по всем элементам карты
         for(let j = 0; j < mapW; j++)
         {
             if(mapCell[i][j][2] === 0){ // если тип клетки - пустая
@@ -1651,7 +1656,21 @@ const period = setInterval(() => {
 
 // ======== ФУНКЦИИ МЕХАНИК ========
 function restorOfSprouts(fraction){ // функция-механика восстановления отростков
-    //
+    let chanceOfTransform = rand(25, 50); // шанс преобразования в отросток рандомится от 25% до 50%
+
+    for(let i = 0; i < mapH; i++){ // проходимся по всем элементам карты
+        for(let j = 0; j < mapW; j++){
+            // если клетка не пустая, не отросток, не стебель и не семя, и фракция соответствует
+            if(mapCell[i][j][2] != 0 && mapCell[i][j][3] === fraction && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1){
+                let isTransform = rand(0, 100);
+                if(isTransform < chanceOfTransform){ // если выполняется шанс
+                    mapCell[i][j][2] = 1; // меняем клетку на стебель
+                    mapCell[i][j][1] = mapCell[i][j][1] + plusEnergyIfTransIntoSprout; // прибавляем доп. энергию при трансформации
+                    //mapCell[i][j][]
+                }
+            }
+        }
+    }
 }
 
 
