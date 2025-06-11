@@ -88,7 +88,7 @@ const manaEnergyPerTurn = 100; // кол-во энергии из манны д�
 // ======== ТАКТИКИ ========
 const expansionTact = []; // экспансия
 for(let i = 0; i < countOfGenoms; i++){
-    const interArr = [];
+    const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let minerIn = rand(0, 2);
     interArr[minerIn] = rand(30, 74); // задаем в 1 из 3 ячеек случайный майнер
     let tester = 2;
@@ -114,7 +114,7 @@ for(let i = 0; i < countOfGenoms; i++){
 
 const prodExtTact = []; // производство-добыча
 for(let i = 0; i < countOfGenoms; i++){
-    const interArr = [];
+    const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let sproutIn = rand(0, 2);
     interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
@@ -140,7 +140,7 @@ for(let i = 0; i < countOfGenoms; i++){
 
 const prodProdTact = []; // производство производства
 for(let i = 0; i < countOfGenoms; i++){
-    const interArr = [];
+    const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let sproutIn = rand(0, 2);
     interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
@@ -166,7 +166,7 @@ for(let i = 0; i < countOfGenoms; i++){
 
 const warMeleeTact = []; // война ближний бой
 for(let i = 0; i < countOfGenoms; i++){
-    const interArr = [];
+    const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let sproutIn = rand(0, 2);
     interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
@@ -192,7 +192,7 @@ for(let i = 0; i < countOfGenoms; i++){
 
 const warDistantv = []; // война ближний бой
 for(let i = 0; i < countOfGenoms; i++){
-    const interArr = [];
+    const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let sproutIn = rand(0, 2);
     interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
@@ -219,12 +219,99 @@ for(let i = 0; i < countOfGenoms; i++){
 const developmentTact = []; // развитие
 for(let i = 0; i < countOfGenoms; i++){
     if(i < 4){ // для 4 геномов
+        const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        
+        interArr[0] = rand(30, 74); // случайный майнер
+        interArr[1] = rand(30, 74); // случайный майнер
+        interArr[2] = rand(30, 74); // случайный майнер
+        interArr[3] = 105; // не задаем условие 1
+        interArr[4] = rand(0, 255);
+        interArr[5] = 105; // не задаем условие 2
+        interArr[6] = rand(0, 255);
+        interArr[7] = rand(0, 255);
+        interArr[8] = rand(0, 255);
+        interArr[9] = rand(0, 255);
+        interArr[10] = rand(0, 255);
+        interArr[11] = rand(0, 255);
+        interArr[12] = rand(0, 255);
+        interArr[13] = rand(0, 255);
+        interArr[14] = rand(0, 255);
 
+        developmentTact.push(interArr);
     }
     else{ // для остальных 28
+        const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+        interArr[0] = rand(30, 74); // случайный майнер
+        interArr[1] = rand(30, 74); // случайный майнер
+        interArr[2] = rand(30, 74); // случайный майнер
+        interArr[3] = rand(0, 104); // ЗАДАЕМ случайное условие 1
+        interArr[4] = rand(0, 255);
+        interArr[5] = rand(0, 104); // ЗАДАЕМ случайное условие 2
+        interArr[6] = rand(0, 255);
+        interArr[7] = rand(0, 255);
+        interArr[8] = rand(0, 255);
+        interArr[9] = rand(0, 255);
+        interArr[10] = rand(0, 255);
+        interArr[11] = rand(0, 255);
+        interArr[12] = rand(0, 255);
+        interArr[13] = rand(0, 255);
+        interArr[14] = rand(0, 255);
+
+        developmentTact.push(interArr);
     }
 }
+
+const migrationTact = []; // миграция
+for(let i = 0; i < countOfGenoms; i++){
+    const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    
+    interArr[0] = rand(0, 255); // случайное создание
+    interArr[1] = rand(0, 255); // случайное создание
+    interArr[2] = rand(0, 255); // случайное создание
+    interArr[3] = rand(0, 104); // ЗАДАЕМ случайное условие 1
+    interArr[4] = rand(0, 255);
+    interArr[5] = rand(0, 104); // ЗАДАЕМ случайное условие 2
+    interArr[6] = rand(0, 255);
+    interArr[7] = rand(0, 255);
+    interArr[8] = rand(0, 255);
+    interArr[9] = 6; // задаем команду 1 как семя-перемещение
+    interArr[10] = rand(0, 255);
+    interArr[11] = rand(0, 255);
+    interArr[12] = 6; // задаем команду 2 как семя-перемещение
+    interArr[13] = rand(0, 255);
+    interArr[14] = rand(0, 255);
+
+    migrationTact.push(interArr);
+}
+
+const nomandismTact = []; // кочевничество
+let directOfNomands = rand(0, 2); // направление движения кочевников
+for(let i = 0; i < countOfGenoms; i++){
+    const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    interArr[directOfNomands] = 0; // в направлении движения создаем отросток
+    let tester = 2;
+    if(tester - directOfNomands === 2) {interArr[1] = rand(60, 84); interArr[2] = rand(60, 84);} // задаем незанятые ячейки ближниками и/или энергиками
+    if(tester - directOfNomands === 1) {interArr[0] = rand(60, 84); interArr[2] = rand(60, 84);}
+    if(tester - directOfNomands === 0) {interArr[0] = rand(60, 84); interArr[1] = rand(60, 84);}
+
+    interArr[3] = 105; // не задаем условие 1
+    interArr[4] = rand(0, 255);
+    interArr[5] = 105; // не задаем условие 2
+    interArr[6] = rand(0, 255);
+    interArr[7] = rand(0, 255);
+    interArr[8] = rand(0, 255);
+    interArr[9] = rand(0, 255);
+    interArr[10] = rand(0, 255);
+    interArr[11] = rand(0, 255);
+    interArr[12] = rand(0, 255);
+    interArr[13] = rand(0, 255);
+    interArr[14] = rand(0, 255);
+
+    nomandismTact.push(interArr);
+}
+
 
 // ======== МАССИВЫ ДАННЫХ ========
 
@@ -282,11 +369,11 @@ let countOfGenoms = 32; // кол-во геномов в тактике
 
 const playerFrac = []; // тут нужно будет заполнить тактиками
 tactics.push(playerFrac);
-const expFrac = []; // тут нужно будет заполнить тактиками
+const expFrac = [expansionTact, prodExtTact, warMeleeTact, migrationTact]; // тут нужно будет заполнить тактиками
 tactics.push(expFrac);
-const quaFrac = []; // тут нужно будет заполнить тактиками
+const quaFrac = [expansionTact, prodProdTact, warDistantTact, warMeleeTact, developmentTact]; // тут нужно будет заполнить тактиками
 tactics.push(quaFrac);
-const nomadFrac = []; // тут нужно будет заполнить тактиками
+const nomadFrac = [nomandismTact, migrationTact]; // тут нужно будет заполнить тактиками
 tactics.push(nomadFrac);
 
 // 1X массив: if-ые функции генома ([функции])
@@ -958,6 +1045,7 @@ function cmdTransformIntoSeed(i, j){ // превратиться в семечк
 }
 
 function cmdTransformIntoSeedAndMove(i, j) { // превратится в семечко и переместиться
+    console.log('Отросток['+i+']['+j+'] исполняет: Превратиться в семечко и полететь');
     if (mapCell[i][j][1] > energyToTransformIntoSeed) {
         mapCell[i][j][1] -= energyToTransformIntoSeed;
         mapCell[i][j][2] = 6;
@@ -1559,6 +1647,12 @@ const period = setInterval(() => {
         }
     }
 }, speedOfUpd);
+
+
+// ======== ФУНКЦИИ МЕХАНИК ========
+function restorOfSprouts(fraction){ // функция-механика восстановления отростков
+    //
+}
 
 
 // ======== НАЧАЛЬНЫЕ ПАРАМЕТРЫ ========
