@@ -7,9 +7,9 @@ let speedOfUpd = 1000; // скорость обновления карты
 const mapH = 48; // высота карты(таблицы)
 const mapW = 48; // ширина карты(таблицы)
 
-for(let i = 0; i < mapH; i++){
+for (let i = 0; i < mapH; i++) {
     const row = document.createElement('tr');
-    for(let j = 0; j < mapW; j++){
+    for (let j = 0; j < mapW; j++) {
         const cell = document.createElement('td');
         cell.textContent = '';
         cell.style.border = '1px solid grey';
@@ -27,7 +27,7 @@ for(let i = 0; i < mapH; i++){
 tableCon.appendChild(mapTable);
 
 // универсальная функция рандома целого числа в интервале включительно с двух сторон
-function rand(min, max){
+function rand(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -95,14 +95,14 @@ const numInRatioForNom = 5; // число для соотношения: есл�
 
 // ======== ТАКТИКИ ========
 const expansionTact = []; // экспансия
-for(let i = 0; i < countOfGenoms; i++){
+for (let i = 0; i < countOfGenoms; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let minerIn = rand(0, 2);
     interArr[minerIn] = rand(30, 74); // задаем в 1 из 3 ячеек случайный майнер
     let tester = 2;
-    if(tester - minerIn === 2) {interArr[1] = 0; interArr[2] = 0;} // задаем незанятые ячейки отростками
-    if(tester - minerIn === 1) {interArr[0] = 0; interArr[2] = 0;}
-    if(tester - minerIn === 0) {interArr[0] = 0; interArr[1] = 0;}
+    if (tester - minerIn === 2) { interArr[1] = 0; interArr[2] = 0; } // задаем незанятые ячейки отростками
+    if (tester - minerIn === 1) { interArr[0] = 0; interArr[2] = 0; }
+    if (tester - minerIn === 0) { interArr[0] = 0; interArr[1] = 0; }
 
     interArr[3] = 105; // не задаем условие 1
     interArr[4] = rand(0, 255);
@@ -121,14 +121,14 @@ for(let i = 0; i < countOfGenoms; i++){
 }
 
 const prodExtTact = []; // производство-добыча
-for(let i = 0; i < countOfGenoms; i++){
+for (let i = 0; i < countOfGenoms; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let sproutIn = rand(0, 2);
     interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
-    if(tester - sproutIn === 2) {interArr[1] = rand(45, 74); interArr[2] = rand(45, 74);} // задаем незанятые ячейки энергиками или органиками на рандом
-    if(tester - sproutIn === 1) {interArr[0] = rand(45, 74); interArr[2] = rand(45, 74);}
-    if(tester - sproutIn === 0) {interArr[0] = rand(45, 74); interArr[1] = rand(45, 74);}
+    if (tester - sproutIn === 2) { interArr[1] = rand(45, 74); interArr[2] = rand(45, 74); } // задаем незанятые ячейки энергиками или органиками на рандом
+    if (tester - sproutIn === 1) { interArr[0] = rand(45, 74); interArr[2] = rand(45, 74); }
+    if (tester - sproutIn === 0) { interArr[0] = rand(45, 74); interArr[1] = rand(45, 74); }
 
     interArr[3] = 105; // не задаем условие 1
     interArr[4] = rand(0, 255);
@@ -147,14 +147,14 @@ for(let i = 0; i < countOfGenoms; i++){
 }
 
 const prodProdTact = []; // производство производства
-for(let i = 0; i < countOfGenoms; i++){
+for (let i = 0; i < countOfGenoms; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let sproutIn = rand(0, 2);
     interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
-    if(tester - sproutIn === 2) {interArr[1] = 35; interArr[2] = 35;} // задаем незанятые ячейки манновиками
-    if(tester - sproutIn === 1) {interArr[0] = 35; interArr[2] = 35;}
-    if(tester - sproutIn === 0) {interArr[0] = 35; interArr[1] = 35;}
+    if (tester - sproutIn === 2) { interArr[1] = 35; interArr[2] = 35; } // задаем незанятые ячейки манновиками
+    if (tester - sproutIn === 1) { interArr[0] = 35; interArr[2] = 35; }
+    if (tester - sproutIn === 0) { interArr[0] = 35; interArr[1] = 35; }
 
     interArr[3] = 105; // не задаем условие 1
     interArr[4] = rand(0, 255);
@@ -173,14 +173,14 @@ for(let i = 0; i < countOfGenoms; i++){
 }
 
 const warMeleeTact = []; // война ближний бой
-for(let i = 0; i < countOfGenoms; i++){
+for (let i = 0; i < countOfGenoms; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let sproutIn = rand(0, 2);
     interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
-    if(tester - sproutIn === 2) {interArr[1] = 80; interArr[2] = 80;} // задаем незанятые ячейки ближниками
-    if(tester - sproutIn === 1) {interArr[0] = 80; interArr[2] = 80;}
-    if(tester - sproutIn === 0) {interArr[0] = 80; interArr[1] = 80;}
+    if (tester - sproutIn === 2) { interArr[1] = 80; interArr[2] = 80; } // задаем незанятые ячейки ближниками
+    if (tester - sproutIn === 1) { interArr[0] = 80; interArr[2] = 80; }
+    if (tester - sproutIn === 0) { interArr[0] = 80; interArr[1] = 80; }
 
     interArr[3] = 105; // не задаем условие 1
     interArr[4] = rand(0, 255);
@@ -199,14 +199,14 @@ for(let i = 0; i < countOfGenoms; i++){
 }
 
 const warDistantv = []; // война ближний бой
-for(let i = 0; i < countOfGenoms; i++){
+for (let i = 0; i < countOfGenoms; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let sproutIn = rand(0, 2);
     interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
-    if(tester - sproutIn === 2) {interArr[1] = 90; interArr[2] = 90;} // задаем незанятые ячейки дальниками
-    if(tester - sproutIn === 1) {interArr[0] = 90; interArr[2] = 90;}
-    if(tester - sproutIn === 0) {interArr[0] = 90; interArr[1] = 90;}
+    if (tester - sproutIn === 2) { interArr[1] = 90; interArr[2] = 90; } // задаем незанятые ячейки дальниками
+    if (tester - sproutIn === 1) { interArr[0] = 90; interArr[2] = 90; }
+    if (tester - sproutIn === 0) { interArr[0] = 90; interArr[1] = 90; }
 
     interArr[3] = 105; // не задаем условие 1
     interArr[4] = rand(0, 255);
@@ -225,10 +225,10 @@ for(let i = 0; i < countOfGenoms; i++){
 }
 
 const developmentTact = []; // развитие
-for(let i = 0; i < countOfGenoms; i++){
-    if(i < 4){ // для 4 геномов
+for (let i = 0; i < countOfGenoms; i++) {
+    if (i < 4) { // для 4 геномов
         const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        
+
         interArr[0] = rand(30, 74); // случайный майнер
         interArr[1] = rand(30, 74); // случайный майнер
         interArr[2] = rand(30, 74); // случайный майнер
@@ -247,7 +247,7 @@ for(let i = 0; i < countOfGenoms; i++){
 
         developmentTact.push(interArr);
     }
-    else{ // для остальных 28
+    else { // для остальных 28
         const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         interArr[0] = rand(30, 74); // случайный майнер
@@ -271,9 +271,9 @@ for(let i = 0; i < countOfGenoms; i++){
 }
 
 const migrationTact = []; // миграция
-for(let i = 0; i < countOfGenoms; i++){
+for (let i = 0; i < countOfGenoms; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    
+
     interArr[0] = rand(0, 255); // случайное создание
     interArr[1] = rand(0, 255); // случайное создание
     interArr[2] = rand(0, 255); // случайное создание
@@ -295,14 +295,14 @@ for(let i = 0; i < countOfGenoms; i++){
 
 const nomandismTact = []; // кочевничество
 let directOfNomands = rand(0, 2); // направление движения кочевников
-for(let i = 0; i < countOfGenoms; i++){
+for (let i = 0; i < countOfGenoms; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     interArr[directOfNomands] = 0; // в направлении движения создаем отросток
     let tester = 2;
-    if(tester - directOfNomands === 2) {interArr[1] = rand(60, 84); interArr[2] = rand(60, 84);} // задаем незанятые ячейки ближниками и/или энергиками
-    if(tester - directOfNomands === 1) {interArr[0] = rand(60, 84); interArr[2] = rand(60, 84);}
-    if(tester - directOfNomands === 0) {interArr[0] = rand(60, 84); interArr[1] = rand(60, 84);}
+    if (tester - directOfNomands === 2) { interArr[1] = rand(60, 84); interArr[2] = rand(60, 84); } // задаем незанятые ячейки ближниками и/или энергиками
+    if (tester - directOfNomands === 1) { interArr[0] = rand(60, 84); interArr[2] = rand(60, 84); }
+    if (tester - directOfNomands === 0) { interArr[0] = rand(60, 84); interArr[1] = rand(60, 84); }
 
     interArr[3] = 105; // не задаем условие 1
     interArr[4] = rand(0, 255);
@@ -325,25 +325,25 @@ for(let i = 0; i < countOfGenoms; i++){
 
 // 3X массив: клетки ([mapH]x[mapW]x[11])
 const mapCell = []; // let для приравнивания пустой клетки (смерти)
-for(let i = 0; i < mapH; i++){
+for (let i = 0; i < mapH; i++) {
     const r0 = []; // let для приравнивания пустой клетки (смерти)
-    for(let j = 0; j < mapW; j++){
+    for (let j = 0; j < mapW; j++) {
         const r1 = []; // let для приравнивания пустой клетки (смерти)
-        for(let t = 0; t < 12; t++){
+        for (let t = 0; t < 12; t++) {
             r1.push(0);
         }
         r0.push(r1);
     }
-    mapCell.push(r0);    
+    mapCell.push(r0);
 }
 
 // 3X массив: почва ([mapH]x[mapW]x[1{0 - энергия, 1 - органика}])
 const mapGround = [];
-for(let i = 0; i < mapH; i++){
+for (let i = 0; i < mapH; i++) {
     const r0 = [];
-    for(let j = 0; j < mapW; j++){
+    for (let j = 0; j < mapW; j++) {
         const r1 = [];
-        for(let t = 0; t < 2; t++){
+        for (let t = 0; t < 2; t++) {
             r1.push(rand(0, 2500)); // устанавливаем рандомную энергию и органику в почве
         }
         r0.push(r1);
@@ -355,19 +355,19 @@ for(let i = 0; i < mapH; i++){
 const genoms = [];
 let countOfFractions = 4; // кол-во фракций
 let countOfGenoms = 32; // кол-во геномов во фракциях
-for(let i = 0; i < countOfFractions; i++){
+for (let i = 0; i < countOfFractions; i++) {
     const r0 = [];
-    for(let j = 0; j < countOfGenoms; j++){
+    for (let j = 0; j < countOfGenoms; j++) {
         const r1 = [];
-        for(let t = 0; t < 15; t++){
+        for (let t = 0; t < 15; t++) {
             r1.push(rand(0, 255));
-            if(t === 3 || t === 5){ // ТЕСТОВОЕ ТОЛЬКО СОЗДАНИЕ КЛЕТОК
+            if (t === 3 || t === 5) { // ТЕСТОВОЕ ТОЛЬКО СОЗДАНИЕ КЛЕТОК
                 r1.push(105, 255);
             }
         }
         r0.push(r1);
     }
-    genoms.push(r0);    
+    genoms.push(r0);
 }
 
 // 4X массив: тактики ([countOfFractions]x[Кол-во тактик]x[countOfGenoms]x[14])
@@ -398,80 +398,80 @@ const fractionColors = ['lightgreen', 'pink', 'lightblue', 'yellow']
 // ======== ФУНКЦИИ ГЕНОМА ========
 
 // главная функкция генома
-function mainGenome(i, j){
+function mainGenome(i, j) {
     //let gen = genoms[mapCell[i][j][3]][mapCell[i][j][10]]; // берем строчку-ген
     let gen = tactics[mapCell[i][j][3]][tactRightNow][mapCell[i][j][10]]; // берем строчку-ген как строчку из тактики выбранной фракции в данный момент
     let resFirstIf = 0;
     let resSecondIf = 0;
-    if(gen[3] > 104 && gen[5] > 104){ // если 2 условия не заданы
-        for(let a = 0; a < 3; a++){ // повторяем 3 раза (0, 1, 2; для каждой стороны)
-            if(gen[0+a] < 95){ // если ответвление есть
-                if(gen[0+a] < 30){ // *отросток
+    if (gen[3] > 104 && gen[5] > 104) { // если 2 условия не заданы
+        for (let a = 0; a < 3; a++) { // повторяем 3 раза (0, 1, 2; для каждой стороны)
+            if (gen[0 + a] < 95) { // если ответвление есть
+                if (gen[0 + a] < 30) { // *отросток
                     createSprout(i, j, a);
-                    console.log('Отросток['+i+']['+j+'] создает: Отросток');
-                } else if(gen[0+a] < 45){ // *манновик
+                    console.log('Отросток[' + i + '][' + j + '] создает: Отросток');
+                } else if (gen[0 + a] < 45) { // *манновик
                     createManaMiner(i, j, a);
-                    console.log('Отросток['+i+']['+j+'] создает: Манновик');
-                } else if(gen[0+a] < 60){ // *органик
+                    console.log('Отросток[' + i + '][' + j + '] создает: Манновик');
+                } else if (gen[0 + a] < 60) { // *органик
                     createOrgMiner(i, j, a);
-                    console.log('Отросток['+i+']['+j+'] создает: Органик');
-                } else if(gen[0+a] < 75){ // *энергик
+                    console.log('Отросток[' + i + '][' + j + '] создает: Органик');
+                } else if (gen[0 + a] < 75) { // *энергик
                     createEnerMiner(i, j, a);
-                    console.log('Отросток['+i+']['+j+'] создает: Энергик');
-                } else if(gen[0+a] < 85){ // *ближняя боевая клетка
+                    console.log('Отросток[' + i + '][' + j + '] создает: Энергик');
+                } else if (gen[0 + a] < 85) { // *ближняя боевая клетка
                     createMeleeFighter(i, j, a);
-                    console.log('Отросток['+i+']['+j+'] создает: Ближника');
-                } else if(gen[0+a] < 95){ // *дальняя боевая клетка
+                    console.log('Отросток[' + i + '][' + j + '] создает: Ближника');
+                } else if (gen[0 + a] < 95) { // *дальняя боевая клетка
                     createDistantFighter(i, j, a);
-                    console.log('Отросток['+i+']['+j+'] создает: Дальника');
+                    console.log('Отросток[' + i + '][' + j + '] создает: Дальника');
                 }
             }
         }
     }
-    if(gen[3] < 105 || gen[5] < 105){ // если хотя бы одно из условий задано
-        if(gen[3] < 105){ // если первое условие задано
-            resFirstIf = ifFunc[Math.floor(gen[3]/7)](i, j, gen[4]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
-            if(resFirstIf === 1){
-                console.log('Отросток['+i+']['+j+'] Успешно');
+    if (gen[3] < 105 || gen[5] < 105) { // если хотя бы одно из условий задано
+        if (gen[3] < 105) { // если первое условие задано
+            resFirstIf = ifFunc[Math.floor(gen[3] / 7)](i, j, gen[4]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
+            if (resFirstIf === 1) {
+                console.log('Отросток[' + i + '][' + j + '] Успешно');
             }
-            else{
-                console.log('Отросток['+i+']['+j+'] Не успешно');
+            else {
+                console.log('Отросток[' + i + '][' + j + '] Не успешно');
             }
         }
-        if(gen[5] < 105){ // если второе условие задано
-            resSecondIf = ifFunc[Math.floor(gen[5]/7)](i, j, gen[6]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
-             if(resSecondIf === 1){
-                console.log('Отросток['+i+']['+j+'] Успешно');
-             }
-            else{
-                console.log('Отросток['+i+']['+j+'] Не успешно');
+        if (gen[5] < 105) { // если второе условие задано
+            resSecondIf = ifFunc[Math.floor(gen[5] / 7)](i, j, gen[6]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
+            if (resSecondIf === 1) {
+                console.log('Отросток[' + i + '][' + j + '] Успешно');
+            }
+            else {
+                console.log('Отросток[' + i + '][' + j + '] Не успешно');
             }
         }
 
-        if(resFirstIf + resSecondIf === 2){ // если 2 условия выполнились
-            if(gen[9] < 33) { // если первая команда задана
-                cmdFunc[Math.floor(gen[9]/3)](i, j);
+        if (resFirstIf + resSecondIf === 2) { // если 2 условия выполнились
+            if (gen[9] < 33) { // если первая команда задана
+                cmdFunc[Math.floor(gen[9] / 3)](i, j);
                 let resRa = rand(0, 1);
-                if(resRa === 0){
-                    mapCell[i][j][10] = Math.floor(gen[10]/8); // меняем номер строчки-гена
+                if (resRa === 0) {
+                    mapCell[i][j][10] = Math.floor(gen[10] / 8); // меняем номер строчки-гена
                 }
-                else{
-                    mapCell[i][j][10] = Math.floor(gen[11]/8); // меняем номер строчки-гена
+                else {
+                    mapCell[i][j][10] = Math.floor(gen[11] / 8); // меняем номер строчки-гена
                 }
             }
-            else{ // если первая команда не задана
-                mapCell[i][j][10] = Math.ceil(gen[7]/32); // меняем номер строчки-гена
+            else { // если первая команда не задана
+                mapCell[i][j][10] = Math.ceil(gen[7] / 32); // меняем номер строчки-гена
             }
         }
-        else{ // если хотя бы одно условие не выполнилось
-            if(gen[12] < 33) { // если вторая команда задана
-                cmdFunc[Math.floor(gen[12]/3)](i, j);
+        else { // если хотя бы одно условие не выполнилось
+            if (gen[12] < 33) { // если вторая команда задана
+                cmdFunc[Math.floor(gen[12] / 3)](i, j);
                 let resRa = rand(0, 1);
-                if(resRa === 0){
-                    mapCell[i][j][10] = Math.floor(gen[13]/8); // меняем номер строчки-гена
+                if (resRa === 0) {
+                    mapCell[i][j][10] = Math.floor(gen[13] / 8); // меняем номер строчки-гена
                 }
-                else{
-                    mapCell[i][j][10] = Math.floor(gen[14]/8); // меняем номер строчки-гена
+                else {
+                    mapCell[i][j][10] = Math.floor(gen[14] / 8); // меняем номер строчки-гена
                 }
             }
         }
@@ -479,96 +479,96 @@ function mainGenome(i, j){
 }
 
 // --- строительные функции ---
-function specifyDirect(i, j, direct){ // вспомогательная функция выбирающее направление (direct: 0 - слева; 1 - спереди; 2 - справа;)
-    if(mapCell[i][j][9] != -1){ // если есть родитель
-        if(mapCell[i][j][9] === 0){ // если родитель слева
-            if(direct === 0 && i != 0){
+function specifyDirect(i, j, direct) { // вспомогательная функция выбирающее направление (direct: 0 - слева; 1 - спереди; 2 - справа;)
+    if (mapCell[i][j][9] != -1) { // если есть родитель
+        if (mapCell[i][j][9] === 0) { // если родитель слева
+            if (direct === 0 && i != 0) {
                 return [i - 1, j, 3, 1];
             }
-            if(direct === 1 && j != mapW-1){
+            if (direct === 1 && j != mapW - 1) {
                 return [i, j + 1, 0, 2];
             }
-            if(direct === 2 && i != mapH-1){
+            if (direct === 2 && i != mapH - 1) {
                 return [i + 1, j, 1, 3];
             }
         }
-        if(mapCell[i][j][9] === 1){ // если родитель спереди
-            if(direct === 0 && j != mapW-1){
+        if (mapCell[i][j][9] === 1) { // если родитель спереди
+            if (direct === 0 && j != mapW - 1) {
                 return [i, j + 1, 0, 2];
             }
-            if(direct === 1 && i != mapH-1){
+            if (direct === 1 && i != mapH - 1) {
                 return [i + 1, j, 1, 3];
             }
-            if(direct === 2 && j != 0){
+            if (direct === 2 && j != 0) {
                 return [i, j - 1, 2, 0];
             }
         }
-        if(mapCell[i][j][9] === 2){ // если родитель справа
-            if(direct === 0 && i != mapH-1){
+        if (mapCell[i][j][9] === 2) { // если родитель справа
+            if (direct === 0 && i != mapH - 1) {
                 return [i + 1, j, 1, 3];
             }
-            if(direct === 1 && j != 0){
+            if (direct === 1 && j != 0) {
                 return [i, j - 1, 2, 0];
             }
-            if(direct === 2 && i != 0){
+            if (direct === 2 && i != 0) {
                 return [i - 1, j, 3, 1];
             }
         }
-        if(mapCell[i][j][9] === 3){ // если родитель сзади
-            if(direct === 0 && j != 0){
+        if (mapCell[i][j][9] === 3) { // если родитель сзади
+            if (direct === 0 && j != 0) {
                 return [i, j - 1, 2, 0];
             }
-            if(direct === 1 && i != 0){
+            if (direct === 1 && i != 0) {
                 return [i - 1, j, 1, 3];
             }
-            if(direct === 2 && j != mapW-1){
+            if (direct === 2 && j != mapW - 1) {
                 return [i, j + 1, 0, 2];
             }
         }
     }
-    else{ // если нет родителя
+    else { // если нет родителя
         let randPer = rand(0, 3);
-        if(randPer === 0){ // если родитель слева
-            if(direct === 0 && i != 0){
+        if (randPer === 0) { // если родитель слева
+            if (direct === 0 && i != 0) {
                 return [i - 1, j, 3, 1];
             }
-            if(direct === 1 && j != mapW-1){
+            if (direct === 1 && j != mapW - 1) {
                 return [i, j + 1, 0, 2];
             }
-            if(direct === 2 && i != mapH-1){
+            if (direct === 2 && i != mapH - 1) {
                 return [i + 1, j, 1, 3];
             }
         }
-        if(randPer === 1){ // если родитель спереди
-            if(direct === 0 && j != mapW-1){
+        if (randPer === 1) { // если родитель спереди
+            if (direct === 0 && j != mapW - 1) {
                 return [i, j + 1, 0, 2];
             }
-            if(direct === 1 && i != mapH-1){
+            if (direct === 1 && i != mapH - 1) {
                 return [i + 1, j, 1, 3];
             }
-            if(direct === 2 && j != 0){
+            if (direct === 2 && j != 0) {
                 return [i, j - 1, 2, 0];
             }
         }
-        if(randPer === 2){ // если родитель справа
-            if(direct === 0 && i != mapH-1){
+        if (randPer === 2) { // если родитель справа
+            if (direct === 0 && i != mapH - 1) {
                 return [i + 1, j, 1, 3];
             }
-            if(direct === 1 && j != 0){
+            if (direct === 1 && j != 0) {
                 return [i, j - 1, 2, 0];
             }
-            if(direct === 2 && i != 0){
+            if (direct === 2 && i != 0) {
                 return [i - 1, j, 3, 1];
             }
         }
-        if(randPer === 3){ // если родитель сзади
-            if(direct === 0 && j != 0){
+        if (randPer === 3) { // если родитель сзади
+            if (direct === 0 && j != 0) {
                 return [i, j - 1, 2, 0];
             }
-            if(direct === 1 && i != 0){
+            if (direct === 1 && i != 0) {
                 return [i - 1, j, 1, 3];
             }
-            if(direct === 2 && j != mapW-1){
+            if (direct === 2 && j != mapW - 1) {
                 return [i, j + 1, 0, 2];
             }
         }
@@ -577,18 +577,18 @@ function specifyDirect(i, j, direct){ // вспомогательная функ
     return -1; // возвращает -1 в случае если нужная клетка находится за границами карты
 }
 
-function createSprout(i, j, direct){ // создание отростка
+function createSprout(i, j, direct) { // создание отростка
     let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
     let energyTo = sDMas[3];
 
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
-    if(mapCell[iC][jC][2] === 0){ // если координата создаваемой клетки пуста
-        if(mapCell[i][j][1] >= energyToCreateSprout){ // если хватает энергии для создания отростка
+    if (mapCell[iC][jC][2] === 0) { // если координата создаваемой клетки пуста
+        if (mapCell[i][j][1] >= energyToCreateSprout) { // если хватает энергии для создания отростка
             mapCell[iC][jC][2] = 1; // изменяем тип клетки на отросток
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateSprout; // вычитаем энергию на создание
@@ -605,25 +605,25 @@ function createSprout(i, j, direct){ // создание отростка
     }
 }
 
-function createManaMiner(i, j, direct){ // создание манновика
+function createManaMiner(i, j, direct) { // создание манновика
     let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
     let energyTo = sDMas[3];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
-    
-    if(mapCell[iC][jC][2] === 0){
-        if(mapCell[i][j][1] >= energyToCreateManaMiner){
+
+    if (mapCell[iC][jC][2] === 0) {
+        if (mapCell[i][j][1] >= energyToCreateManaMiner) {
             mapCell[iC][jC][2] = 3;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateManaMiner;
             mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
-            mapCell[iC][jC][directOfParent+5] = 1; // добывающая клетка передает энергию в сторону родителя
+            mapCell[iC][jC][directOfParent + 5] = 1; // добывающая клетка передает энергию в сторону родителя
             mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
 
             mapCell[i][j][2] = 2;
@@ -631,25 +631,25 @@ function createManaMiner(i, j, direct){ // создание манновика
     }
 }
 
-function createOrgMiner(i, j, direct){ // создание органика
+function createOrgMiner(i, j, direct) { // создание органика
     let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
     let energyTo = sDMas[3];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
-    if(mapCell[iC][jC][2] === 0){
-        if(mapCell[i][j][1] >= energyToCreateOrgMiner){
+    if (mapCell[iC][jC][2] === 0) {
+        if (mapCell[i][j][1] >= energyToCreateOrgMiner) {
             mapCell[iC][jC][2] = 4;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateOrgMiner;
             mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
-            mapCell[iC][jC][directOfParent+5] = 1; // добывающая клетка передает энергию в сторону родителя
+            mapCell[iC][jC][directOfParent + 5] = 1; // добывающая клетка передает энергию в сторону родителя
             mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
 
             mapCell[i][j][2] = 2;
@@ -657,25 +657,25 @@ function createOrgMiner(i, j, direct){ // создание органика
     }
 }
 
-function createEnerMiner(i, j, direct){ // создание энергика
+function createEnerMiner(i, j, direct) { // создание энергика
     let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
     let energyTo = sDMas[3];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
-    if(mapCell[iC][jC][2] === 0){
-        if(mapCell[i][j][1] >= energyToCreateEnerMiner){
+    if (mapCell[iC][jC][2] === 0) {
+        if (mapCell[i][j][1] >= energyToCreateEnerMiner) {
             mapCell[iC][jC][2] = 5;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateEnerMiner;
             mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
-            mapCell[iC][jC][directOfParent+5] = 1; // добывающая клетка передает энергию в сторону родителя
+            mapCell[iC][jC][directOfParent + 5] = 1; // добывающая клетка передает энергию в сторону родителя
             mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
 
             mapCell[i][j][2] = 2;
@@ -683,18 +683,18 @@ function createEnerMiner(i, j, direct){ // создание энергика
     }
 }
 
-function createMeleeFighter(i, j, direct){ // создание ближника
+function createMeleeFighter(i, j, direct) { // создание ближника
     let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
     let energyTo = sDMas[3];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
-    
-    if(mapCell[iC][jC][2] === 0){
-        if(mapCell[i][j][1] >= energyToCreateMeleeFighter){
+
+    if (mapCell[iC][jC][2] === 0) {
+        if (mapCell[i][j][1] >= energyToCreateMeleeFighter) {
             mapCell[iC][jC][2] = 7;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateMeleeFighter;
@@ -710,18 +710,18 @@ function createMeleeFighter(i, j, direct){ // создание ближника
     }
 }
 
-function createDistantFighter(i, j, direct){ // создание дальника
+function createDistantFighter(i, j, direct) { // создание дальника
     let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
     let energyTo = sDMas[3];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
-    if(mapCell[iC][jC][2] === 0){
-        if(mapCell[i][j][1] >= energyToCreateDistantFighter){
+    if (mapCell[iC][jC][2] === 0) {
+        if (mapCell[i][j][1] >= energyToCreateDistantFighter) {
             mapCell[iC][jC][2] = 8;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateDistantFighter;
@@ -738,28 +738,28 @@ function createDistantFighter(i, j, direct){ // создание дальник�
 }
 
 // --- if-ые функции ---
-function ifEnergyRise(i, j){ // если кол-во энергии клетки растет
-    console.log('Отросток['+i+']['+j+'] проверяет: Рост энергии');
-    if(mapCell[i][j][11] < mapCell[i][j][1]){ // если энергии в предыдущий ход больше чем энергии в этот ход
+function ifEnergyRise(i, j) { // если кол-во энергии клетки растет
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Рост энергии');
+    if (mapCell[i][j][11] < mapCell[i][j][1]) { // если энергии в предыдущий ход больше чем энергии в этот ход
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifEnerInGroundMoreOrg(i, j){ // если энергии в почве больше чем органики
-    console.log('Отросток['+i+']['+j+'] проверяет: Больше ли энергии чем органики');
-    if(mapGround[i][j][0] > mapGround[i][j][1]){
+function ifEnerInGroundMoreOrg(i, j) { // если энергии в почве больше чем органики
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Больше ли энергии чем органики');
+    if (mapGround[i][j][0] > mapGround[i][j][1]) {
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifObsracleFront(i, j){ // если препятствие спереди
-    console.log('Отросток['+i+']['+j+'] проверяет: Есть ли препятствие спереди');
+function ifObsracleFront(i, j) { // если препятствие спереди
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Есть ли препятствие спереди');
     let sDMas = specifyDirect(i, j, 1); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) return 0;
     let iC = sDMas[0];
@@ -767,285 +767,285 @@ function ifObsracleFront(i, j){ // если препятствие сперед�
     let directOfParent = sDMas[2];
     let energyTo = sDMas[3];
 
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
-    
-    if(mapCell[iC][jC][2] != 0){
+
+    if (mapCell[iC][jC][2] != 0) {
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifObsracleLeft(i, j){ // если препятствие слева
-    console.log('Отросток['+i+']['+j+'] проверяет: Есть ли препятствие слева');
+function ifObsracleLeft(i, j) { // если препятствие слева
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Есть ли препятствие слева');
     let sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
     let energyTo = sDMas[3];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
-    if(mapCell[iC][jC][2] != 0){
+    if (mapCell[iC][jC][2] != 0) {
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifObsracleRight(i, j){ // если препятствие справа
-    console.log('Отросток['+i+']['+j+'] проверяет: Есть ли препятствие справа');
+function ifObsracleRight(i, j) { // если препятствие справа
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Есть ли препятствие справа');
     let sDMas = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
     let directOfParent = sDMas[2];
     let energyTo = sDMas[3];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
-    if(mapCell[iC][jC][2] != 0){
+    if (mapCell[iC][jC][2] != 0) {
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifNotObsracle(i, j){ // если с трёх сторон препятствий нет
-    console.log('Отросток['+i+']['+j+'] проверяет: Нет ли препятствий с трёх сторон');
-    if(mapCell[i][j][9] === -1 || mapCell[i][j][9] === 3){ // если родителя нет или он располагается снизу
-        if(i != 0 && j != 0 && j != mapW-1 && mapCell[i-1][j][2] === 0 && mapCell[i][j-1][2] === 0 && mapCell[i][j+1][2] === 0){
+function ifNotObsracle(i, j) { // если с трёх сторон препятствий нет
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Нет ли препятствий с трёх сторон');
+    if (mapCell[i][j][9] === -1 || mapCell[i][j][9] === 3) { // если родителя нет или он располагается снизу
+        if (i != 0 && j != 0 && j != mapW - 1 && mapCell[i - 1][j][2] === 0 && mapCell[i][j - 1][2] === 0 && mapCell[i][j + 1][2] === 0) {
             return 1;
         }
-        else{
+        else {
             return 0;
         }
     }
-    if(mapCell[i][j][9] === 0){ // если родитель слева
-        if(i != 0 && j != 0 && j != mapW-1 && i != mapH-1 && mapCell[i][j+1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
+    if (mapCell[i][j][9] === 0) { // если родитель слева
+        if (i != 0 && j != 0 && j != mapW - 1 && i != mapH - 1 && mapCell[i][j + 1][2] === 0 && mapCell[i - 1][j][2] === 0 && mapCell[i + 1][j][2] === 0) {
             return 1;
         }
-        else{
+        else {
             return 0;
         }
     }
-    if(mapCell[i][j][9] === 1){ // если родитель спереди
-        if(i != 0 && j != 0 && j != mapW-1 && i != mapH-1 && mapCell[i+1][j][2] === 0 && mapCell[i][j+1][2] === 0 && mapCell[i][j-1][2] === 0){
+    if (mapCell[i][j][9] === 1) { // если родитель спереди
+        if (i != 0 && j != 0 && j != mapW - 1 && i != mapH - 1 && mapCell[i + 1][j][2] === 0 && mapCell[i][j + 1][2] === 0 && mapCell[i][j - 1][2] === 0) {
             return 1;
         }
-        else{
+        else {
             return 0;
         }
     }
-    if(mapCell[i][j][9] === 2){ // если родитель справа
-        if(i != 0 && j != 0 && j != mapW-1 && i != mapH-1 && mapCell[i][j-1][2] === 0 && mapCell[i-1][j][2] === 0 && mapCell[i+1][j][2] === 0){
+    if (mapCell[i][j][9] === 2) { // если родитель справа
+        if (i != 0 && j != 0 && j != mapW - 1 && i != mapH - 1 && mapCell[i][j - 1][2] === 0 && mapCell[i - 1][j][2] === 0 && mapCell[i + 1][j][2] === 0) {
             return 1;
         }
-        else{
+        else {
             return 0;
         }
     }
 }
 
-function ifOrgRightMoreOrgLeft(i, j){ // если органики справа больше чем органики слева
-    console.log('Отросток['+i+']['+j+'] проверяет: Больше ли справа органики чем слева');
+function ifOrgRightMoreOrgLeft(i, j) { // если органики справа больше чем органики слева
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Больше ли справа органики чем слева');
     let sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
     let sDMasq = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMasq === -1) return 0;
     let iCq = sDMasq[0];
     let jCq = sDMasq[1];
-    
-    if(iCq === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iCq === -1) // если клетка за границами карты, прерываем функцию
         return -1;
-    
-    if(mapGround[iCq][jCq][1] > mapGround[iC][jC][1]){
+
+    if (mapGround[iCq][jCq][1] > mapGround[iC][jC][1]) {
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifOrgLeftMoreOrgRight(i, j){ // если органики слева больше чем органики справа
-    console.log('Отросток['+i+']['+j+'] проверяет: Больше ли слева органики чем справа');
+function ifOrgLeftMoreOrgRight(i, j) { // если органики слева больше чем органики справа
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Больше ли слева органики чем справа');
     let sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
     let sDMasq = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMasq === -1) return 0;
     let iCq = sDMasq[0];
     let jCq = sDMasq[1];
-    
-    if(iCq === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iCq === -1) // если клетка за границами карты, прерываем функцию
         return -1;
-    
-    if(mapGround[iCq][jCq][1] > mapGround[iC][jC][1]){
+
+    if (mapGround[iCq][jCq][1] > mapGround[iC][jC][1]) {
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifOrgFrontMoreOrgLeft(i, j){ // если органики спереди больше чем органики слева
-    console.log('Отросток['+i+']['+j+'] проверяет: Больше ли спереди органики чем слева');
+function ifOrgFrontMoreOrgLeft(i, j) { // если органики спереди больше чем органики слева
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Больше ли спереди органики чем слева');
     let sDMas = specifyDirect(i, j, 1); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
     let sDMasq = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMasq === -1) return 0;
     let iCq = sDMasq[0];
     let jCq = sDMasq[1];
-    
-    if(iCq === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iCq === -1) // если клетка за границами карты, прерываем функцию
         return -1;
-    
-    if(mapGround[iC][jC][1] > mapGround[iCq][jCq][1]){
+
+    if (mapGround[iC][jC][1] > mapGround[iCq][jCq][1]) {
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifOrgFrontMoreOrgRight(i, j){ // если органики спереди больше чем органики справа
-    console.log('Отросток['+i+']['+j+'] проверяет: Больше ли спереди органики чем справа');
+function ifOrgFrontMoreOrgRight(i, j) { // если органики спереди больше чем органики справа
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Больше ли спереди органики чем справа');
     let sDMas = specifyDirect(i, j, 1); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) return 0;
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iC === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
     let sDMasq = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMasq === -1) return 0;
     let iCq = sDMasq[0];
     let jCq = sDMasq[1];
-    
-    if(iCq === -1) // если клетка за границами карты, прерываем функцию
+
+    if (iCq === -1) // если клетка за границами карты, прерываем функцию
         return -1;
 
-    if(mapGround[iC][jC][1] > mapGround[iCq][jCq][1]){
+    if (mapGround[iC][jC][1] > mapGround[iCq][jCq][1]) {
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifOrgInGroundMoreP2(i, j, P){ // если органики в почве больше P * 2
-    console.log('Отросток['+i+']['+j+'] проверяет: Больше ли органики в почве чем '+P*2);
-    if(mapGround[i][j][1] > P*2){
+function ifOrgInGroundMoreP2(i, j, P) { // если органики в почве больше P * 2
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Больше ли органики в почве чем ' + P * 2);
+    if (mapGround[i][j][1] > P * 2) {
         return 1;
     }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifOrgInGround3x3MoreP18(i, j, P){ // если органики в почве в квадрате 3x3 больше чем P * 18
-    console.log('Отросток['+i+']['+j+'] проверяет: Больше ли органики в почве 3x3 чем '+P*18);
-    if(i != 0 && i != mapH-1 && j != 0 && j != mapW-1){
-        orgIn3x3 = mapGround[i-1][j-1][1] + mapGround[i-1][j][1] + mapGround[i-1][j+1][1] + mapGround[i][j-1][1] + mapGround[i][j][1] + mapGround[i][j+1][1] + mapGround[i+1][j-1][1] + mapGround[i+1][j][1] + mapGround[i+1][j+1][1];
-        if(orgIn3x3 > P * 18){
+function ifOrgInGround3x3MoreP18(i, j, P) { // если органики в почве в квадрате 3x3 больше чем P * 18
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Больше ли органики в почве 3x3 чем ' + P * 18);
+    if (i != 0 && i != mapH - 1 && j != 0 && j != mapW - 1) {
+        orgIn3x3 = mapGround[i - 1][j - 1][1] + mapGround[i - 1][j][1] + mapGround[i - 1][j + 1][1] + mapGround[i][j - 1][1] + mapGround[i][j][1] + mapGround[i][j + 1][1] + mapGround[i + 1][j - 1][1] + mapGround[i + 1][j][1] + mapGround[i + 1][j + 1][1];
+        if (orgIn3x3 > P * 18) {
             return 1;
         }
-        else{
+        else {
             return 0;
         }
     }
 }
 
-function ifRandom0to255MoreP(i, j, P){ // если рандомное число от 0 до 255 больше P
-    console.log('Отросток['+i+']['+j+'] проверяет: Больше ли рандомное число чем '+P);
-    if(rand(0, 255) > P){
+function ifRandom0to255MoreP(i, j, P) { // если рандомное число от 0 до 255 больше P
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Больше ли рандомное число чем ' + P);
+    if (rand(0, 255) > P) {
         return 1;
     }
-    else{
-        return 0;
-    }
-} 
-
-function ifEnemyNear(i, j){ // если в соседней клетке есть враг
-    console.log('Отросток['+i+']['+j+'] проверяет: Есть ли враг в соседней клетке');
-    let counter = 0;
-    if(i != 0 && j != 0 && mapCell[i-1][j-1][3] != mapCell[i][j][3]){
-        counter = 1;
-    }
-    if(i != 0 && mapCell[i-1][j][3] != mapCell[i][j][3]){
-        counter = 1;
-    }
-    if(i != 0 && j != mapW-1 && mapCell[i-1][j+1][3] != mapCell[i][j][3]){
-        counter = 1;
-    }
-    if(j != 0 && mapCell[i][j-1][3] != mapCell[i][j][3]){
-        counter = 1;
-    }
-    if(j != mapW-1 && mapCell[i][j+1][3] != mapCell[i][j][3]){
-        counter = 1;
-    }
-    if(i != mapH-1 && j != 0 && mapCell[i+1][j-1][3] != mapCell[i][j][3]){
-        counter = 1;
-    }
-    if(i != mapH-1 && mapCell[i+1][j][3] != mapCell[i][j][3]){
-        counter = 1;
-    }
-    if(i != mapH-1 && j != mapW-1 && mapCell[i+1][j+1][3] != mapCell[i][j][3]){
-        counter = 1;
-    }
-
-    if(counter === 1){
-        return 1;
-    }
-    else{
+    else {
         return 0;
     }
 }
 
-function ifHPCellLessP12(i, j, P){ // если ХП клетки меньше P / 2
-    console.log('Отросток['+i+']['+j+'] проверяет: Меньше ли хп чем '+P/2);
-    if(mapCell[i][j][0] < P / 2){
+function ifEnemyNear(i, j) { // если в соседней клетке есть враг
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Есть ли враг в соседней клетке');
+    let counter = 0;
+    if (i != 0 && j != 0 && mapCell[i - 1][j - 1][3] != mapCell[i][j][3]) {
+        counter = 1;
+    }
+    if (i != 0 && mapCell[i - 1][j][3] != mapCell[i][j][3]) {
+        counter = 1;
+    }
+    if (i != 0 && j != mapW - 1 && mapCell[i - 1][j + 1][3] != mapCell[i][j][3]) {
+        counter = 1;
+    }
+    if (j != 0 && mapCell[i][j - 1][3] != mapCell[i][j][3]) {
+        counter = 1;
+    }
+    if (j != mapW - 1 && mapCell[i][j + 1][3] != mapCell[i][j][3]) {
+        counter = 1;
+    }
+    if (i != mapH - 1 && j != 0 && mapCell[i + 1][j - 1][3] != mapCell[i][j][3]) {
+        counter = 1;
+    }
+    if (i != mapH - 1 && mapCell[i + 1][j][3] != mapCell[i][j][3]) {
+        counter = 1;
+    }
+    if (i != mapH - 1 && j != mapW - 1 && mapCell[i + 1][j + 1][3] != mapCell[i][j][3]) {
+        counter = 1;
+    }
+
+    if (counter === 1) {
         return 1;
     }
-    else{
+    else {
+        return 0;
+    }
+}
+
+function ifHPCellLessP12(i, j, P) { // если ХП клетки меньше P / 2
+    console.log('Отросток[' + i + '][' + j + '] проверяет: Меньше ли хп чем ' + P / 2);
+    if (mapCell[i][j][0] < P / 2) {
+        return 1;
+    }
+    else {
         return 0;
     }
 }
 
 // --- cmd-ые функции ---
-function cmdSkipTurn(i, j){ // пропустить ход
-    console.log('Отросток['+i+']['+j+'] исполняет: Пропустить ход');
+function cmdSkipTurn(i, j) { // пропустить ход
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Пропустить ход');
     mapCell[i][j][4] = 1;
 }
 
-function cmdTransformIntoSeed(i, j){ // превратиться в семечко
-    console.log('Отросток['+i+']['+j+'] исполняет: Превратиться в семечко');
-    if(mapCell[i][j][1] > energyToTransformIntoSeed){
+function cmdTransformIntoSeed(i, j) { // превратиться в семечко
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Превратиться в семечко');
+    if (mapCell[i][j][1] > energyToTransformIntoSeed) {
         mapCell[i][j][1] = mapCell[i][j][1] - energyToTransformIntoSeed;
         mapCell[i][j][2] = 6;
         mapCell[i][j][9] = -1;
@@ -1054,7 +1054,7 @@ function cmdTransformIntoSeed(i, j){ // превратиться в семечк
 }
 
 function cmdTransformIntoSeedAndMove(i, j) { // превратится в семечко и переместиться
-    console.log('Отросток['+i+']['+j+'] исполняет: Превратиться в семечко и полететь');
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Превратиться в семечко и полететь');
     if (mapCell[i][j][1] > energyToTransformIntoSeed) {
         mapCell[i][j][1] -= energyToTransformIntoSeed;
         mapCell[i][j][2] = 6;
@@ -1084,131 +1084,131 @@ function cmdTransformIntoSeedAndMove(i, j) { // превратится в сем
     }
 }
 
-function cmdMoveEnerInGroundLeft(i, j){ // переместить энергию из почвы налево
-    console.log('Отросток['+i+']['+j+'] исполняет: Переместить энергию из почвы налево');
+function cmdMoveEnerInGroundLeft(i, j) { // переместить энергию из почвы налево
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Переместить энергию из почвы налево');
     const sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1)
+
+    if (iC === -1)
         return -1;
-    
-    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+
+    if (mapCell[i][j][1] > energyForMoveEnerOrOrg) {
         mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
         mapGround[iC][jC][0] = mapGround[iC][jC][0] + mapGround[i][j][0];
         mapGround[i][j][0] = 0;
     }
 }
 
-function cmdMoveEnerInGroundRight(i, j){ // переместить энергию из почвы направо
-    console.log('Отросток['+i+']['+j+'] исполняет: Переместить энергию из почвы направо');
+function cmdMoveEnerInGroundRight(i, j) { // переместить энергию из почвы направо
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Переместить энергию из почвы направо');
     const sDMas = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1)
+
+    if (iC === -1)
         return -1;
 
-    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+    if (mapCell[i][j][1] > energyForMoveEnerOrOrg) {
         mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
         mapGround[iC][jC][0] = mapGround[iC][jC][0] + mapGround[i][j][0];
         mapGround[i][j][0] = 0;
     }
 }
 
-function cmdMoveEnerInGroundFront(i, j){ // переместить энергию из почвы вперёд
-    console.log('Отросток['+i+']['+j+'] исполняет: Переместить энергию из почвы вперёд');
+function cmdMoveEnerInGroundFront(i, j) { // переместить энергию из почвы вперёд
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Переместить энергию из почвы вперёд');
     const sDMas = specifyDirect(i, j, 1); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1)
+
+    if (iC === -1)
         return -1;
 
-    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+    if (mapCell[i][j][1] > energyForMoveEnerOrOrg) {
         mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
         mapGround[iC][jC][0] = mapGround[iC][jC][0] + mapGround[i][j][0];
         mapGround[i][j][0] = 0;
     }
 }
 
-function cmdMoveOrgInGroundLeft(i, j){ // переместить органику из почвы налево
-    console.log('Отросток['+i+']['+j+'] исполняет: Переместить органику из почвы налево');
+function cmdMoveOrgInGroundLeft(i, j) { // переместить органику из почвы налево
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Переместить органику из почвы налево');
     const sDMas = specifyDirect(i, j, 0); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1)
+
+    if (iC === -1)
         return -1;
 
-    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+    if (mapCell[i][j][1] > energyForMoveEnerOrOrg) {
         mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
         mapGround[iC][jC][1] = mapGround[iC][jC][1] + mapGround[i][j][1];
         mapGround[i][j][1] = 0;
     }
 }
 
-function cmdMoveOrgInGroundRight(i, j){ // переместить органику из почвы направо
-    console.log('Отросток['+i+']['+j+'] исполняет: Переместить органику из почвы направо');
+function cmdMoveOrgInGroundRight(i, j) { // переместить органику из почвы направо
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Переместить органику из почвы направо');
     const sDMas = specifyDirect(i, j, 2); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1)
+
+    if (iC === -1)
         return -1;
 
-    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+    if (mapCell[i][j][1] > energyForMoveEnerOrOrg) {
         mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
         mapGround[iC][jC][1] = mapGround[iC][jC][1] + mapGround[i][j][1];
         mapGround[i][j][1] = 0;
     }
 }
 
-function cmdMoveOrgInGroundFront(i, j){ // переместить органику из почвы вперёд
-    console.log('Отросток['+i+']['+j+'] исполняет: Переместить органику из почвы вперёд');
+function cmdMoveOrgInGroundFront(i, j) { // переместить органику из почвы вперёд
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Переместить органику из почвы вперёд');
     const sDMas = specifyDirect(i, j, 1); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     let iC = sDMas[0];
     let jC = sDMas[1];
-    
-    if(iC === -1)
+
+    if (iC === -1)
         return -1;
 
-    if(mapCell[i][j][1] > energyForMoveEnerOrOrg){
+    if (mapCell[i][j][1] > energyForMoveEnerOrOrg) {
         mapCell[i][j][1] = mapCell[i][j][1] - energyForMoveEnerOrOrg;
         mapGround[iC][jC][1] = mapGround[iC][jC][1] + mapGround[i][j][1];
         mapGround[i][j][1] = 0;
     }
 }
 
-function cmdTransformEnerIntoOrg3x3(i, j){ // преобразовать энергию в органику в квадрате 3x3
-    console.log('Отросток['+i+']['+j+'] исполняет: Преобразовать энергию в органику в квадрате 3x3');
-    if(mapCell[i][j][1] > energyForTransformEnerIntoOrg3x3){
+function cmdTransformEnerIntoOrg3x3(i, j) { // преобразовать энергию в органику в квадрате 3x3
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Преобразовать энергию в органику в квадрате 3x3');
+    if (mapCell[i][j][1] > energyForTransformEnerIntoOrg3x3) {
         mapCell[i][j][1] = mapCell[i][j][1] - energyForTransformEnerIntoOrg3x3;
-        for(let a = 0; a < 3; a++){
-            for(let b = 0; b < 3; b++){
-                if(i+1-a >= 0 && i+1-a < mapH && j+1-b >= 0 && j+1-b < mapW){
-                    mapGround[i+1-a][j+1-b][1] = mapGround[i+1-a][j+1-b][1] + mapGround[i+1-a][j+1-b][0];
-                    mapGround[i+1-a][j+1-b][0] = 0;
+        for (let a = 0; a < 3; a++) {
+            for (let b = 0; b < 3; b++) {
+                if (i + 1 - a >= 0 && i + 1 - a < mapH && j + 1 - b >= 0 && j + 1 - b < mapW) {
+                    mapGround[i + 1 - a][j + 1 - b][1] = mapGround[i + 1 - a][j + 1 - b][1] + mapGround[i + 1 - a][j + 1 - b][0];
+                    mapGround[i + 1 - a][j + 1 - b][0] = 0;
                 }
             }
         }
     }
 }
 
-function cmdRestHP(i, j){ // восстановить ХП
-    console.log('Отросток['+i+']['+j+'] исполняет: Восстановить ХП');
-    if(mapCell[i][j][1] > energyForCmdRestHp){
+function cmdRestHP(i, j) { // восстановить ХП
+    console.log('Отросток[' + i + '][' + j + '] исполняет: Восстановить ХП');
+    if (mapCell[i][j][1] > energyForCmdRestHp) {
         mapCell[i][j][1] = mapCell[i][j][1] - energyForCmdRestHp;
 
-        if(mapCell[i][j][2] < 7){ // если тип клетки не боевой
+        if (mapCell[i][j][2] < 7) { // если тип клетки не боевой
             mapCell[i][j][0] = mapCell[i][j][0] + hpPeaceCells / rateHpRestInCmd;
-            if(mapCell[i][j][0] > hpPeaceCells){
+            if (mapCell[i][j][0] > hpPeaceCells) {
                 mapCell[i][j][0] = hpPeaceCells;
             }
         }
-        else{
+        else {
             mapCell[i][j][0] = mapCell[i][j][0] + hpWarCells / rateHpRestInCmd;
-            if(mapCell[i][j][0] > hpPeaceCells){
+            if (mapCell[i][j][0] > hpPeaceCells) {
                 mapCell[i][j][0] = hpPeaceCells;
             }
         }
@@ -1219,41 +1219,41 @@ function cmdRestHP(i, j){ // восстановить ХП
 // ======== ГЛАВНЫЙ ЦИКЛ ========
 
 // --- Вспомогательные функции ---
-function cellDeath(i, j, relate){ // смерть
-    if(relate === 0){
+function cellDeath(i, j, relate) { // смерть
+    if (relate === 0) {
         maxHp = hpPeaceCells;
     }
-    else{
+    else {
         maxHp = hpWarCells;
     }
 
-    if(mapCell[i][j][0] <= 0){ // если ХП клетки меньше или равно 0 (убиваем клетку)
-        console.log('Клетка['+i+']['+j+'] Умирает');
-        
+    if (mapCell[i][j][0] <= 0) { // если ХП клетки меньше или равно 0 (убиваем клетку)
+        console.log('Клетка[' + i + '][' + j + '] Умирает');
+
         // счетчик смертей
-        if(mapCell[i][j][1] <= 0){ // если энергия была меньше или равна 0
+        if (mapCell[i][j][1] <= 0) { // если энергия была меньше или равна 0
             factCounters[mapCell[i][j][3]][0] += 1; // то зачисляем в счетчик "ненасильственных" убийств
         }
-        else{
+        else {
             factCounters[mapCell[i][j][3]][1] += 1; // то зачисляем в счетчик "насильственных" убийств
         }
 
         // процедуры перед смертью клетки
-        if(i != 0 && mapCell[i-1][j][9] === 3){ // сверху
-            mapCell[i-1][j][9] = -1; // устанавливаем что нет родителя
-            mapCell[i-1][j][8] = 0; // передаем что энергию передавать более не надо
+        if (i != 0 && mapCell[i - 1][j][9] === 3) { // сверху
+            mapCell[i - 1][j][9] = -1; // устанавливаем что нет родителя
+            mapCell[i - 1][j][8] = 0; // передаем что энергию передавать более не надо
         }
-        if(j != 0 && mapCell[i][j-1][9] === 3){ // слева
-            mapCell[i][j-1][9] = -1; // устанавливаем что нет родителя
-            mapCell[i-1][j][7] = 0; // передаем что энергию передавать более не надо
+        if (j != 0 && mapCell[i][j - 1][9] === 3) { // слева
+            mapCell[i][j - 1][9] = -1; // устанавливаем что нет родителя
+            mapCell[i - 1][j][7] = 0; // передаем что энергию передавать более не надо
         }
-        if(i != mapH-1 && mapCell[i+1][j][9] === 3){ // снизу
-            mapCell[i+1][j][9] = -1; // устанавливаем что нет родителя
-            mapCell[i-1][j][6] = 0; // передаем что энергию передавать более не надо
+        if (i != mapH - 1 && mapCell[i + 1][j][9] === 3) { // снизу
+            mapCell[i + 1][j][9] = -1; // устанавливаем что нет родителя
+            mapCell[i - 1][j][6] = 0; // передаем что энергию передавать более не надо
         }
-        if(j != mapW-1 && mapCell[i][j+1][9] === 3){ // справа
-            mapCell[i][j+1][9] = -1; // устанавливаем что нет родителя
-            mapCell[i-1][j][5] = 0; // передаем что энергию передавать более не надо
+        if (j != mapW - 1 && mapCell[i][j + 1][9] === 3) { // справа
+            mapCell[i][j + 1][9] = -1; // устанавливаем что нет родителя
+            mapCell[i - 1][j][5] = 0; // передаем что энергию передавать более не надо
         }
 
         mapGround[i][j][0] = mapGround[i][j][0] + mapCell[i][j][1]; // передаем почве энергию клетки
@@ -1278,66 +1278,66 @@ function cellDeath(i, j, relate){ // смерть
 
 }
 
-function drawTransCell(i, j){ // отображение формы стебля (транспортной клетки)
+function drawTransCell(i, j) { // отображение формы стебля (транспортной клетки)
     let sumOfNumLine = mapCell[i][j][5] + mapCell[i][j][6] + mapCell[i][j][7] + mapCell[i][j][8]; // кол-во клеток которым передается энергия
 
-    if(sumOfNumLine === 0){
+    if (sumOfNumLine === 0) {
         mapTable.rows[i].cells[j].textContent = '.';
     }
-    if(sumOfNumLine === 1){
-        if(mapCell[i][j][9] === 0 || mapCell[i][j][9] === 2){
+    if (sumOfNumLine === 1) {
+        if (mapCell[i][j][9] === 0 || mapCell[i][j][9] === 2) {
             mapTable.rows[i].cells[j].textContent = '-';
         }
-        if(mapCell[i][j][9] === 1 || mapCell[i][j][9] === 3){
+        if (mapCell[i][j][9] === 1 || mapCell[i][j][9] === 3) {
             mapTable.rows[i].cells[j].textContent = '|';
         }
     }
-    if(sumOfNumLine === 2){
-        if(mapCell[i][j][9] === 0){
+    if (sumOfNumLine === 2) {
+        if (mapCell[i][j][9] === 0) {
             mapTable.rows[i].cells[j].textContent = '-|';
         }
-        if(mapCell[i][j][9] === 1){
+        if (mapCell[i][j][9] === 1) {
             mapTable.rows[i].cells[j].textContent = '⟂';
         }
-        if(mapCell[i][j][9] === 2){
+        if (mapCell[i][j][9] === 2) {
             mapTable.rows[i].cells[j].textContent = '|-';
         }
-        if(mapCell[i][j][9] === 3){
+        if (mapCell[i][j][9] === 3) {
             mapTable.rows[i].cells[j].textContent = 'т';
         }
     }
-    if(sumOfNumLine === 3){
+    if (sumOfNumLine === 3) {
         mapTable.rows[i].cells[j].textContent = '+';
     }
 }
 
-function transferEnergy(i, j){ // любая передача энергии (для стебля и производственных клеток)
+function transferEnergy(i, j) { // любая передача энергии (для стебля и производственных клеток)
     let sumOfNumLine = mapCell[i][j][5] + mapCell[i][j][6] + mapCell[i][j][7] + mapCell[i][j][8]; // кол-во клеток которым передается энергия
-    for(let z = 0; z < sumOfNumLine; z++){ // повторяем столько раз, сколько есть клеток куда передается энергия
-        if(mapCell[i][j][1] >= energyConsumTrans){ // если есть энергия которую можно передавать
-            if(mapCell[i][j][5] === 1){ // если передаем энергию влево
-                mapCell[i][j-1][1] = mapCell[i][j-1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
+    for (let z = 0; z < sumOfNumLine; z++) { // повторяем столько раз, сколько есть клеток куда передается энергия
+        if (mapCell[i][j][1] >= energyConsumTrans) { // если есть энергия которую можно передавать
+            if (mapCell[i][j][5] === 1) { // если передаем энергию влево
+                mapCell[i][j - 1][1] = mapCell[i][j - 1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
                 mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
             }
-            else if(mapCell[i][j][6] === 1){ // если передаем энергию вверх
-                mapCell[i-1][j][1] = mapCell[i-1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
+            else if (mapCell[i][j][6] === 1) { // если передаем энергию вверх
+                mapCell[i - 1][j][1] = mapCell[i - 1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
                 mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
             }
-            else if(mapCell[i][j][7] === 1){ // если передаем энергию вправо
-                mapCell[i][j+1][1] = mapCell[i][j+1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
+            else if (mapCell[i][j][7] === 1) { // если передаем энергию вправо
+                mapCell[i][j + 1][1] = mapCell[i][j + 1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
                 mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
             }
-            else if(mapCell[i][j][8] === 1){ // если передаем энергию вниз
-                mapCell[i+1][j][1] = mapCell[i+1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
+            else if (mapCell[i][j][8] === 1) { // если передаем энергию вниз
+                mapCell[i + 1][j][1] = mapCell[i + 1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
                 mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
             }
         }
     }
 
-    if(sumOfNumLine === 0){
+    if (sumOfNumLine === 0) {
         return 0;
     }
-    else{
+    else {
         return 1;
     }
 }
@@ -1346,7 +1346,7 @@ function transferEnergy(i, j){ // любая передача энергии (д
 const tactRightNow = [0, 0, 0, 0]; // тактики в данный момент для фракций (0 - игрок; 1 - эксп; 2 - кач; 3 - кочевники)
 
 const factCounters = []; // счетчики для факторов для каждой фракции
-for(let i = 0; i < countOfFractions; i++){
+for (let i = 0; i < countOfFractions; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0];
     // 0: счетчик смертей от недостатка энергии
     // 1: счетчик смертей от убийств
@@ -1376,365 +1376,380 @@ minFactors.push(nomArr);
 
 let counterForUpdFact = 0; // счетчик для отмера ходов обнуления (обновления) факторов
 
-// --- Главный Цикл ---
-const period = setInterval(() => {
-    for(let i = 0; i < mapH; i++){ // проходимся по всем элементам карты
-        for(let j = 0; j < mapW; j++)
-        {
-            if(mapCell[i][j][2] === 0){ // если тип клетки - пустая
-                if(mapCell[i][j][4] != 0){
-                    mapTable.rows[i].cells[j].textContent = '';
-                }
-                else{
-                    mapCell[i][j][4] = mapCell[i][j][4] - 1;
-                }
+// --- Главная Функция ---
+function mainFunc(i, j) {
+    if (mapCell[i][j][2] === 0) { // если тип клетки - пустая
+        if (mapCell[i][j][4] != 0) {
+            mapTable.rows[i].cells[j].textContent = '';
+        }
+        else {
+            mapCell[i][j][4] = mapCell[i][j][4] - 1;
+        }
+    }
+    if (mapCell[i][j][2] === 1) { // если тип клетки - отросток
+        if (mapCell[i][j][4] === 0) { // если компилируем клетку
+            mapTable.rows[i].cells[j].textContent = '@';
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+            mapCell[i][j][11] = mapCell[i][j][1]; // заполняем энергию в предыдущий ход
+
+            // вычет энергии, ХП клетки и проверка на смерть (если надо - смерть)
+            mapCell[i][j][1] = mapCell[i][j][1] - energyConsumSprout; // трата энергии в ход
+            if (mapCell[i][j][1] <= 0) {
+                mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
             }
-            if(mapCell[i][j][2] === 1){ // если тип клетки - отросток
-                if(mapCell[i][j][4] === 0){ // если компилируем клетку
-                    mapTable.rows[i].cells[j].textContent = '@';
-                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            cellDeath(i, j, 0); // вызываем смерть клетки (0 - мирная клетка, 1 - боевая клетка)
 
-                    mapCell[i][j][11] = mapCell[i][j][1]; // заполняем энергию в предыдущий ход
+            // механики клетки
+            mainGenome(i, j); // вызываем основную функцию генома
+        }
+        else {
+            mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+        }
+    }
+    if (mapCell[i][j][2] === 2) { // если тип клетки - стебель
+        if (mapCell[i][j][4] === 0) {
+            // счетчики
+            factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+            factCounters[mapCell[i][j][3]][5] += 1; // кол-во отростков
+            factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
 
-                    // вычет энергии, ХП клетки и проверка на смерть (если надо - смерть)
-                    mapCell[i][j][1] = mapCell[i][j][1] - energyConsumSprout; // трата энергии в ход
-                    if(mapCell[i][j][1] <= 0){
-                        mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
-                    }
-                    cellDeath(i, j, 0); // вызываем смерть клетки (0 - мирная клетка, 1 - боевая клетка)
+            // графическое отображение
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            drawTransCell(i, j); // отображаем графическую форму клетки
 
-                    // механики клетки
-                    mainGenome(i, j); // вызываем основную функцию генома
-                }
-                else{
-                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
-                }
+            // вычет энергии, ХП клетки и проверка на смерть (если надо - смерть)
+            mapCell[i][j][1] = mapCell[i][j][1] - energyConsumTrans; // трата энергии в ход
+            if (mapCell[i][j][1] <= 0) {
+                mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
             }
-            if(mapCell[i][j][2] === 2){ // если тип клетки - стебель
-                if(mapCell[i][j][4] === 0){
-                    // счетчики
-                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
-                    factCounters[mapCell[i][j][3]][5] += 1; // кол-во отростков
-                    factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
+            cellDeath(i, j, 0); // вызываем смерть клетки (0 - мирная клетка, 1 - боевая клетка)
 
-                    // графическое отображение
-                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-                    drawTransCell(i, j); // отображаем графическую форму клетки
+            // --- Механики Клетки ---
 
-                    // вычет энергии, ХП клетки и проверка на смерть (если надо - смерть)
-                    mapCell[i][j][1] = mapCell[i][j][1] - energyConsumTrans; // трата энергии в ход
-                    if(mapCell[i][j][1] <= 0){
-                        mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
-                    }
-                    cellDeath(i, j, 0); // вызываем смерть клетки (0 - мирная клетка, 1 - боевая клетка)
-
-                    // --- Механики Клетки ---
-
-                    // прорабатываем вариант смерти клетки куда передаем энергию
-                    if(mapCell[i][j][5] === 0 && mapCell[i][j][6] === 0 && mapCell[i][j][7] === 0 && mapCell[i][j][8] === 0){ // если стебель никуда не передает энергии
-                        if(mapCell[i][j][9] != -1){ // если есть родитель
-                            mapCell[i][j][5+mapCell[i][j][9]] = 1; // то передаем энергию в сторону родителя
-                            let stopper = 0;
-                            let sC = 1;
-                            while(stopper === 0){
-                                if(mapCell[i][j][9] === 0){ // если родитель слева
-                                    if(j-sC != -1 && mapCell[i][j-sC][2] === 2){ // если слева (с расстоянием sC)
-                                        mapCell[i][j-sC][7] = 0; // то не передаем энергию вправо 
-                                    }
-                                    else{
-                                        stopper = 1; // останавливаем цикл
-                                    }
-                                }
-                                if(mapCell[i][j][9] === 1){ // если родитель спереди
-                                    if(i-sC != -1 && mapCell[i-sC][j][2] === 2){ // если спереди (с расстоянием sC)
-                                        mapCell[i-sC][j][8] = 0; // то не передаем энергию вниз
-                                    }
-                                    else{
-                                        stopper = 1; // останавливаем цикл
-                                    }
-                                }
-                                if(mapCell[i][j][9] === 2){ // если родитель справа
-                                    if(j+sC != mapW+1 && mapCell[i][j+sC][2] === 2){ // если справа (с расстоянием sC)
-                                        mapCell[i][j+sC][5] = 0; // то не передаем энергию влево
-                                    }
-                                    else{
-                                        stopper = 1; // останавливаем цикл
-                                    }
-                                }
-                                if(mapCell[i][j][9] === 3){ // если родитель снизу
-                                    if(i+sC != mapH+1 && mapCell[i+sC][j][2] === 2){ // если снизу (с расстоянием sC)
-                                        mapCell[i+sC][j][6] = 0; // то не передаем энергию вверх
-                                    }
-                                    else{
-                                        stopper = 1; // останавливаем цикл
-                                    }
-                                }
-
-                                sC++;
+            // прорабатываем вариант смерти клетки куда передаем энергию
+            if (mapCell[i][j][5] === 0 && mapCell[i][j][6] === 0 && mapCell[i][j][7] === 0 && mapCell[i][j][8] === 0) { // если стебель никуда не передает энергии
+                if (mapCell[i][j][9] != -1) { // если есть родитель
+                    mapCell[i][j][5 + mapCell[i][j][9]] = 1; // то передаем энергию в сторону родителя
+                    let stopper = 0;
+                    let sC = 1;
+                    while (stopper === 0) {
+                        if (mapCell[i][j][9] === 0) { // если родитель слева
+                            if (j - sC != -1 && mapCell[i][j - sC][2] === 2) { // если слева (с расстоянием sC)
+                                mapCell[i][j - sC][7] = 0; // то не передаем энергию вправо 
+                            }
+                            else {
+                                stopper = 1; // останавливаем цикл
                             }
                         }
-                        else{ // если родителя нет
-                            cellDeath(i, j, 0); // убиваем клетку т.к. она теперь бесполезна
-                        }
-                    }
-
-                    // непосредственно передача энергии
-                    transferEnergy(i, j);
-                }
-                else{
-                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
-                }
-            }
-            if(mapCell[i][j][2] === 3){ // если тип клетки - манновик
-                if(mapCell[i][j][4] === 0){
-                    // счетчики
-                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
-                    factCounters[mapCell[i][j][3]][3] += 1; // кол-во майнеров
-                    factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
-
-                    // графика
-                    mapTable.rows[i].cells[j].textContent = 'м';
-                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-
-                    // хп, энергия и прочее
-                    // производственная клетка не тратит энергии
-                    cellDeath(i, j, 0);
-
-                    // механики
-                    mapCell[i][j][1] = mapCell[i][j][1] + manaEnergyPerTurn; // начисляем энергию для её передачи
-                    let prodRes = transferEnergy(i, j);
-                    if(prodRes === 0){ // если некуда передовать энергию - убиваем клетку из-за бесполезности
-                        cellDeath(i, j);
-                    }
-                }
-                else{
-                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
-                }
-            }
-            if(mapCell[i][j][2] === 4){ // если тип клетки - органик
-                if(mapCell[i][j][4] === 0){
-                    // счетчики
-                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
-                    factCounters[mapCell[i][j][3]][3] += 1; // кол-во майнеров
-                    factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
-
-                    // графика
-                    mapTable.rows[i].cells[j].textContent = 'о';
-                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-
-                    // хп, энергия и прочее
-                    // производственная клетка не тратит энергии
-                    cellDeath(i, j, 0);
-
-                    // механики
-                    mapCell[i][j][1] = mapCell[i][j][1] + energyFromOrgPerTurn; // начисляем энергию для её передачи
-                    mapGround[i][j][1] = mapGround[i][j][1] - orgForEnerPerTurn; // тратим органику из почвы
-                    let prodRes = transferEnergy(i, j);
-                    if(prodRes === 0){ // если некуда передовать энергию - убиваем клетку из-за бесполезности
-                        cellDeath(i, j);
-                    }
-                }
-                else{
-                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
-                }
-            }
-            if(mapCell[i][j][2] === 5){ // если тип клетки - энергик
-                if(mapCell[i][j][4] === 0){
-                    // счетчики
-                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
-                    factCounters[mapCell[i][j][3]][3] += 1; // кол-во майнеров
-                    factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
-
-                    // графика
-                    mapTable.rows[i].cells[j].textContent = 'э';
-                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-
-                    // хп, энергия и прочее
-                    // производственная клетка не тратит энергии
-                    cellDeath(i, j, 0);
-
-                    // механики
-                    mapCell[i][j][1] = mapCell[i][j][1] + energyMinePerTurn; // начисляем энергию для её передачи
-                    mapGround[i][j][1] = mapGround[i][j][1] - energyMinePerTurn; // тратим энергию из почвы
-                    let prodRes = transferEnergy(i, j);
-                    if(prodRes === 0){ // если некуда передовать энергию - убиваем клетку из-за бесполезности
-                        cellDeath(i, j);
-                    }
-                }
-                else{
-                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
-                }
-            }
-            if(mapCell[i][j][2] === 6){ // если тип клетки - семя
-                if(mapCell[i][j][4] === 0){ // если таймер (а им является не-компиляция) пребывания семенем окончен
-                    mapCell[i][j][2] = 1; // то делаем клетку отростком
-                }
-                else{ // иначе отбавляем этот таймер на единицу
-                    mapCell[i][j][4] = mapCell[i][j][4] - 1;
-                }
-                // графика
-                mapTable.rows[i].cells[j].textContent = '*';
-                mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-
-                // семя ничего не тратит будучи семенем (разве что по нему может проходить урон)
-            }
-            if(mapCell[i][j][2] === 7){ // если тип клетки - ближник
-                if(mapCell[i][j][4] === 0){
-                    // счетчики
-                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
-                    factCounters[mapCell[i][j][3]][4] += 1; // кол-во боевых клеток
-
-                    // графика
-                    mapTable.rows[i].cells[j].textContent = 'б';
-                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-
-                    // хп, энергия и прочее
-                    mapCell[i][j][1] = mapCell[i][j][1] - energyConsumWar; // трата энергии в ход
-                    if(mapCell[i][j][1] <= 0){
-                        mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
-                    }
-                    cellDeath(i, j, 1);
-
-                    // механики
-                    if(mapCell[i][j][1] >= energyToMeleeCombat){ // если хватает энергии для атаки
-                        mapCell[i][j][1] = mapCell[i][j][1] - energyToMeleeCombat; // тратим энергию за атаку
-                        for(let a = 0; a < 3; a++){
-                            for(let b = 0; b < 3; b++){
-                                if(i-1+a >= 0 && i-1+a < mapH && j-1+a >= 0 && j-1+a < mapH && mapCell[i-1+a][j-1+a][2] != 0 && mapCell[i-1+a][j-1+a][3] != mapCell[i][j][3]){ // если не выходит за карту, атакуемая клетка не пустая и атакуемая клетка другой фракции
-                                    mapCell[i-1+a][j-1+a][0] = mapCell[i-1+a][j-1+a][0] - damageOfMeleeCombat; // то наносим урон
-                                }
+                        if (mapCell[i][j][9] === 1) { // если родитель спереди
+                            if (i - sC != -1 && mapCell[i - sC][j][2] === 2) { // если спереди (с расстоянием sC)
+                                mapCell[i - sC][j][8] = 0; // то не передаем энергию вниз
+                            }
+                            else {
+                                stopper = 1; // останавливаем цикл
                             }
                         }
+                        if (mapCell[i][j][9] === 2) { // если родитель справа
+                            if (j + sC != mapW + 1 && mapCell[i][j + sC][2] === 2) { // если справа (с расстоянием sC)
+                                mapCell[i][j + sC][5] = 0; // то не передаем энергию влево
+                            }
+                            else {
+                                stopper = 1; // останавливаем цикл
+                            }
+                        }
+                        if (mapCell[i][j][9] === 3) { // если родитель снизу
+                            if (i + sC != mapH + 1 && mapCell[i + sC][j][2] === 2) { // если снизу (с расстоянием sC)
+                                mapCell[i + sC][j][6] = 0; // то не передаем энергию вверх
+                            }
+                            else {
+                                stopper = 1; // останавливаем цикл
+                            }
+                        }
+
+                        sC++;
                     }
                 }
-                else{
-                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+                else { // если родителя нет
+                    cellDeath(i, j, 0); // убиваем клетку т.к. она теперь бесполезна
                 }
             }
-            if(mapCell[i][j][2] === 8){ // если тип клетки - дальник
-                if(mapCell[i][j][4] === 0){
-                    // счетчики
-                    factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
-                    factCounters[mapCell[i][j][3]][4] += 1; // кол-во боевых клеток
 
-                    // графика
-                    mapTable.rows[i].cells[j].textContent = '#';
-                    mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            // непосредственно передача энергии
+            transferEnergy(i, j);
+        }
+        else {
+            mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+        }
+    }
+    if (mapCell[i][j][2] === 3) { // если тип клетки - манновик
+        if (mapCell[i][j][4] === 0) {
+            // счетчики
+            factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+            factCounters[mapCell[i][j][3]][3] += 1; // кол-во майнеров
+            factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
 
-                    // хп, энергия и прочее
-                    mapCell[i][j][1] = mapCell[i][j][1] - energyConsumWar; // трата энергии в ход
-                    if(mapCell[i][j][1] <= 0){
-                        mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
+            // графика
+            mapTable.rows[i].cells[j].textContent = 'м';
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+            // хп, энергия и прочее
+            // производственная клетка не тратит энергии
+            cellDeath(i, j, 0);
+
+            // механики
+            mapCell[i][j][1] = mapCell[i][j][1] + manaEnergyPerTurn; // начисляем энергию для её передачи
+            let prodRes = transferEnergy(i, j);
+            if (prodRes === 0) { // если некуда передовать энергию - убиваем клетку из-за бесполезности
+                cellDeath(i, j);
+            }
+        }
+        else {
+            mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+        }
+    }
+    if (mapCell[i][j][2] === 4) { // если тип клетки - органик
+        if (mapCell[i][j][4] === 0) {
+            // счетчики
+            factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+            factCounters[mapCell[i][j][3]][3] += 1; // кол-во майнеров
+            factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
+
+            // графика
+            mapTable.rows[i].cells[j].textContent = 'о';
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+            // хп, энергия и прочее
+            // производственная клетка не тратит энергии
+            cellDeath(i, j, 0);
+
+            // механики
+            mapCell[i][j][1] = mapCell[i][j][1] + energyFromOrgPerTurn; // начисляем энергию для её передачи
+            mapGround[i][j][1] = mapGround[i][j][1] - orgForEnerPerTurn; // тратим органику из почвы
+            let prodRes = transferEnergy(i, j);
+            if (prodRes === 0) { // если некуда передовать энергию - убиваем клетку из-за бесполезности
+                cellDeath(i, j);
+            }
+        }
+        else {
+            mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+        }
+    }
+    if (mapCell[i][j][2] === 5) { // если тип клетки - энергик
+        if (mapCell[i][j][4] === 0) {
+            // счетчики
+            factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+            factCounters[mapCell[i][j][3]][3] += 1; // кол-во майнеров
+            factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
+
+            // графика
+            mapTable.rows[i].cells[j].textContent = 'э';
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+            // хп, энергия и прочее
+            // производственная клетка не тратит энергии
+            cellDeath(i, j, 0);
+
+            // механики
+            mapCell[i][j][1] = mapCell[i][j][1] + energyMinePerTurn; // начисляем энергию для её передачи
+            mapGround[i][j][1] = mapGround[i][j][1] - energyMinePerTurn; // тратим энергию из почвы
+            let prodRes = transferEnergy(i, j);
+            if (prodRes === 0) { // если некуда передовать энергию - убиваем клетку из-за бесполезности
+                cellDeath(i, j);
+            }
+        }
+        else {
+            mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+        }
+    }
+    if (mapCell[i][j][2] === 6) { // если тип клетки - семя
+        if (mapCell[i][j][4] === 0) { // если таймер (а им является не-компиляция) пребывания семенем окончен
+            mapCell[i][j][2] = 1; // то делаем клетку отростком
+        }
+        else { // иначе отбавляем этот таймер на единицу
+            mapCell[i][j][4] = mapCell[i][j][4] - 1;
+        }
+        // графика
+        mapTable.rows[i].cells[j].textContent = '*';
+        mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+        // семя ничего не тратит будучи семенем (разве что по нему может проходить урон)
+    }
+    if (mapCell[i][j][2] === 7) { // если тип клетки - ближник
+        if (mapCell[i][j][4] === 0) {
+            // счетчики
+            factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+            factCounters[mapCell[i][j][3]][4] += 1; // кол-во боевых клеток
+
+            // графика
+            mapTable.rows[i].cells[j].textContent = 'б';
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+            // хп, энергия и прочее
+            mapCell[i][j][1] = mapCell[i][j][1] - energyConsumWar; // трата энергии в ход
+            if (mapCell[i][j][1] <= 0) {
+                mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
+            }
+            cellDeath(i, j, 1);
+
+            // механики
+            if (mapCell[i][j][1] >= energyToMeleeCombat) { // если хватает энергии для атаки
+                mapCell[i][j][1] = mapCell[i][j][1] - energyToMeleeCombat; // тратим энергию за атаку
+                for (let a = 0; a < 3; a++) {
+                    for (let b = 0; b < 3; b++) {
+                        if (i - 1 + a >= 0 && i - 1 + a < mapH && j - 1 + a >= 0 && j - 1 + a < mapH && mapCell[i - 1 + a][j - 1 + a][2] != 0 && mapCell[i - 1 + a][j - 1 + a][3] != mapCell[i][j][3]) { // если не выходит за карту, атакуемая клетка не пустая и атакуемая клетка другой фракции
+                            mapCell[i - 1 + a][j - 1 + a][0] = mapCell[i - 1 + a][j - 1 + a][0] - damageOfMeleeCombat; // то наносим урон
+                        }
                     }
-                    cellDeath(i, j, 1);
-
-                    // механики
-                    if(mapCell[i][j][1] >= energyToDistantCombat){ // если хватает энергии для атаки
-                        let attackDirect = rand(0, 3);
-                        if(attackDirect === 0){ // стреляем налево
-                            let stopper = 0;
-                            let distant = 1;
-                            while(stopper === 0){
-                                if(j-distant < 0 || mapCell[i][j-distant][2] != 0){ // если следующая клетка за картой или она не пустая
-                                    if(j-distant < 0){ // если клетка за границей карты - просто прерываем цикл, выстрела не будет
-                                        stopper = 1;
-                                    }
-                                    if(mapCell[i][j-distant][3] === mapCell[i][j][3]){ // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
-                                        stopper = 1;
-                                    }
-                                    // теперь же, когда мы уверены что клетка есть и она не нашей фракции
-                                    mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
-                                    mapCell[i][j-distant][0] = mapCell[i][j-distant][0] - damageOfDistantCombat; // наносим урон
-                                    for(let a = 1; a < distant; a++){
-                                        mapTable.rows[i].cells[j-a].textContent = '<'; // рисуем красивую полосу стрельбы
-                                        mapTable.rows[i].cells[j-a].style.color = fractionColors[mapCell[i][j][3]];
-                                    }
-                                }
-                                distant++;
-                            }
-                        }
-                        if(attackDirect === 1){ // стреляем вперед
-                            let stopper = 0;
-                            let distant = 1;
-                            while(stopper === 0){
-                                if(i-distant < 0 || mapCell[i-distant][j][2] != 0){ // если следующая клетка за картой или она не пустая
-                                    if(i-distant < 0){ // если клетка за границей карты - просто прерываем цикл, выстрела не будет
-                                        stopper = 1;
-                                    }
-                                    if(mapCell[i-distant][j][3] === mapCell[i][j][3]){ // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
-                                        stopper = 1;
-                                    }
-                                    // теперь же, когда мы уверены что клетка есть и она не нашей фракции
-                                    mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
-                                    mapCell[i-distant][j][0] = mapCell[i-distant][j][0] - damageOfDistantCombat; // наносим урон
-                                    for(let a = 1; a < distant; a++){
-                                        mapTable.rows[i-a].cells[j].textContent = '^'; // рисуем красивую полосу стрельбы
-                                        mapTable.rows[i-a].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-                                    }
-                                }
-                                distant++;
-                            }
-                        }
-                        if(attackDirect === 2){ // стреляем направо
-                            let stopper = 0;
-                            let distant = 1;
-                            while(stopper === 0){
-                                if(j+distant >= mapW || mapCell[i][j+distant][2] != 0){ // если следующая клетка за картой или она не пустая
-                                    if(j+distant >= mapW){ // если клетка за границей карты - просто прерываем цикл, выстрела не будет
-                                        stopper = 1;
-                                    }
-                                    if(mapCell[i][j+distant][3] === mapCell[i][j][3]){ // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
-                                        stopper = 1;
-                                    }
-                                    // теперь же, когда мы уверены что клетка есть и она не нашей фракции
-                                    mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
-                                    mapCell[i][j+distant][0] = mapCell[i][j+distant][0] - damageOfDistantCombat; // наносим урон
-                                    for(let a = 1; a < distant; a++){
-                                        mapTable.rows[i].cells[j+a].textContent = '>'; // рисуем красивую полосу стрельбы
-                                        mapTable.rows[i].cells[j+a].style.color = fractionColors[mapCell[i][j][3]];
-                                    }
-                                }
-                                distant++;
-                            }
-                        }
-                        if(attackDirect === 3){ // стреляем вниз
-                            let stopper = 0;
-                            let distant = 1;
-                            while(stopper === 0){
-                                if(i+distant >= mapH || mapCell[i+distant][j][2] != 0){ // если следующая клетка за картой или она не пустая
-                                    if(i+distant >= mapH){ // если клетка за границей карты - просто прерываем цикл, выстрела не будет
-                                        stopper = 1;
-                                    }
-                                    if(mapCell[i+distant][j][3] === mapCell[i][j][3]){ // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
-                                        stopper = 1;
-                                    }
-                                    // теперь же, когда мы уверены что клетка есть и она не нашей фракции
-                                    mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
-                                    mapCell[i+distant][j][0] = mapCell[i+distant][j][0] - damageOfDistantCombat; // наносим урон
-                                    for(let a = 1; a < distant; a++){
-                                        mapTable.rows[i+a].cells[j].textContent = 'V'; // рисуем красивую полосу стрельбы
-                                        mapTable.rows[i+a].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-                                    }
-                                }
-                                distant++;
-                            }
-                        }
-                    }
-                }
-                else{
-                    mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
                 }
             }
         }
+        else {
+            mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+        }
     }
+    if (mapCell[i][j][2] === 8) { // если тип клетки - дальник
+        if (mapCell[i][j][4] === 0) {
+            // счетчики
+            factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+            factCounters[mapCell[i][j][3]][4] += 1; // кол-во боевых клеток
+
+            // графика
+            mapTable.rows[i].cells[j].textContent = '#';
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+            // хп, энергия и прочее
+            mapCell[i][j][1] = mapCell[i][j][1] - energyConsumWar; // трата энергии в ход
+            if (mapCell[i][j][1] <= 0) {
+                mapCell[i][j][0] = mapCell[i][j][0] - hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
+            }
+            cellDeath(i, j, 1);
+
+            // механики
+            if (mapCell[i][j][1] >= energyToDistantCombat) { // если хватает энергии для атаки
+                let attackDirect = rand(0, 3);
+                if (attackDirect === 0) { // стреляем налево
+                    let stopper = 0;
+                    let distant = 1;
+                    while (stopper === 0) {
+                        if (j - distant < 0 || mapCell[i][j - distant][2] != 0) { // если следующая клетка за картой или она не пустая
+                            if (j - distant < 0) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
+                                stopper = 1;
+                            }
+                            if (mapCell[i][j - distant][3] === mapCell[i][j][3]) { // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
+                                stopper = 1;
+                            }
+                            // теперь же, когда мы уверены что клетка есть и она не нашей фракции
+                            mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
+                            mapCell[i][j - distant][0] = mapCell[i][j - distant][0] - damageOfDistantCombat; // наносим урон
+                            for (let a = 1; a < distant; a++) {
+                                mapTable.rows[i].cells[j - a].textContent = '<'; // рисуем красивую полосу стрельбы
+                                mapTable.rows[i].cells[j - a].style.color = fractionColors[mapCell[i][j][3]];
+                            }
+                        }
+                        distant++;
+                    }
+                }
+                if (attackDirect === 1) { // стреляем вперед
+                    let stopper = 0;
+                    let distant = 1;
+                    while (stopper === 0) {
+                        if (i - distant < 0 || mapCell[i - distant][j][2] != 0) { // если следующая клетка за картой или она не пустая
+                            if (i - distant < 0) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
+                                stopper = 1;
+                            }
+                            if (mapCell[i - distant][j][3] === mapCell[i][j][3]) { // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
+                                stopper = 1;
+                            }
+                            // теперь же, когда мы уверены что клетка есть и она не нашей фракции
+                            mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
+                            mapCell[i - distant][j][0] = mapCell[i - distant][j][0] - damageOfDistantCombat; // наносим урон
+                            for (let a = 1; a < distant; a++) {
+                                mapTable.rows[i - a].cells[j].textContent = '^'; // рисуем красивую полосу стрельбы
+                                mapTable.rows[i - a].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+                            }
+                        }
+                        distant++;
+                    }
+                }
+                if (attackDirect === 2) { // стреляем направо
+                    let stopper = 0;
+                    let distant = 1;
+                    while (stopper === 0) {
+                        if (j + distant >= mapW || mapCell[i][j + distant][2] != 0) { // если следующая клетка за картой или она не пустая
+                            if (j + distant >= mapW) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
+                                stopper = 1;
+                            }
+                            if (mapCell[i][j + distant][3] === mapCell[i][j][3]) { // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
+                                stopper = 1;
+                            }
+                            // теперь же, когда мы уверены что клетка есть и она не нашей фракции
+                            mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
+                            mapCell[i][j + distant][0] = mapCell[i][j + distant][0] - damageOfDistantCombat; // наносим урон
+                            for (let a = 1; a < distant; a++) {
+                                mapTable.rows[i].cells[j + a].textContent = '>'; // рисуем красивую полосу стрельбы
+                                mapTable.rows[i].cells[j + a].style.color = fractionColors[mapCell[i][j][3]];
+                            }
+                        }
+                        distant++;
+                    }
+                }
+                if (attackDirect === 3) { // стреляем вниз
+                    let stopper = 0;
+                    let distant = 1;
+                    while (stopper === 0) {
+                        if (i + distant >= mapH || mapCell[i + distant][j][2] != 0) { // если следующая клетка за картой или она не пустая
+                            if (i + distant >= mapH) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
+                                stopper = 1;
+                            }
+                            if (mapCell[i + distant][j][3] === mapCell[i][j][3]) { // если клетка нашей фракции - просто прерываем цикл, выстрела не будет
+                                stopper = 1;
+                            }
+                            // теперь же, когда мы уверены что клетка есть и она не нашей фракции
+                            mapCell[i][j][1] = mapCell[i][j][1] - energyToDistantCombat; // вычитаем энергию за выстрел
+                            mapCell[i + distant][j][0] = mapCell[i + distant][j][0] - damageOfDistantCombat; // наносим урон
+                            for (let a = 1; a < distant; a++) {
+                                mapTable.rows[i + a].cells[j].textContent = 'V'; // рисуем красивую полосу стрельбы
+                                mapTable.rows[i + a].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+                            }
+                        }
+                        distant++;
+                    }
+                }
+            }
+        }
+        else {
+            mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
+        }
+    }
+}
+
+// --- Главный Цикл ---
+const period = setInterval(() => {
+    let whatMainSide = rand(0, 1); // рандом для выбора стороны компилирования
+    if(whatMainSide === 0){ // слева-направо, сверху-вниз
+        for (let i = 0; i < mapH; i++) { // проходимся по всем элементам карты
+            for (let j = 0; j < mapW; j++){
+                mainFunc(i, j);
+            }
+        }
+    }
+    else{ // справа-налево, снизу-вверх
+        for (let i = mapH; i > 0; i--) { // проходимся по всем элементам карты
+            for (let j = mapW; j > 0; j--){
+                mainFunc(i, j);
+            }
+        }
+    }
+
     // проверка и восстановление отростков для каждой фракции
-    if(factCounters[1][5] <= factCounters[1][2] / numInRatioForExp){ // если отростков меньше кол-во всех клеток на константу ДЛЯ ЭКСПОВ
+    if (factCounters[1][5] <= factCounters[1][2] / numInRatioForExp) { // если отростков меньше кол-во всех клеток на константу ДЛЯ ЭКСПОВ
         restorOfSprouts[1]; // то восстановливаем отростки экспов
     }
-    if(factCounters[2][5] <= factCounters[2][2] / numInRatioForQua){ // если отростков меньше кол-во всех клеток на константу ДЛЯ КАЧЕСТВЕННИКОВ
+    if (factCounters[2][5] <= factCounters[2][2] / numInRatioForQua) { // если отростков меньше кол-во всех клеток на константу ДЛЯ КАЧЕСТВЕННИКОВ
         restorOfSprouts[2]; // то восстановливаем отростки качественников
     }
-    if(factCounters[3][5] <= factCounters[3][2] / numInRatioForNom){ // если отростков меньше кол-во всех клеток на константу ДЛЯ КОЧЕВНИКОВ
+    if (factCounters[3][5] <= factCounters[3][2] / numInRatioForNom) { // если отростков меньше кол-во всех клеток на константу ДЛЯ КОЧЕВНИКОВ
         restorOfSprouts[3]; // то восстановливаем отростки кочевников
     }
 
@@ -1744,7 +1759,7 @@ const period = setInterval(() => {
     whatAboutTactic(3); // какие тактики у кочевников
 
     // все по счетчикам-факторам
-    for(let i = 0; i < countOfFractions; i++){ // обнуляем факторы-счетчики для соотношений каждый ход для всех фракций
+    for (let i = 0; i < countOfFractions; i++) { // обнуляем факторы-счетчики для соотношений каждый ход для всех фракций
         factCounters[i][2] = 0;
         factCounters[i][3] = 0;
         factCounters[i][4] = 0;
@@ -1753,8 +1768,8 @@ const period = setInterval(() => {
     }
 
     counterForUpdFact += 1; // обновляем счетчик обновления счетчиков факторов смертей
-    if(countOfFractions >= turnsForUpdateFact){ // если счетчик равен (или вдруг привысил) кол-во ходов на обновление счетчиков факторов
-        for(let i = 0; i < countOfFractions; i++){ // обнуляем все факторы-счетчики смертей всех фракций
+    if (countOfFractions >= turnsForUpdateFact) { // если счетчик равен (или вдруг привысил) кол-во ходов на обновление счетчиков факторов
+        for (let i = 0; i < countOfFractions; i++) { // обнуляем все факторы-счетчики смертей всех фракций
             factCounters[i][0] = 0;
             factCounters[i][1] = 0;
         }
@@ -1765,15 +1780,15 @@ const period = setInterval(() => {
 
 
 // ======== ФУНКЦИИ МЕХАНИК ========
-function restorOfSprouts(fraction){ // функция-механика восстановления отростков
+function restorOfSprouts(fraction) { // функция-механика восстановления отростков
     let chanceOfTransform = rand(25, 50); // шанс преобразования в отросток рандомится от 25% до 50%
 
-    for(let i = 0; i < mapH; i++){ // проходимся по всем элементам карты
-        for(let j = 0; j < mapW; j++){
+    for (let i = 0; i < mapH; i++) { // проходимся по всем элементам карты
+        for (let j = 0; j < mapW; j++) {
             // если клетка не пустая, не отросток, не стебель и не семя, и фракция соответствует
-            if(mapCell[i][j][2] != 0 && mapCell[i][j][3] === fraction && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1){
+            if (mapCell[i][j][2] != 0 && mapCell[i][j][3] === fraction && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1) {
                 let isTransform = rand(0, 100);
-                if(isTransform < chanceOfTransform){ // если выполняется шанс
+                if (isTransform < chanceOfTransform) { // если выполняется шанс
                     mapCell[i][j][2] = 1; // меняем клетку на стебель
                     mapCell[i][j][1] = mapCell[i][j][1] + plusEnergyIfTransIntoSprout; // прибавляем доп. энергию при трансформации
                     mapCell[i][j][10] = rand(0, 32); // устанавливаем случайный номер генома в массиве функции
@@ -1783,92 +1798,92 @@ function restorOfSprouts(fraction){ // функция-механика восс�
     }
 }
 
-function whatAboutTactic(fraction){ // функция-механика для смен/поддержания тактик
-    if(fraction === 1){ // если фракция - эксы
+function whatAboutTactic(fraction) { // функция-механика для смен/поддержания тактик
+    if (fraction === 1) { // если фракция - эксы
         // "аварийные тактики"
-        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "насильственных" убийств
+        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "насильственных" убийств
             tactRightNow[faction] = 2; // то выбираем тактику "война: ближний бой"
             return 0;
         }
-        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "не насильственных" убийств
+        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "не насильственных" убийств
             tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
             return 0;
         }
 
         // "стабильные" тактики
-        if(factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[faction][4]){ // активен ли фактор соот. доб. и отр.
+        if (factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[faction][4]) { // активен ли фактор соот. доб. и отр.
             tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
             return 0;
         }
-        if(factCounters[fraction][2] <= minFactors[faction][2]){ // активен ли фактор кол-ва клеток для фракции
+        if (factCounters[fraction][2] <= minFactors[faction][2]) { // активен ли фактор кол-ва клеток для фракции
             tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
             return 0;
         }
 
         let randFact = rand(0, 1); // рандом 50 на 50
-        if(randFact === 0){
-            if(factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[faction][3]){ // активен ли фактор соот. доб. и боев.
+        if (randFact === 0) {
+            if (factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[faction][3]) { // активен ли фактор соот. доб. и боев.
                 tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
                 return 0;
             }
-            if(factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[faction][5]){ // активен ли фактор соот. боев. и мир.
+            if (factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[faction][5]) { // активен ли фактор соот. боев. и мир.
                 tactRightNow[faction] = 2; // то выбираем тактику "война: ближний бой"
                 return 0;
             }
         }
-        if(randFact === 1){
+        if (randFact === 1) {
             tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
             return 0;
         }
     }
-    if(fraction === 2){ // если фракция - качественники
+    if (fraction === 2) { // если фракция - качественники
         // "аварийные тактики"
-        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "насильственных" убийств
+        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "насильственных" убийств
             tactRightNow[faction] = 3; // то выбираем тактику "война: ближний бой"
             return 0;
         }
-        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "не насильственных" убийств
+        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "не насильственных" убийств
             tactRightNow[faction] = 1; // то выбираем тактику "производство: производство"
             return 0;
         }
 
         // "стабильные" тактики
-        if(factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[faction][4]){ // активен ли фактор соот. доб. и отр.
+        if (factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[faction][4]) { // активен ли фактор соот. доб. и отр.
             tactRightNow[faction] = 1; // то выбираем тактику "производство: производство"
             return 0;
         }
-        if(factCounters[fraction][2] <= minFactors[faction][2]){ // активен ли фактор кол-ва клеток для фракции
+        if (factCounters[fraction][2] <= minFactors[faction][2]) { // активен ли фактор кол-ва клеток для фракции
             tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
             return 0;
         }
 
         let randFact = rand(0, 100); // рандом ста процентов
-        if(randFact < 40){
-            if(factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[faction][3]){ // активен ли фактор соот. доб. и боев.
+        if (randFact < 40) {
+            if (factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[faction][3]) { // активен ли фактор соот. доб. и боев.
                 tactRightNow[faction] = 1; // то выбираем тактику "производство: производство"
                 return 0;
             }
-            if(factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[faction][5]){ // активен ли фактор соот. боев. и мир.
+            if (factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[faction][5]) { // активен ли фактор соот. боев. и мир.
                 tactRightNow[faction] = 2; // то выбираем тактику "война: дальний бой"
                 return 0;
             }
         }
-        else if(randFact < 80){
+        else if (randFact < 80) {
             tactRightNow[faction] = 4; // то выбираем тактику "развитие"
             return 0;
         }
-        else{
+        else {
             tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
             return 0;
         }
     }
-    if(fraction === 3){ // если фракция - кочевники
+    if (fraction === 3) { // если фракция - кочевники
         // "аварийные тактики"
-        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "насильственных" убийств
+        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "насильственных" убийств
             tactRightNow[faction] = 1; // то выбираем тактику "миграция"
             return 0;
         }
-        if(factCounters[fraction][1] >= minFactors[faction][1]){ // активен ли фактор "не насильственных" убийств
+        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "не насильственных" убийств
             tactRightNow[faction] = 1; // то выбираем тактику "миграция"
             return 0;
         }
