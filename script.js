@@ -718,7 +718,7 @@ function createMeleeFighter(i, j, direct) { // создание ближника
             mapCell[iC][jC][2] = 7;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateMeleeFighter;
-            mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
+            mapCell[iC][jC][1] = Math.round(mapCell[i][j][1] / 3);
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
             mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
@@ -745,7 +745,7 @@ function createDistantFighter(i, j, direct) { // создание дальник
             mapCell[iC][jC][2] = 8;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateDistantFighter;
-            mapCell[iC][iC][1] = Math.round(mapCell[i][j][1] / 3);
+            mapCell[iC][jC][1] = Math.round(mapCell[i][j][1] / 3);
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
             mapCell[iC][jC][4] = 1;
             mapCell[iC][jC][9] = directOfParent;
@@ -1331,35 +1331,28 @@ function drawTransCell(i, j) { // отображение формы стебля
     }
 }
 
-function transferEnergy(i, j) { // любая передача энергии (для стебля и производственных клеток)
-    let sumOfNumLine = mapCell[i][j][5] + mapCell[i][j][6] + mapCell[i][j][7] + mapCell[i][j][8]; // кол-во клеток которым передается энергия
-    for (let z = 0; z < sumOfNumLine; z++) { // повторяем столько раз, сколько есть клеток куда передается энергия
-        if (mapCell[i][j][1] >= energyConsumTrans) { // если есть энергия которую можно передавать
-            if (mapCell[i][j][5] === 1) { // если передаем энергию влево
-                mapCell[i][j - 1][1] = mapCell[i][j - 1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
-            }
-            else if (mapCell[i][j][6] === 1) { // если передаем энергию вверх
-                mapCell[i - 1][j][1] = mapCell[i - 1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
-            }
-            else if (mapCell[i][j][7] === 1) { // если передаем энергию вправо
-                mapCell[i][j + 1][1] = mapCell[i][j + 1][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
-            }
-            else if (mapCell[i][j][8] === 1) { // если передаем энергию вниз
-                mapCell[i + 1][j][1] = mapCell[i + 1][j][1] + Math.trunc(mapCell[i][j][1] / sumOfNumLine); // передаем энергию деленную на кол-во клеток которым нужно передавать
-                mapCell[i][j][1] = mapCell[i][j][1] - Math.trunc(mapCell[i][j][1] / sumOfNumLine); // отнимаем переданную энергию
+function transferEnergy(i, j) {
+    let sumOfNumLine = mapCell[i][j][5] + mapCell[i][j][6] + mapCell[i][j][7] + mapCell[i][j][8];
+    if (sumOfNumLine === 0 || mapCell[i][j][1] < energyConsumTrans) return 0;
+
+    const directions = [
+        { flag: 5, di: 0, dj: -1 }, // влево
+        { flag: 6, di: -1, dj: 0 }, // вверх
+        { flag: 7, di: 0, dj: 1 },  // вправо
+        { flag: 8, di: 1, dj: 0 }   // вниз
+    ];
+
+    directions.forEach(({ flag, di, dj }) => {
+        if (mapCell[i][j][flag] === 1) {
+            let targetI = i + di, targetJ = j + dj;
+            if (targetI >= 0 && targetI < mapH && targetJ >= 0 && targetJ < mapW) {
+                let transfer = Math.trunc(mapCell[i][j][1] / sumOfNumLine);
+                mapCell[targetI][targetJ][1] += transfer;
+                mapCell[i][j][1] -= transfer;
             }
         }
-    }
-
-    if (sumOfNumLine === 0) {
-        return 0;
-    }
-    else {
-        return 1;
-    }
+    });
+    return 1;
 }
 
 // --- Константы и переменные для Главного Цикла и функций-механик ---
@@ -1755,8 +1748,8 @@ const period = setInterval(() => {
         }
     }
     else{ // справа-налево, снизу-вверх
-        for (let i = mapH; i > 0; i--) { // проходимся по всем элементам карты
-            for (let j = mapW; j > 0; j--){
+        for (let i = mapH-1; i > 0; i--) { // проходимся по всем элементам карты
+            for (let j = mapW-1; j > 0; j--){
                 mainFunc(i, j);
             }
         }
@@ -1766,13 +1759,13 @@ const period = setInterval(() => {
 
     // проверка и восстановление отростков для каждой фракции
     if (factCounters[1][5] <= factCounters[1][2] / numInRatioForExp) { // если отростков меньше кол-во всех клеток на константу ДЛЯ ЭКСПОВ
-        restorOfSprouts[1]; // то восстановливаем отростки экспов
+        restorOfSprouts(1); // то восстановливаем отростки экспов
     }
     if (factCounters[2][5] <= factCounters[2][2] / numInRatioForQua) { // если отростков меньше кол-во всех клеток на константу ДЛЯ КАЧЕСТВЕННИКОВ
-        restorOfSprouts[2]; // то восстановливаем отростки качественников
+        restorOfSprouts(2); // то восстановливаем отростки качественников
     }
     if (factCounters[3][5] <= factCounters[3][2] / numInRatioForNom) { // если отростков меньше кол-во всех клеток на константу ДЛЯ КОЧЕВНИКОВ
-        restorOfSprouts[3]; // то восстановливаем отростки кочевников
+        restorOfSprouts(3); // то восстановливаем отростки кочевников
     }
     
     // какие тактики на следующий ход?
@@ -1823,90 +1816,90 @@ function restorOfSprouts(fraction) { // функция-механика восс
 function whatAboutTactic(fraction) { // функция-механика для смен/поддержания тактик
     if (fraction === 1) { // если фракция - эксы
         // "аварийные тактики"
-        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "насильственных" убийств
-            tactRightNow[faction] = 2; // то выбираем тактику "война: ближний бой"
+        if (factCounters[fraction][1] >= minFactors[fraction][1]) { // активен ли фактор "насильственных" убийств
+            tactRightNow[fraction] = 2; // то выбираем тактику "война: ближний бой"
             return 0;
         }
-        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "не насильственных" убийств
-            tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
+        if (factCounters[fraction][0] >= minFactors[fraction][0]) { // активен ли фактор "не насильственных" убийств
+            tactRightNow[fraction] = 1; // то выбираем тактику "производство: добыча"
             return 0;
         }
 
         // "стабильные" тактики
-        if (factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[faction][4]) { // активен ли фактор соот. доб. и отр.
-            tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
+        if (factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[fraction][4]) { // активен ли фактор соот. доб. и отр.
+            tactRightNow[fraction] = 1; // то выбираем тактику "производство: добыча"
             return 0;
         }
-        if (factCounters[fraction][2] <= minFactors[faction][2]) { // активен ли фактор кол-ва клеток для фракции
-            tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
+        if (factCounters[fraction][2] <= minFactors[fraction][2]) { // активен ли фактор кол-ва клеток для фракции
+            tactRightNow[fraction] = 0; // то выбираем тактику "экспансия"
             return 0;
         }
 
         let randFact = rand(0, 1); // рандом 50 на 50
         if (randFact === 0) {
-            if (factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[faction][3]) { // активен ли фактор соот. доб. и боев.
-                tactRightNow[faction] = 1; // то выбираем тактику "производство: добыча"
+            if (factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[fraction][3]) { // активен ли фактор соот. доб. и боев.
+                tactRightNow[fraction] = 1; // то выбираем тактику "производство: добыча"
                 return 0;
             }
-            if (factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[faction][5]) { // активен ли фактор соот. боев. и мир.
-                tactRightNow[faction] = 2; // то выбираем тактику "война: ближний бой"
+            if (factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[fraction][5]) { // активен ли фактор соот. боев. и мир.
+                tactRightNow[fraction] = 2; // то выбираем тактику "война: ближний бой"
                 return 0;
             }
         }
         if (randFact === 1) {
-            tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
+            tactRightNow[fraction] = 0; // то выбираем тактику "экспансия"
             return 0;
         }
     }
     if (fraction === 2) { // если фракция - качественники
         // "аварийные тактики"
-        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "насильственных" убийств
-            tactRightNow[faction] = 3; // то выбираем тактику "война: ближний бой"
+        if (factCounters[fraction][1] >= minFactors[fraction][1]) { // активен ли фактор "насильственных" убийств
+            tactRightNow[fraction] = 3; // то выбираем тактику "война: ближний бой"
             return 0;
         }
-        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "не насильственных" убийств
-            tactRightNow[faction] = 1; // то выбираем тактику "производство: производство"
+        if (factCounters[fraction][0] >= minFactors[fraction][0]) { // активен ли фактор "не насильственных" убийств
+            tactRightNow[fraction] = 1; // то выбираем тактику "производство: производство"
             return 0;
         }
 
         // "стабильные" тактики
-        if (factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[faction][4]) { // активен ли фактор соот. доб. и отр.
-            tactRightNow[faction] = 1; // то выбираем тактику "производство: производство"
+        if (factCounters[fraction][3] / factCounters[fraction][5] <= minFactors[fraction][4]) { // активен ли фактор соот. доб. и отр.
+            tactRightNow[fraction] = 1; // то выбираем тактику "производство: производство"
             return 0;
         }
-        if (factCounters[fraction][2] <= minFactors[faction][2]) { // активен ли фактор кол-ва клеток для фракции
-            tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
+        if (factCounters[fraction][2] <= minFactors[fraction][2]) { // активен ли фактор кол-ва клеток для фракции
+            tactRightNow[fraction] = 0; // то выбираем тактику "экспансия"
             return 0;
         }
 
         let randFact = rand(0, 100); // рандом ста процентов
         if (randFact < 40) {
-            if (factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[faction][3]) { // активен ли фактор соот. доб. и боев.
-                tactRightNow[faction] = 1; // то выбираем тактику "производство: производство"
+            if (factCounters[fraction][3] / factCounters[fraction][4] <= minFactors[fraction][3]) { // активен ли фактор соот. доб. и боев.
+                tactRightNow[fraction] = 1; // то выбираем тактику "производство: производство"
                 return 0;
             }
-            if (factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[faction][5]) { // активен ли фактор соот. боев. и мир.
-                tactRightNow[faction] = 2; // то выбираем тактику "война: дальний бой"
+            if (factCounters[fraction][4] / factCounters[fraction][6] <= minFactors[fraction][5]) { // активен ли фактор соот. боев. и мир.
+                tactRightNow[fraction] = 2; // то выбираем тактику "война: дальний бой"
                 return 0;
             }
         }
         else if (randFact < 80) {
-            tactRightNow[faction] = 4; // то выбираем тактику "развитие"
+            tactRightNow[fraction] = 4; // то выбираем тактику "развитие"
             return 0;
         }
         else {
-            tactRightNow[faction] = 0; // то выбираем тактику "экспансия"
+            tactRightNow[fraction] = 0; // то выбираем тактику "экспансия"
             return 0;
         }
     }
     if (fraction === 3) { // если фракция - кочевники
         // "аварийные тактики"
-        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "насильственных" убийств
-            tactRightNow[faction] = 1; // то выбираем тактику "миграция"
+        if (factCounters[fraction][1] >= minFactors[fraction][1]) { // активен ли фактор "насильственных" убийств
+            tactRightNow[fraction] = 1; // то выбираем тактику "миграция"
             return 0;
         }
-        if (factCounters[fraction][1] >= minFactors[faction][1]) { // активен ли фактор "не насильственных" убийств
-            tactRightNow[faction] = 1; // то выбираем тактику "миграция"
+        if (factCounters[fraction][0] >= minFactors[fraction][0]) { // активен ли фактор "не насильственных" убийств
+            tactRightNow[fraction] = 1; // то выбираем тактику "миграция"
             return 0;
         }
 
@@ -1936,45 +1929,45 @@ tactRightNow[2] = 0;
 tactRightNow[3] = 0;
 
 // --- функция начальных клеток ---
-function startSprouts(startPos, indent, faction){ // универсальная функция создания нач. клеток-отростков
-    // опеределяем верные случайные координаты в зависимости от четверти
-    let ri = 0;
-    let rj = 0;
-    if(startPos === 0){
-        ri = rand(indent, mapH/4 - indent); // вычисляем рандомное значение i
-        rj = rand(indent+mapW/4, mapW/2 - indent); // вычисляем рандомное значение j
-    }
-    if(startPos === 1){
-        ri = rand(indent, mapH/4 - indent); // вычисляем рандомное значение i
-        rj = rand(indent, mapW/4 - indent); // вычисляем рандомное значение j
-    }
-    if(startPos === 2){
-        ri = rand(indent+mapH/4, mapH/2 - indent); // вычисляем рандомное значение i
-        rj = rand(indent, mapW/4 - indent); // вычисляем рандомное значение j
-    }
-    if(startPos === 3){
-        ri = rand(indent+mapH/4, mapH/2 - indent); // вычисляем рандомное значение i
-        rj = rand(indent+mapW/4, mapW/2 - indent); // вычисляем рандомное значение j
-    }
-
-    for(let t = 0; t < countOfStartSprout[faction]; t++){ // повторяем столько, сколько начальных клеток
-        if(mapCell[ri][rj][2] === 0){ // если клетка пустая
-            // создаем клетку-отросток
-            mapCell[ri][rj][0] = hpPeaceCells; // задаем нач. ХП
-            mapCell[ri][rj][1] = startSproutEnergy; // задаем нач. энергию
-            mapCell[ri][rj][2] = 1; // задаем тип как отросток
-            mapCell[ri][rj][3] = faction; // задаем фракцию
-            mapCell[ri][rj][4] = 0; // задаем компиляцию клетки
-            mapCell[ri][rj][5] = 0; // энергию никуда не передаем
-            mapCell[ri][rj][6] = 0; // энергию никуда не передаем
-            mapCell[ri][rj][7] = 0; // энергию никуда не передаем
-            mapCell[ri][rj][8] = 0; // энергию никуда не передаем
-            mapCell[ri][rj][9] = -1; // родителя нет
-            mapCell[ri][rj][10] = rand(0, 32); // рандомный номер генома
-            mapCell[ri][rj][11] = 0; // в предыдущей ход не было энергии
+function startSprouts(startPos, indent, fraction) {
+    const getRandomCoords = () => {
+        let ri, rj;
+        if (startPos === 0) {
+            ri = rand(indent, Math.floor(mapH / 4) - indent);
+            rj = rand(Math.ceil(mapW / 4) + indent, Math.floor(mapW / 2) - indent);
+        } else if (startPos === 1) {
+            ri = rand(indent, Math.floor(mapH / 4) - indent);
+            rj = rand(indent, Math.floor(mapW / 4) - indent);
+        } else if (startPos === 2) {
+            ri = rand(Math.ceil(mapH / 4) + indent, Math.floor(mapH / 2) - indent);
+            rj = rand(indent, Math.floor(mapW / 4) - indent);
+        } else if (startPos === 3) {
+            ri = rand(Math.ceil(mapH / 4) + indent, Math.floor(mapH / 2) - indent);
+            rj = rand(Math.ceil(mapW / 4) + indent, Math.floor(mapW / 2) - indent);
         }
-        else{
-            t -= 1; // добавляем циклу ещё один оборот
+        return [ri, rj];
+    };
+
+    for (let t = 0; t < countOfStartSprout[fraction]; t++) {
+        let [ri, rj] = getRandomCoords();
+        let attempts = 0;
+        while (mapCell[ri][rj][2] !== 0 && attempts < 100) {
+            [ri, rj] = getRandomCoords();
+            attempts++;
+        }
+        if (mapCell[ri][rj][2] === 0) {
+            mapCell[ri][rj][0] = hpPeaceCells;
+            mapCell[ri][rj][1] = startSproutEnergy;
+            mapCell[ri][rj][2] = 1;
+            mapCell[ri][rj][3] = fraction;
+            mapCell[ri][rj][4] = 0;
+            mapCell[ri][rj][5] = 0;
+            mapCell[ri][rj][6] = 0;
+            mapCell[ri][rj][7] = 0;
+            mapCell[ri][rj][8] = 0;
+            mapCell[ri][rj][9] = -1;
+            mapCell[ri][rj][10] = rand(0, 31);
+            mapCell[ri][rj][11] = 0;
         }
     }
 }
