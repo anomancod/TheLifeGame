@@ -409,7 +409,7 @@ const cmdFunc = [cmdSkipTurn, cmdTransformIntoSeed, cmdTransformIntoSeedAndMove,
 // ^^^ объявляем массив для cmd-функций ^^^
 
 // 1X массив: цвета фракций ([цвета{кол-во = кол-ву фракций; индекс цвета = индекс фракции}])
-const fractionColors = ['lightgreen', 'pink', 'lightblue', 'yellow']
+const fractionColors = ['lightgreen', 'pink', 'aqua', 'yellow'];
 
 // ======== ФУНКЦИИ ГЕНОМА ========
 
@@ -1913,10 +1913,12 @@ function whatAboutTactic(fraction) { // функция-механика для �
 
 // --- все переменные и константы ---
 let startExpPos = rand(0, 3); // случайно выбираем в какую четверть расселить экспов
-if(startExpPos === 0){let startQuaPos = 2; let startNomPos = [1, 3];} // устанавливаем стартовые четверти других фракций в зависимости от стартовой четверти экспов
-if(startExpPos === 1){let startQuaPos = 3; let startNomPos = [0, 2];}
-if(startExpPos === 2){let startQuaPos = 0; let startNomPos = [1, 3];}
-if(startExpPos === 3){let startQuaPos = 1; let startNomPos = [0, 2];}
+let startQuaPos = 0;
+let startNomPos = [0, 0];
+if(startExpPos === 0){startQuaPos = 2; startNomPos = [1, 3];} // устанавливаем стартовые четверти других фракций в зависимости от стартовой четверти экспов
+if(startExpPos === 1){startQuaPos = 3; startNomPos = [0, 2];}
+if(startExpPos === 2){startQuaPos = 0; startNomPos = [1, 3];}
+if(startExpPos === 3){startQuaPos = 1; startNomPos = [0, 2];}
 
 // устанавливаем отступы для каждой не-игровой тактики
 const indentExp = 3; // экспы
