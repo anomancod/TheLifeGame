@@ -68,8 +68,8 @@ const minerConstEnergy = 250; // постоянная энергия у майн
 const energyToMeleeCombat = 50; // трата энергии на удар ближника {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 const energyToDistantCombat = 75; // трата энергии на выстрел дальника {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 
-const damageOfMeleeCombat = 25; // урон от удара ближника {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
-const damageOfDistantCombat = 25; // урон от выстрела дальника {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+const damageOfMeleeCombat = 500; // урон от удара ближника {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
+const damageOfDistantCombat = 500; // урон от выстрела дальника {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 
 const energyToTransformIntoSeed = 100; // энергия для становления семенем {!!! ТЕСТОВОЕ ЗНАЧЕНИЕ !!!}
 const minTurnsAsSeed = 1; // минимальное кол-во ходов как семя
