@@ -108,6 +108,13 @@ const countOfStartSprout = [startPlayerSprout, startExpSprout, startQuaSprout, s
 
 
 // ======== ТАКТИКИ ========
+
+// 4X массив: тактики ([countOfFractions]x[Кол-во тактик]x[countOfGenoms]x[14])
+const tactics = [];
+let countOfFractions = 4; // кол-во фракций
+let countOfGenoms = 32; // кол-во геномов в тактике
+
+
 const expansionTact = []; // экспансия
 for (let i = 0; i < countOfGenoms; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -212,7 +219,7 @@ for (let i = 0; i < countOfGenoms; i++) {
     warMeleeTact.push(interArr);
 }
 
-const warDistantv = []; // война ближний бой
+const warDistantTact = []; // война ближний бой
 for (let i = 0; i < countOfGenoms; i++) {
     const interArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let sproutIn = rand(0, 2);
@@ -365,8 +372,8 @@ for (let i = 0; i < mapH; i++) {
     mapGround.push(r0);
 }
 
-// 3X массив: геномы ([countOfFractions]x[countOfGenoms]x[14])
-const genoms = [];
+// 3X массив: геномы ([countOfFractions]x[countOfGenoms]x[14]) // УСТАРЕЛО
+/*const genoms = [];
 let countOfFractions = 4; // кол-во фракций
 let countOfGenoms = 32; // кол-во геномов во фракциях
 for (let i = 0; i < countOfFractions; i++) {
@@ -382,12 +389,7 @@ for (let i = 0; i < countOfFractions; i++) {
         r0.push(r1);
     }
     genoms.push(r0);
-}
-
-// 4X массив: тактики ([countOfFractions]x[Кол-во тактик]x[countOfGenoms]x[14])
-const tactics = [];
-let countOfFractions = 4; // кол-во фракций
-let countOfGenoms = 32; // кол-во геномов в тактике
+}*/
 
 const playerFrac = []; // тут нужно будет заполнить тактиками
 tactics.push(playerFrac);
@@ -1381,11 +1383,11 @@ const playerArr = [0, 0, 0, 0, 0, 0];
 // 4: макс. соотношение между добывающими и отростковыми клетками для активации этого фактора
 // 5: макс. соотношение между боевыми и мирными клетками для активации этого фактора
 minFactors.push(playerArr);
-const expArr = [factCounters[faction][2]/5, factCounters[faction][2]/5, 250, 1, 1.5, 0.2];
+const expArr = [factCounters[1][2]/5, factCounters[1][2]/5, 250, 1, 1.5, 0.2];
 minFactors.push(expArr);
-const quaArr = [factCounters[faction][2]/8, factCounters[faction][2]/8, 120, 1.5, 2, 0.33];
+const quaArr = [factCounters[2][2]/8, factCounters[2][2]/8, 120, 1.5, 2, 0.33];
 minFactors.push(quaArr);
-const nomArr = [factCounters[faction][2], factCounters[faction][2]/10, 75, 1, 1.5, 0.25];
+const nomArr = [factCounters[3][2], factCounters[3][2]/10, 75, 1, 1.5, 0.25];
 minFactors.push(nomArr);
 
 let counterForUpdFact = 0; // счетчик для отмера ходов обнуления (обновления) факторов
@@ -1921,8 +1923,8 @@ if(startExpPos === 3){let startQuaPos = 1; let startNomPos = [0, 2];}
 
 // устанавливаем отступы для каждой не-игровой тактики
 const indentExp = 3; // экспы
-const indentExp = 4; // качественники
-const indentExp = 0; // кочевники
+const indentQua = 4; // качественники
+const indentNom = 0; // кочевники
 
 // задаем экспансию (или кочевничество) начало всем не-игровым фракциям
 tactRightNow[1] = 0;
@@ -1932,21 +1934,23 @@ tactRightNow[3] = 0;
 // --- функция начальных клеток ---
 function startSprouts(startPos, indent, faction){ // универсальная функция создания нач. клеток-отростков
     // опеределяем верные случайные координаты в зависимости от четверти
+    let ri = 0;
+    let rj = 0;
     if(startPos === 0){
-        let ri = rand(indent, mapH/4 - indent); // вычисляем рандомное значение i
-        let rj = rand(indent+mapW/4, mapW/2 - indent); // вычисляем рандомное значение j
+        ri = rand(indent, mapH/4 - indent); // вычисляем рандомное значение i
+        rj = rand(indent+mapW/4, mapW/2 - indent); // вычисляем рандомное значение j
     }
     if(startPos === 1){
-        let ri = rand(indent, mapH/4 - indent); // вычисляем рандомное значение i
-        let rj = rand(indent, mapW/4 - indent); // вычисляем рандомное значение j
+        ri = rand(indent, mapH/4 - indent); // вычисляем рандомное значение i
+        rj = rand(indent, mapW/4 - indent); // вычисляем рандомное значение j
     }
     if(startPos === 2){
-        let ri = rand(indent+mapH/4, mapH/2 - indent); // вычисляем рандомное значение i
-        let rj = rand(indent, mapW/4 - indent); // вычисляем рандомное значение j
+        ri = rand(indent+mapH/4, mapH/2 - indent); // вычисляем рандомное значение i
+        rj = rand(indent, mapW/4 - indent); // вычисляем рандомное значение j
     }
     if(startPos === 3){
-        let ri = rand(indent+mapH/4, mapH/2 - indent); // вычисляем рандомное значение i
-        let rj = rand(indent+mapW/4, mapW/2 - indent); // вычисляем рандомное значение j
+        ri = rand(indent+mapH/4, mapH/2 - indent); // вычисляем рандомное значение i
+        rj = rand(indent+mapW/4, mapW/2 - indent); // вычисляем рандомное значение j
     }
 
     for(let t = 0; t < countOfStartSprout[faction]; t++){ // повторяем столько, сколько начальных клеток
