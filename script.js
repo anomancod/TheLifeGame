@@ -1367,11 +1367,11 @@ const playerArr = [0, 0, 0, 0, 0, 0];
 // 4: макс. соотношение между добывающими и отростковыми клетками для активации этого фактора
 // 5: макс. соотношение между боевыми и мирными клетками для активации этого фактора
 minFactors.push(playerArr);
-const expArr = [0, 0, 0, 0, 0, 0];
+const expArr = [factCounters[faction][2]/5, factCounters[faction][2]/5, 250, 1, 1.5, 0.2];
 minFactors.push(expArr);
-const quaArr = [0, 0, 0, 0, 0, 0];
+const quaArr = [factCounters[faction][2]/8, factCounters[faction][2]/8, 120, 1.5, 2, 0.33];
 minFactors.push(quaArr);
-const nomArr = [0, 0, 0, 0, 0, 0];
+const nomArr = [factCounters[faction][2], factCounters[faction][2]/10, 75, 1, 1.5, 0.25];
 minFactors.push(nomArr);
 
 let counterForUpdFact = 0; // счетчик для отмера ходов обнуления (обновления) факторов
