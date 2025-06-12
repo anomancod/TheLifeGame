@@ -416,7 +416,7 @@ const fractionColors = ['lightgreen', 'pink', 'lightblue', 'yellow']
 // главная функкция генома
 function mainGenome(i, j) {
     //let gen = genoms[mapCell[i][j][3]][mapCell[i][j][10]]; // берем строчку-ген
-    let gen = tactics[mapCell[i][j][3]][tactRightNow][mapCell[i][j][10]]; // берем строчку-ген как строчку из тактики выбранной фракции в данный момент
+    let gen = tactics[mapCell[i][j][3]][tactRightNow[mapCell[i][j][3]]][mapCell[i][j][10]]; // берем строчку-ген как строчку из тактики выбранной фракции в данный момент
     let resFirstIf = 0;
     let resSecondIf = 0;
     if (gen[3] > 104 && gen[5] > 104) { // если 2 условия не заданы
@@ -446,7 +446,8 @@ function mainGenome(i, j) {
     }
     if (gen[3] < 105 || gen[5] < 105) { // если хотя бы одно из условий задано
         if (gen[3] < 105) { // если первое условие задано
-            resFirstIf = ifFunc[Math.floor(gen[3] / 7)](i, j, gen[4]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
+            const ifIndex = Math.min(Math.floor(gen[3] / (105 / ifFunc.length)), ifFunc.length - 1); // индекс для корректного вызова функции
+            resFirstIf = ifFunc[ifIndex](i, j, gen[4]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
             if (resFirstIf === 1) {
                 console.log('Отросток[' + i + '][' + j + '] Успешно');
             }
@@ -455,7 +456,8 @@ function mainGenome(i, j) {
             }
         }
         if (gen[5] < 105) { // если второе условие задано
-            resSecondIf = ifFunc[Math.floor(gen[5] / 7)](i, j, gen[6]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
+            const ifIndex = Math.min(Math.floor(gen[5] / (105 / ifFunc.length)), ifFunc.length - 1); // индекс для корректного вызова функции
+            resSecondIf = ifFunc[ifIndex](i, j, gen[6]); // вызываем функций по нужному индексу и передаем коорд. с параметром и принимаем результат (0 - не выпол., 1 - выпол.)
             if (resSecondIf === 1) {
                 console.log('Отросток[' + i + '][' + j + '] Успешно');
             }
@@ -466,7 +468,8 @@ function mainGenome(i, j) {
 
         if (resFirstIf + resSecondIf === 2) { // если 2 условия выполнились
             if (gen[9] < 33) { // если первая команда задана
-                cmdFunc[Math.floor(gen[9] / 3)](i, j);
+                const cmdIndex = Math.min(Math.floor(gen[9] / (33 / cmdFunc.length)), cmdFunc.length - 1); // корректный индекс для вызова команды
+                cmdFunc[cmdIndex](i, j); // вызываем команду по корректному индексу
                 let resRa = rand(0, 1);
                 if (resRa === 0) {
                     mapCell[i][j][10] = Math.floor(gen[10] / 8); // меняем номер строчки-гена
@@ -481,7 +484,8 @@ function mainGenome(i, j) {
         }
         else { // если хотя бы одно условие не выполнилось
             if (gen[12] < 33) { // если вторая команда задана
-                cmdFunc[Math.floor(gen[12] / 3)](i, j);
+                const cmdIndex = Math.min(Math.floor(gen[12] / (33 / cmdFunc.length)), cmdFunc.length - 1); // корректный индекс для вызова команды
+                cmdFunc[cmdIndex](i, j); // вызываем команду по корректному индексу
                 let resRa = rand(0, 1);
                 if (resRa === 0) {
                     mapCell[i][j][10] = Math.floor(gen[13] / 8); // меняем номер строчки-гена
