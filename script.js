@@ -111,8 +111,8 @@ const countOfStartSprout = [startPlayerSprout, startExpSprout, startQuaSprout, s
 
 // 4X массив: тактики ([countOfFractions]x[Кол-во тактик]x[countOfGenoms]x[14])
 const tactics = [];
-let countOfFractions = 4; // кол-во фракций
-let countOfGenoms = 32; // кол-во геномов в тактике
+const countOfFractions = 4; // кол-во фракций
+const countOfGenoms = 32; // кол-во геномов в тактике
 
 
 const expansionTact = []; // экспансия
@@ -424,22 +424,16 @@ function mainGenome(i, j) {
             if (gen[0 + a] < 95) { // если ответвление есть
                 if (gen[0 + a] < 30) { // *отросток
                     createSprout(i, j, a);
-                    console.log('Отросток[' + i + '][' + j + '] создает: Отросток');
                 } else if (gen[0 + a] < 45) { // *манновик
                     createManaMiner(i, j, a);
-                    console.log('Отросток[' + i + '][' + j + '] создает: Манновик');
                 } else if (gen[0 + a] < 60) { // *органик
                     createOrgMiner(i, j, a);
-                    console.log('Отросток[' + i + '][' + j + '] создает: Органик');
                 } else if (gen[0 + a] < 75) { // *энергик
                     createEnerMiner(i, j, a);
-                    console.log('Отросток[' + i + '][' + j + '] создает: Энергик');
                 } else if (gen[0 + a] < 85) { // *ближняя боевая клетка
                     createMeleeFighter(i, j, a);
-                    console.log('Отросток[' + i + '][' + j + '] создает: Ближника');
                 } else if (gen[0 + a] < 95) { // *дальняя боевая клетка
                     createDistantFighter(i, j, a);
-                    console.log('Отросток[' + i + '][' + j + '] создает: Дальника');
                 }
             }
         }
@@ -609,6 +603,8 @@ function createSprout(i, j, direct) { // создание отростка
 
     if (mapCell[iC][jC][2] === 0) { // если координата создаваемой клетки пуста
         if (mapCell[i][j][1] >= energyToCreateSprout) { // если хватает энергии для создания отростка
+            console.log('Отросток[' + i + '][' + j + '] создает: Отросток');
+
             mapCell[iC][jC][2] = 1; // изменяем тип клетки на отросток
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateSprout; // вычитаем энергию на создание
@@ -637,6 +633,8 @@ function createManaMiner(i, j, direct) { // создание манновика
 
     if (mapCell[iC][jC][2] === 0) {
         if (mapCell[i][j][1] >= energyToCreateManaMiner) {
+            console.log('Отросток[' + i + '][' + j + '] создает: Манновик');
+
             mapCell[iC][jC][2] = 3;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
@@ -663,6 +661,8 @@ function createOrgMiner(i, j, direct) { // создание органика
 
     if (mapCell[iC][jC][2] === 0) {
         if (mapCell[i][j][1] >= energyToCreateOrgMiner) {
+            console.log('Отросток[' + i + '][' + j + '] создает: Органик');
+
             mapCell[iC][jC][2] = 4;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
@@ -689,6 +689,8 @@ function createEnerMiner(i, j, direct) { // создание энергика
 
     if (mapCell[iC][jC][2] === 0) {
         if (mapCell[i][j][1] >= energyToCreateEnerMiner) {
+            console.log('Отросток[' + i + '][' + j + '] создает: Энергик');
+
             mapCell[iC][jC][2] = 5;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
@@ -715,6 +717,8 @@ function createMeleeFighter(i, j, direct) { // создание ближника
 
     if (mapCell[iC][jC][2] === 0) {
         if (mapCell[i][j][1] >= energyToCreateMeleeFighter) {
+            console.log('Отросток[' + i + '][' + j + '] создает: Ближника');
+
             mapCell[iC][jC][2] = 7;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateMeleeFighter;
@@ -742,6 +746,8 @@ function createDistantFighter(i, j, direct) { // создание дальник
 
     if (mapCell[iC][jC][2] === 0) {
         if (mapCell[i][j][1] >= energyToCreateDistantFighter) {
+            console.log('Отросток[' + i + '][' + j + '] создает: Дальника');
+
             mapCell[iC][jC][2] = 8;
             mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateDistantFighter;
