@@ -1953,8 +1953,8 @@ function whatAboutTactic(fraction) { // функция-механика для �
 
 // --- все переменные и константы ---
 let startExpPos = rand(0, 3); // случайно выбираем в какую четверть расселить экспов
-let startQuaPos = 0;
-let startNomPos = [0, 0];
+let startQuaPos = 3;
+let startNomPos = [0, 2];
 if(startExpPos === 0){startQuaPos = 2; startNomPos = [1, 3];} // устанавливаем стартовые четверти других фракций в зависимости от стартовой четверти экспов
 if(startExpPos === 1){startQuaPos = 3; startNomPos = [0, 2];}
 if(startExpPos === 2){startQuaPos = 0; startNomPos = [1, 3];}
