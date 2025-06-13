@@ -1618,6 +1618,7 @@ function mainFunc(i, j) {
                     for (let b = 0; b < 3; b++) {
                         if (i - 1 + a >= 0 && i - 1 + a < mapH && j - 1 + a >= 0 && j - 1 + a < mapH && mapCell[i - 1 + a][j - 1 + a][2] != 0 && mapCell[i - 1 + a][j - 1 + a][3] != mapCell[i][j][3]) { // если не выходит за карту, атакуемая клетка не пустая и атакуемая клетка другой фракции
                             mapCell[i - 1 + a][j - 1 + a][0] = mapCell[i - 1 + a][j - 1 + a][0] - damageOfMeleeCombat; // то наносим урон
+                            mapTable.rows[i - 1 + a].cells[j - 1 + a].textContent = 'X'; // отображаем атаку ближника
                         }
                     }
                 }
