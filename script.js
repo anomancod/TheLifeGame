@@ -1778,6 +1778,14 @@ const period = setInterval(() => {
         restorOfSprouts(3); // то восстановливаем отростки кочевников
     }
     
+    // обновляем данные для минимальных факторов
+    minFactors[1][0] = factCounters[1][2]/5;
+    minFactors[1][1] = factCounters[1][2]/5;
+    minFactors[2][0] = factCounters[2][2]/8;
+    minFactors[2][1] = factCounters[2][2]/8;
+    minFactors[3][0] = factCounters[3][2];
+    minFactors[3][1] = factCounters[3][2]/10;
+
     // какие тактики на следующий ход?
     if(turnsFromStart >= turnsNoChangeStartTacticExp){ whatAboutTactic(1); } // обновляем тактику У ЭКСПОВ, если прошло достаточно ходов с начала
     if(turnsFromStart >= turnsNoChangeStartTacticQua){ whatAboutTactic(2); } // обновляем тактику У КАЧЕСТВЕННИКОВ, если прошло достаточно ходов с начала
