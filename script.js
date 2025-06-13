@@ -1975,17 +1975,17 @@ function startSprouts(startPos, indent, fraction) {
     const getRandomCoords = () => {
         let ri, rj;
         if (startPos === 0) {
-            ri = rand(indent, Math.floor(mapH / 4) - indent);
-            rj = rand(Math.ceil(mapW / 4) + indent, Math.floor(mapW / 2) - indent);
+            ri = rand(indent, Math.floor(mapH / 2) - indent);
+            rj = rand(Math.ceil(mapW / 2) + indent, mapW / 2 - indent);
         } else if (startPos === 1) {
-            ri = rand(indent, Math.floor(mapH / 4) - indent);
-            rj = rand(indent, Math.floor(mapW / 4) - indent);
+            ri = rand(indent, Math.floor(mapH / 2) - indent);
+            rj = rand(indent, Math.floor(mapW / 2) - indent);
         } else if (startPos === 2) {
-            ri = rand(Math.ceil(mapH / 4) + indent, Math.floor(mapH / 2) - indent);
-            rj = rand(indent, Math.floor(mapW / 4) - indent);
+            ri = rand(Math.ceil(mapH / 2) + indent, mapH / 2 - indent);
+            rj = rand(indent, Math.floor(mapW / 2) - indent);
         } else if (startPos === 3) {
-            ri = rand(Math.ceil(mapH / 4) + indent, Math.floor(mapH / 2) - indent);
-            rj = rand(Math.ceil(mapW / 4) + indent, Math.floor(mapW / 2) - indent);
+            ri = rand(Math.ceil(mapH / 2) + indent, mapH / 2 - indent);
+            rj = rand(Math.ceil(mapW / 2) + indent, mapW / 2 - indent);
         }
         return [ri, rj];
     };
