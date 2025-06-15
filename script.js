@@ -415,8 +415,12 @@ const fractionColors = ['lightgreen', 'pink', 'aqua', 'yellow'];
 
 // главная функкция генома
 function mainGenome(i, j) {
-    //let gen = genoms[mapCell[i][j][3]][mapCell[i][j][10]]; // берем строчку-ген
-    let gen = tactics[mapCell[i][j][3]][tactRightNow[mapCell[i][j][3]]][mapCell[i][j][10]]; // берем строчку-ген как строчку из тактики выбранной фракции в данный момент
+    const frac = mapCell[i][j][3];
+    const tactIdx = tactRightNow[frac];
+    const geneIdx = mapCell[i][j][10];
+    if (tactIdx < 0 || tactIdx >= tactics[frac].length) return; // проверка для устранениях ошибок
+    if (geneIdx < 0 || geneIdx >= tactics[frac][tactIdx].length) return; // проверка для устранениях ошибок
+    let gen = tactics[frac][tactIdx][geneIdx]; // берем строчку-ген как строчку из тактики выбранной фракции в данный момент
     let resFirstIf = 0;
     let resSecondIf = 0;
     if (gen[3] > 104 && gen[5] > 104) { // если 2 условия не заданы
