@@ -1511,7 +1511,8 @@ function mainFunc(i, j) {
             mapCell[i][j][1] = mapCell[i][j][1] + manaEnergyPerTurn; // начисляем энергию для её передачи
             let prodRes = transferEnergy(i, j);
             if (prodRes === 0) { // если некуда передовать энергию - убиваем клетку из-за бесполезности
-                cellDeath(i, j);
+                mapCell[i][j][0] = 0;
+                cellDeath(i, j, 0);
             }
         }
         else {
@@ -1538,7 +1539,8 @@ function mainFunc(i, j) {
             mapGround[i][j][1] = mapGround[i][j][1] - orgForEnerPerTurn; // тратим органику из почвы
             let prodRes = transferEnergy(i, j);
             if (prodRes === 0) { // если некуда передовать энергию - убиваем клетку из-за бесполезности
-                cellDeath(i, j);
+                mapCell[i][j][0] = 0;
+                cellDeath(i, j, 0);
             }
         }
         else {
@@ -1565,7 +1567,8 @@ function mainFunc(i, j) {
             mapGround[i][j][1] = mapGround[i][j][1] - energyMinePerTurn; // тратим энергию из почвы
             let prodRes = transferEnergy(i, j);
             if (prodRes === 0) { // если некуда передовать энергию - убиваем клетку из-за бесполезности
-                cellDeath(i, j);
+                mapCell[i][j][0] = 0;
+                cellDeath(i, j, 0);
             }
         }
         else {
@@ -1811,6 +1814,9 @@ function restorOfSprouts(fraction) { // функция-механика восс
         for (let j = 0; j < mapW; j++) {
             // если клетка не пустая, не отросток, не стебель и не семя, и фракция соответствует
             if (mapCell[i][j][2] != 0 && mapCell[i][j][3] === fraction && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1) {
+
+                // ТУТ БУДЕТ ТО ЧТО ПОЗВОЛИТ ПРОВЕРЯТЬ ТОЛЬКО КЛЕТКИ ВОКРУГ КОТОРЫХ ЕСТЬ ПУСТЫЕ КЛЕТКИ
+
                 let isTransform = rand(0, 100);
                 if (isTransform < chanceOfTransform) { // если выполняется шанс
                     mapCell[i][j][2] = 1; // меняем клетку на стебель
