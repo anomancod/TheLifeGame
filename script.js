@@ -1384,7 +1384,7 @@ let counterForUpdFact = 0; // счетчик для отмера ходов об
 // --- Главная Функция ---
 function mainFunc(i, j) {
     if (mapCell[i][j][2] === 0) { // если тип клетки - пустая
-        if (mapCell[i][j][4] != 0) {
+        if (mapCell[i][j][4] === 0) { // если компилируем клетку
             mapTable.rows[i].cells[j].textContent = '';
         }
         else {
@@ -1751,18 +1751,17 @@ const period = setInterval(() => {
     }
 
     if (botFactCounterOfEmptyCells[1] <= factCounters[1][2] / numInRatioForExp) { // если отростков с пустыми клетками вокруг меньше кол-во всех клеток на константу ДЛЯ ЭКСПОВ
-        console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ ЭКСПОВ");
+        console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ ЭКСПОВ. ПУСТЫШЕК: "+botFactCounterOfEmptyCells[1]);
         restoreOfSprouts(1); // то восстановливаем отростки экспов
     }
     if (botFactCounterOfEmptyCells[2] <= factCounters[2][2] / numInRatioForQua) { // если отростков с пустыми клетками вокруг меньше кол-во всех клеток на константу ДЛЯ КАЧЕСТВЕННИКОВ
-        console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ КАЧЕСТВЕННИКОВ");
+        console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ КАЧЕСТВЕННИКОВ. ПУСТЫШЕК: "+botFactCounterOfEmptyCells[2]);
         restoreOfSprouts(2); // то восстановливаем отростки качественников
     }
     if (botFactCounterOfEmptyCells[3] <= factCounters[3][2] / numInRatioForNom) { // если отростков с пустыми клетками вокруг меньше кол-во всех клеток на константу ДЛЯ КОЧЕВНИКОВ
-        console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ КОЧЕВНИКОВ");
+        console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ КОЧЕВНИКОВ. ПУСТЫШЕК: "+botFactCounterOfEmptyCells[3]);
         restoreOfSprouts(3); // то восстановливаем отростки кочевников
     }
-    botFactCounterOfEmptyCells = [0, 0, 0, 0]; // обнуляем массив для следующей итерации цикла
     
     // обновляем данные для минимальных факторов
     minFactors[1][0] = factCounters[1][2]/5;
