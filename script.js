@@ -1652,11 +1652,13 @@ function mainFunc(i, j) {
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if(mapCell[i][j-distant][3] != mapCell[i][j][3]){ // если фракция не наша
                             mapCell[i][j-distant][0] -= damageOfDistantCombat; // наносим урон
+                            mapTable.rows[i+h].cells[j].textContent = 'X'; // рисуем нанесение урона
+
+                            for(let h; h < distant; h++){
+                                mapTable.rows[i].cells[j-h].textContent = '<'; // рисуем красивую полосу стрельбы
+                                mapTable.rows[i].cells[j-h].style.color = fractionColors[mapCell[i][j][3]];
+                            }
                         }
-
-                        mapTable.rows[i].cells[j-distant].textContent = '<'; // рисуем красивую полосу стрельбы
-                        mapTable.rows[i].cells[j-distant].style.color = fractionColors[mapCell[i][j][3]];
-
                         distant++;
                     }
                 }
@@ -1670,11 +1672,13 @@ function mainFunc(i, j) {
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if(mapCell[i-distant][j][3] != mapCell[i][j][3]){ // если фракция не наша
                             mapCell[i-distant][j][0] -= damageOfDistantCombat; // наносим урон
+                            mapTable.rows[i+h].cells[j].textContent = 'X'; // рисуем нанесение урона
+
+                            for(let h; h < distant; h++){
+                                mapTable.rows[i-h].cells[j].textContent = '^'; // рисуем красивую полосу стрельбы
+                                mapTable.rows[i-h].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+                            }
                         }
-
-                        mapTable.rows[i-distant].cells[j].textContent = '^'; // рисуем красивую полосу стрельбы
-                        mapTable.rows[i-distant].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-
                         distant++;
                     }
                 }
@@ -1688,11 +1692,13 @@ function mainFunc(i, j) {
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if(mapCell[i][j+distant][3] != mapCell[i][j][3]){ // если фракция не наша
                             mapCell[i][j+distant][0] -= damageOfDistantCombat; // наносим урон
+                            mapTable.rows[i+h].cells[j].textContent = 'X'; // рисуем нанесение урона
+
+                            for(let h; h < distant; h++){
+                                mapTable.rows[i].cells[j+h].textContent = '>'; // рисуем красивую полосу стрельбы
+                                mapTable.rows[i].cells[j+h].style.color = fractionColors[mapCell[i][j][3]];
+                            }
                         }
-
-                        mapTable.rows[i].cells[j+distant].textContent = '>'; // рисуем красивую полосу стрельбы
-                        mapTable.rows[i].cells[j+distant].style.color = fractionColors[mapCell[i][j][3]];
-
                         distant++;
                     }
                 }
@@ -1706,11 +1712,13 @@ function mainFunc(i, j) {
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if(mapCell[i+distant][j][3] != mapCell[i][j][3]){ // если фракция не наша
                             mapCell[i+distant][j][0] -= damageOfDistantCombat; // наносим урон
+                            mapTable.rows[i+h].cells[j].textContent = 'X'; // рисуем нанесение урона
+
+                            for(let h; h < distant; h++){
+                                mapTable.rows[i+h].cells[j].textContent = 'V'; // рисуем красивую полосу стрельбы
+                                mapTable.rows[i+h].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+                            }
                         }
-
-                        mapTable.rows[i+distant].cells[j].textContent = 'V'; // рисуем красивую полосу стрельбы
-                        mapTable.rows[i+distant].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-
                         distant++;
                     }
                 }
