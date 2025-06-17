@@ -1808,20 +1808,29 @@ const period = setInterval(() => {
 
 // ======== ФУНКЦИИ МЕХАНИК ========
 function restorOfSprouts(fraction) { // функция-механика восстановления отростков
-    let chanceOfTransform = rand(25, 50); // шанс преобразования в отросток рандомится от 25% до 50%
-
     for (let i = 0; i < mapH; i++) { // проходимся по всем элементам карты
         for (let j = 0; j < mapW; j++) {
             // если клетка не пустая, не отросток, не стебель и не семя, и фракция соответствует
             if (mapCell[i][j][2] != 0 && mapCell[i][j][3] === fraction && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1 && mapCell[i][j][2] != 1) {
 
-                // ТУТ БУДЕТ ТО ЧТО ПОЗВОЛИТ ПРОВЕРЯТЬ ТОЛЬКО КЛЕТКИ ВОКРУГ КОТОРЫХ ЕСТЬ ПУСТЫЕ КЛЕТКИ
+                // проверяем есть ли пустые клетки вокруг
+                let counterOfEmptyCells = 0; // счетчик для пустых клеток
+                for (let a = 0; a < 3; a++) {
+                    for (let b = 0; b < 3; b++) {
+                        if (i - 1 + a >= 0 && i - 1 + a < mapH && j - 1 + a >= 0 && j - 1 + a < mapH && mapCell[i - 1 + a][j - 1 + a][2] === 0) { // если не выходит за карту и пустая
+                            counterOfEmptyCells += 1; // обновляем счетчик
+                        }
+                    }
+                }
 
-                let isTransform = rand(0, 100);
-                if (isTransform < chanceOfTransform) { // если выполняется шанс
-                    mapCell[i][j][2] = 1; // меняем клетку на стебель
-                    mapCell[i][j][1] = mapCell[i][j][1] + plusEnergyIfTransIntoSprout; // прибавляем доп. энергию при трансформации
-                    mapCell[i][j][10] = rand(0, 32); // устанавливаем случайный номер генома в массиве функции
+                if (counterOfEmptyCells != 0){
+                    let chanceOfTransform = rand(25+counterOfEmptyCells*2, 50+counterOfEmptyCells*2); // шанс преобразования в отросток рандомится от 25% до 50% (с добавляем прибавки от того сколько пустых клеток вокруг)
+                    let isTransform = rand(0, 100);
+                    if (isTransform < chanceOfTransform) { // если выполняется шанс
+                        mapCell[i][j][2] = 1; // меняем клетку на стебель
+                        mapCell[i][j][1] = mapCell[i][j][1] + plusEnergyIfTransIntoSprout; // прибавляем доп. энергию при трансформации
+                        mapCell[i][j][10] = rand(0, 32); // устанавливаем случайный номер генома в массиве функции
+                    }
                 }
             }
         }
