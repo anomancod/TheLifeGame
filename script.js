@@ -1790,6 +1790,7 @@ const period = setInterval(() => {
         console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ КОЧЕВНИКОВ");
         restoreOfSprouts(3); // то восстановливаем отростки кочевников
     }
+    botFactCounterOfEmptyCells = [0, 0, 0, 0]; // обнуляем массив для следующей итерации цикла
     
     // обновляем данные для минимальных факторов
     minFactors[1][0] = factCounters[1][2]/5;
