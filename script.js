@@ -199,9 +199,9 @@ for (let i = 0; i < countOfGenoms; i++) {
     let sproutIn = rand(0, 2);
     interArr[sproutIn] = 0; // задаем в случайную клетку отросток
     let tester = 2;
-    if (tester - sproutIn === 2) { interArr[1] = 80; interArr[2] = 80; } // задаем незанятые ячейки ближниками
-    if (tester - sproutIn === 1) { interArr[0] = 80; interArr[2] = 80; }
-    if (tester - sproutIn === 0) { interArr[0] = 80; interArr[1] = 80; }
+    if (tester - sproutIn === 2) { interArr[1] = rand(76, 90); interArr[2] = rand(76, 90); } // задаем незанятые ячейки ближниками и с меньшим шансом - дальниками
+    if (tester - sproutIn === 1) { interArr[0] = rand(76, 90); interArr[2] = rand(76, 90); }
+    if (tester - sproutIn === 0) { interArr[0] = rand(76, 90); interArr[1] = rand(76, 90); }
 
     interArr[3] = 105; // не задаем условие 1
     interArr[4] = rand(0, 255);
