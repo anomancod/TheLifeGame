@@ -2038,7 +2038,11 @@ function mainFunc(i, j) {
             // производственная клетка не тратит энергии
             cellDeath(i, j, 0);
 
-            // --
+            // механики
+            mapCell[i][j][1] += energyPerTurnByEtherMiner; // начисляем энергию для её передачи
+            let prodRes = transferEnergy(i, j); // передаем энергию
+
+            countOfEther += etherPerTurnByEtherMiner; // начисляем добытый эфир за ход
         }
         else {
             mapCell[i][j][4] -= 1; // если не компилируем - снижаем не компиляцию на 1
