@@ -2417,7 +2417,7 @@ function startSprouts(startPos, indent, fraction) {
     for (let t = 0; t < countOfStartSprout[fraction]; t++) {
         let [ri, rj] = getRandomCoords();
         let attempts = 0;
-        while (mapCell[ri][rj][2] !== 0 && attempts < 100) {
+        while (mapCell[ri][rj][2] != 0 && attempts < 100) {
             [ri, rj] = getRandomCoords();
             attempts++;
         }
