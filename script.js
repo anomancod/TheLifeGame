@@ -34,8 +34,20 @@ function rand(min, max) {
 }
 
 
-// ======== ЗНАЧЕНИЯ ДЛЯ ИНТЕРФЕЙСА ========
+// ======== ВСЁ СВЯЗАННОЕ С ИНТЕРФЕЙСМ ========
 let IsPlay = false; // идёт ли игра?
+
+function clickOnPlay(){
+    isPlay = true;
+    console.log("ИГРА ЗАПУЩЕНА");
+}
+function clickOnStop(){
+    isPlay = false;
+    console.log("ИГРА ОСТАНОВЛЕНА");
+}
+
+document.getElementById("PlayB").addEventListener("click", clickOnPlay); // добавляем кнопке "Пуск" ивент-листенер
+document.getElementById("StopB").addEventListener("click", clickOnStop); // добавляем кнопке "Стоп" ивент-листенер
 
 
 // ======== КОНСТАНТЫ ========
@@ -1717,7 +1729,7 @@ function mainFunc(i, j) {
 
 // --- Главный Цикл ---
 const period = setInterval(() => {
-    if (IsPlay === true) { // если игра в данный момент идёт
+    if (isPlay === true) { // если игра в данный момент идёт
         let whatMainSide = rand(0, 1); // рандом для выбора стороны компилирования
         if (whatMainSide === 0) { // слева-направо, сверху-вниз
             for (let i = 0; i < mapH; i++) { // проходимся по всем элементам карты
