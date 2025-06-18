@@ -58,7 +58,7 @@ function handleSelectSpdChange(){
 
 
 // ======== ВСЁ ДЛЯ ИГРОКА ========
-let countOfPlayerSpr = 3; // кол-во доступных для размещения игроком отростков (3 - НАЧАЛЬНОЕ КОЛ-ВО)
+let countOfPlayerSpr = 3; // кол-во доступных для размещения игроком отростков (3 - НАЧАЛЬНОЕ КОЛИЧЕСТВО)
 let countOfEther = 0; // кол-во эфира у игрока
 let countOfPlayerCells; // кол-во клеток игрока
 
@@ -2432,6 +2432,7 @@ startSprouts(startQuaPos, indentQua, 2); // качественники
 startSprouts(startNomPos[0], indentNom, 3); // коченивики 1
 startSprouts(startNomPos[1], indentNom, 3); // коченивики 2
 
+
 // ======== ДЕЙСТВИЯ ИГРОКА ========
 
 // создание отростков игрока пользователем
@@ -2456,7 +2457,7 @@ document.querySelectorAll('td').forEach(cell => {
             mapCell[i][j][10] = rand(0, 31);
             mapCell[i][j][11] = 0;
 
-            countOfPlayerSpr -= 1; // и отбавляем кол-во доступных для размещения отростков
+            countOfPlayerSpr -= 1; // и отбавляем кол-во доступных для размещения отрост
         }
     }
   });
