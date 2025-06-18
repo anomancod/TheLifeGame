@@ -70,6 +70,7 @@ const energyToCreateEtherMiner = 100; // энергия для создания 
 const etherPerTurnByEtherMiner = 10; // эфир в ход производимый эфирником
 const energyPerTurnByEtherMiner = 50; // немного энергии в ход производимой эфирником
 const etherPerTurnByAnyCell = 0.05; // эфир в ход производимый каждой клеткой
+const etherForClean = 5; // эфир за очищение
 
 const energyToMeleeClean = 200; // энергия для очищения ближником
 const energyToDistantClean = 300; // энергия для очищения дальником
@@ -1940,13 +1941,16 @@ function mainFunc(i, j) {
                             if(mapCell[i-1+a][j-1+a][2] === 7){ // если очищаемая клетка - ближник
                                 mapCell[i-1+a][j-1+a][2] = 9; // то не только очищаем, то и меняем тип на ближнего очистителя
                                 mapCell[i-1+a][j-1+a][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else if(mapCell[i-1+a][j-1+a][2] === 8){ // если очищаемая клетка - дальник
                                 mapCell[i-1+a][j-1+a][2] = 10; // то не только очищаем, то и меняем тип на дальнего очистителя
                                 mapCell[i-1+a][j-1+a][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else{ // для всех остальных просто меняем фракцию (очищаем)
                                 mapCell[i-1+a][j-1+a][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                         }
                     }
@@ -1988,13 +1992,16 @@ function mainFunc(i, j) {
                             if(mapCell[i][j - distant][2] === 7){ // если очищаемая клетка - ближник
                                 mapCell[i][j - distant][2] = 9; // то не только очищаем, то и меняем тип на ближнего очистителя
                                 mapCell[i][j - distant][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else if(mapCell[i][j - distant][2] === 8){ // если очищаемая клетка - дальник
                                 mapCell[i][j - distant][2] = 10; // то не только очищаем, то и меняем тип на дальнего очистителя
                                 mapCell[i][j - distant][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else{ // для всех остальных просто меняем фракцию (очищаем)
                                 mapCell[i][j - distant][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                         }
                         distant++;
@@ -2012,13 +2019,16 @@ function mainFunc(i, j) {
                             if(mapCell[i - distant][j][2] === 7){ // если очищаемая клетка - ближник
                                 mapCell[i - distant][j][2] = 9; // то не только очищаем, то и меняем тип на ближнего очистителя
                                 mapCell[i - distant][j][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else if(mapCell[i - distant][j][2] === 8){ // если очищаемая клетка - дальник
                                 mapCell[i - distant][j][2] = 10; // то не только очищаем, то и меняем тип на дальнего очистителя
                                 mapCell[i - distant][j][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else{ // для всех остальных просто меняем фракцию (очищаем)
                                 mapCell[i - distant][j][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                         }
                         distant++;
@@ -2036,13 +2046,16 @@ function mainFunc(i, j) {
                             if(mapCell[i][j + distant][2] === 7){ // если очищаемая клетка - ближник
                                 mapCell[i][j + distant][2] = 9; // то не только очищаем, то и меняем тип на ближнего очистителя
                                 mapCell[i][j + distant][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else if(mapCell[i][j + distant][2] === 8){ // если очищаемая клетка - дальник
                                 mapCell[i][j + distant][2] = 10; // то не только очищаем, то и меняем тип на дальнего очистителя
                                 mapCell[i][j + distant][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else{ // для всех остальных просто меняем фракцию (очищаем)
                                 mapCell[i][j + distant][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                         }
                         distant++;
@@ -2060,13 +2073,16 @@ function mainFunc(i, j) {
                             if(mapCell[i + distant][j][2] === 7){ // если очищаемая клетка - ближник
                                 mapCell[i + distant][j][2] = 9; // то не только очищаем, то и меняем тип на ближнего очистителя
                                 mapCell[i + distant][j][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else if(mapCell[i + distant][j][2] === 8){ // если очищаемая клетка - дальник
                                 mapCell[i + distant][j][2] = 10; // то не только очищаем, то и меняем тип на дальнего очистителя
                                 mapCell[i + distant][j][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                             else{ // для всех остальных просто меняем фракцию (очищаем)
                                 mapCell[i + distant][j][3] = 0; // очищаем (присваиваем фракцию игрока)
+                                countOfEther += etherForClean; // добавляем эфир за очищение
                             }
                         }
                         distant++;
@@ -2147,6 +2163,9 @@ const period = setInterval(() => {
         // --- Всё связанное с игроком ---
         // обновляем данные о кол-ве клеток у игрока
         countOfPlayerCells = factCounters[0][2];
+
+        // начисляем эфира за каждую клетку принадлежащую фракции игрока
+        countOfEther += countOfPlayerCells * etherPerTurnByAnyCell;
 
         // отображение кол-ва доступных отростков, всех клеток к мин. необходимым и эфира
         document.getElementById("CountOfSpr").innerHTML = "Отростки: " + countOfPlayerSpr;
