@@ -48,5 +48,5 @@ body{
 }
 
 td:hover{
-    filter:brightness(0.8);
+    background-color: #505050;
 }
