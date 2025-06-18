@@ -2151,9 +2151,12 @@ const period = setInterval(() => {
                 }
             }
         }
-
+        
         // обновляем данные о кол-ве клеток у игрока
         countOfPlayerCells = factCounters[0][2];
+
+        // отображение кол-ва доступных отростков, всех клеток к мин. необходимым и эфира
+        document.getElementById("CountOfSpr").innerHTML = "Кол-во доступных остростков: " + countOfPlayerSpr;
 
         if (botFactCounterOfEmptyCells[1] <= factCounters[1][2] / numInRatioForExp) { // если отростков с пустыми клетками вокруг меньше кол-во всех клеток на константу ДЛЯ ЭКСПОВ
             console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ ЭКСПОВ. ПУСТЫШЕК: " + botFactCounterOfEmptyCells[1]);
