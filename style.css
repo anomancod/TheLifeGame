@@ -7,3 +7,42 @@ table{
 body{
     background-color: #171717;
 }
+
+.playButtons{
+    text-align: center;
+    margin-top: 5px;
+}
+
+.pButPl{
+    background-color: darkgreen;
+    width: 125px;
+    height: 50px;
+    color:white;
+    font-size:20px;
+    border: 0;
+}
+
+.pButPl:active{
+    background-color: rgb(1, 70, 1);
+}
+
+.pButSt{
+    background-color: darkred;
+    width: 125px;
+    height: 50px;
+    color:white;
+    font-size:20px;
+    border: 0;
+}
+
+.pButSt:active{
+    background-color: rgb(77, 0, 0);
+}
+
+.pSelect{
+    background-color: rgb(6, 6, 184);
+    width: 125px;
+    height: 25px;
+    color:white;
+    border: 0;
+}
