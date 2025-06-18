@@ -2595,6 +2595,9 @@ document.getElementById("bCleanMeleeTact").addEventListener("click", clickOnBCle
 document.getElementById("bCleanDistantTact").addEventListener("click", clickOnBCleanDistantTact);
 document.getElementById("bMigrationTact").addEventListener("click", clickOnBMigrationTact);
 
+// т.к. в начале у нас включена экспансия, зажимаем первую кнопку-тактику
+document.getElementById("bExpTact").style.backgroundColor = 'rgb(56, 56, 56)';
+
 // --- Начальные слова ---
 
 // отображение кол-ва доступных отростков, всех клеток к мин. необходимым и эфира
