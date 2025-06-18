@@ -508,13 +508,13 @@ for (let i = 0; i < countOfFractions; i++) {
     genoms.push(r0);
 }*/
 
-const playerFrac = []; // тут нужно будет заполнить тактиками
+const playerFrac = [expansionTact, prodExtTact, prodProdTact, prodEtherTact, clearMeleeTact, clearDistantTact, migrationTact]; // тактики игрока
 tactics.push(playerFrac);
-const expFrac = [expansionTact, prodExtTact, warMeleeTact, migrationTact]; // тут нужно будет заполнить тактиками
+const expFrac = [expansionTact, prodExtTact, warMeleeTact, migrationTact]; // тактики экспов
 tactics.push(expFrac);
-const quaFrac = [expansionTact, prodProdTact, warDistantTact, warMeleeTact, developmentTact]; // тут нужно будет заполнить тактиками
+const quaFrac = [expansionTact, prodProdTact, warDistantTact, warMeleeTact, developmentTact]; // тактики качественников
 tactics.push(quaFrac);
-const nomadFrac = [nomandismTact, migrationTact]; // тут нужно будет заполнить тактиками
+const nomadFrac = [nomandismTact, migrationTact]; // тактики кочевников
 tactics.push(nomadFrac);
 
 // 1X массив: if-ые функции генома ([функции])
