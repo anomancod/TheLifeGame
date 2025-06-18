@@ -66,5 +66,18 @@ td:hover{
     width: 200px; /* Фиксированная ширина боковых блоков */
     text-align: center; /* Центрирование содержимого */
     color: white; /* Цвет текста, чтобы он был виден на тёмном фоне */
+    font-size: 32px;
+}
+
+.etherB{
+    background-color: darkgreen;
+    width: 150px;
+    height: 75px;
+    color:white;
     font-size: 20px;
+    border: 0;
+}
+
+.etherB:active{
+    background-color: rgb(1, 70, 1);
 }

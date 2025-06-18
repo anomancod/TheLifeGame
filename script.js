@@ -60,7 +60,7 @@ function handleSelectSpdChange(){
 // ======== ВСЁ ДЛЯ ИГРОКА ========
 let countOfPlayerSpr = 3; // кол-во доступных для размещения игроком отростков (3 - НАЧАЛЬНОЕ КОЛИЧЕСТВО)
 let countOfEther = 0; // кол-во эфира у игрока
-let countOfPlayerCells; // кол-во клеток игрока
+let countOfPlayerCells = 0; // кол-во клеток игрока
 
 // --- константы для игрока ---
 const energyToCreateMeleeCleaner = 100; // энергия для создания ближнего очистителя
@@ -73,6 +73,8 @@ const etherPerTurnByAnyCell = 0.05; // эфир в ход производимы
 
 const energyToMeleeClean = 200; // энергия для очищения ближником
 const energyToDistantClean = 300; // энергия для очищения дальником
+
+const countOfRestEnergyByEther = 500; // кол-во энергии восстанавливаемое эфировой функцией
 
 // ======== КОНСТАНТЫ ========
 const hpPeaceCells = 1000; // нач. и макс. ХП мирных клеток
@@ -2152,12 +2154,16 @@ const period = setInterval(() => {
             }
         }
         
+        // --- Всё связанное с игроком ---
         // обновляем данные о кол-ве клеток у игрока
         countOfPlayerCells = factCounters[0][2];
 
         // отображение кол-ва доступных отростков, всех клеток к мин. необходимым и эфира
-        document.getElementById("CountOfSpr").innerHTML = "Кол-во доступных остростков: " + countOfPlayerSpr;
+        document.getElementById("CountOfSpr").innerHTML = "Отростки: " + countOfPlayerSpr;
+        document.getElementById("CountCells").innerHTML = "Клетки: " + countOfPlayerCells + "/1728";
+        document.getElementById("CountEther").innerHTML = "Эфир: " + countOfEther;
 
+        // --- Всё не связанное с игроком
         if (botFactCounterOfEmptyCells[1] <= factCounters[1][2] / numInRatioForExp) { // если отростков с пустыми клетками вокруг меньше кол-во всех клеток на константу ДЛЯ ЭКСПОВ
             console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ ЭКСПОВ. ПУСТЫШЕК: " + botFactCounterOfEmptyCells[1]);
             restoreOfSprouts(1); // то восстановливаем отростки экспов
@@ -2470,3 +2476,34 @@ document.querySelectorAll('td').forEach(cell => {
     }
   });
 });
+
+// --- Эфировые Функции ---
+function clickOnCreateSpr(){
+    if(countOfEther >= 10){ // если эфира для создания достаточно
+        countOfPlayerSpr += 1; // прибавляем доступный отросток
+        countOfEther -= 10; // вычитаем затраченный эфир
+    }
+}
+
+function clickOnRestEnergy(){
+    if(countOfEther >= 25){ // если эфира достаточно
+        for(let i = 0; i < mapH; i++){
+            for(let j = 0; j < mapW; j++){ // проходимся по всем клеткам карты
+                if(mapCell[i][j][3] === 0){ // если фракция игрока
+                    mapCell[i][j][1] += countOfRestEnergyByEther; // прибавляем фиксированное кол-во восстанавливаемого этой функцией эфира
+                }
+            }
+        }
+        countOfEther -= 25; // вычитаем затраченный эфир
+    }
+}
+
+document.getElementById("bCreateSpr").addEventListener("click", clickOnCreateSpr); // добавляем кнопке "Создать отросток" ивент-листенер
+document.getElementById("bRestEnergy").addEventListener("click", clickOnRestEnergy); // добавляем кнопке "Восстановить энергию" ивент-листенер
+
+// --- Начальные слова ---
+
+// отображение кол-ва доступных отростков, всех клеток к мин. необходимым и эфира
+document.getElementById("CountOfSpr").innerHTML = "Отростки: " + countOfPlayerSpr;
+document.getElementById("CountCells").innerHTML = "Клетки: " + countOfPlayerCells + "/1728";
+document.getElementById("CountEther").innerHTML = "Эфир: " + countOfEther;
