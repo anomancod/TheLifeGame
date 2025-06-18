@@ -46,3 +46,7 @@ body{
     color:white;
     border: 0;
 }
+
+td:hover{
+    filter:brightness(0.8);
+}
