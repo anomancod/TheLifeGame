@@ -2458,6 +2458,8 @@ document.querySelectorAll('td').forEach(cell => {
             mapCell[i][j][11] = 0;
 
             countOfPlayerSpr -= 1; // и отбавляем кол-во доступных для размещения отрост
+
+            console.log('ИГРОК СОЗДАЛ ОТРОСТОК ПО КООРДИНАТАМ:'+i+' '+j);
         }
     }
   });
