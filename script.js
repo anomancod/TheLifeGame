@@ -2170,7 +2170,7 @@ const period = setInterval(() => {
         // отображение кол-ва доступных отростков, всех клеток к мин. необходимым и эфира
         document.getElementById("CountOfSpr").innerHTML = "Отростки: " + countOfPlayerSpr;
         document.getElementById("CountCells").innerHTML = "Клетки: " + countOfPlayerCells + "/1728";
-        document.getElementById("CountEther").innerHTML = "Эфир: " + countOfEther;
+        document.getElementById("CountEther").innerHTML = "Эфир: " + countOfEther.toFixed(2); // тут округляем значени до 2 знаков после запятой
 
         // --- Всё не связанное с игроком
         if (botFactCounterOfEmptyCells[1] <= factCounters[1][2] / numInRatioForExp) { // если отростков с пустыми клетками вокруг меньше кол-во всех клеток на константу ДЛЯ ЭКСПОВ
