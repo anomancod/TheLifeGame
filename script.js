@@ -1989,16 +1989,16 @@ function startSprouts(startPos, indent, fraction) {
         let ri, rj;
         if (startPos === 0) {
             ri = rand(indent, mapH / 2 - indent);
-            rj = rand(mapW / 2 + indent, mapW / 2 - indent);
+            rj = rand(mapW / 2 + indent, mapW - indent);
         } else if (startPos === 1) {
             ri = rand(indent, mapH / 2 - indent);
             rj = rand(indent, mapW / 2 - indent);
         } else if (startPos === 2) {
-            ri = rand(mapH / 2 + indent, mapH / 2 - indent);
+            ri = rand(mapH / 2 + indent, mapH - indent);
             rj = rand(indent, mapW / 2 - indent);
         } else if (startPos === 3) {
-            ri = rand(mapH / 2 + indent, mapH / 2 - indent);
-            rj = rand(mapW / 2 + indent, mapW / 2 - indent);
+            ri = rand(mapH / 2 + indent, mapH - indent);
+            rj = rand(mapW / 2 + indent, mapW - indent);
         }
         return [ri, rj];
     };
@@ -2032,9 +2032,3 @@ startSprouts(startExpPos, indentExp, 1); // экспы
 startSprouts(startQuaPos, indentQua, 2); // качественники
 startSprouts(startNomPos[0], indentNom, 3); // коченивики 1
 startSprouts(startNomPos[1], indentNom, 3); // коченивики 2
-
-// ПРОВЕРКА
-console.log('Стартовая позиция экзов: ' + startExpPos);
-console.log('Стартовая позиция качественников: ' + startQuaPos);
-console.log('Стартовая позиция кочевников 1: ' + startNomPos[0]);
-console.log('Стартовая позиция кочевников 2: ' + startNomPos[1]);
