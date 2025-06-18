@@ -2501,6 +2501,100 @@ function clickOnRestEnergy(){
 document.getElementById("bCreateSpr").addEventListener("click", clickOnCreateSpr); // добавляем кнопке "Создать отросток" ивент-листенер
 document.getElementById("bRestEnergy").addEventListener("click", clickOnRestEnergy); // добавляем кнопке "Восстановить энергию" ивент-листенер
 
+// --- Кнопки-Тактики ---
+function clickOnBExpTact(){ // экспансия
+    tactRightNow[0] = 0;
+
+    // изменение цвета
+    document.getElementById("bExpTact").style.backgroundColor = 'rgb(56, 56, 56)';
+    document.getElementById("bProdExtTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdProdTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdEtherTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanMeleeTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanDistantTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bMigrationTact").style.backgroundColor = 'rgb(92, 92, 92)';
+}
+function clickOnBProdExtTact(){ // производство добыча
+    tactRightNow[0] = 1;
+
+    // изменение цвета
+    document.getElementById("bExpTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdExtTact").style.backgroundColor = 'rgb(56, 56, 56)';
+    document.getElementById("bProdProdTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdEtherTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanMeleeTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanDistantTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bMigrationTact").style.backgroundColor = 'rgb(92, 92, 92)';
+}
+function clickOnBProdProdTact(){ // производство производство
+    tactRightNow[0] = 2;
+
+    // изменение цвета
+    document.getElementById("bExpTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdExtTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdProdTact").style.backgroundColor = 'rgb(56, 56, 56)';
+    document.getElementById("bProdEtherTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanMeleeTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanDistantTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bMigrationTact").style.backgroundColor = 'rgb(92, 92, 92)';
+}
+function clickOnBProdEtherTact(){ // производство эфир
+    tactRightNow[0] = 3;
+
+    // изменение цвета
+    document.getElementById("bExpTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdExtTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdProdTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdEtherTact").style.backgroundColor = 'rgb(56, 56, 56)';
+    document.getElementById("bCleanMeleeTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanDistantTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bMigrationTact").style.backgroundColor = 'rgb(92, 92, 92)';
+}
+function clickOnBCleanMeleeTact(){ // очищение ближним
+    tactRightNow[0] = 4;
+
+    // изменение цвета
+    document.getElementById("bExpTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdExtTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdProdTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdEtherTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanMeleeTact").style.backgroundColor = 'rgb(56, 56, 56)';
+    document.getElementById("bCleanDistantTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bMigrationTact").style.backgroundColor = 'rgb(92, 92, 92)';
+}
+function clickOnBCleanDistantTact(){ // очищение дальним
+    tactRightNow[0] = 5;
+
+    // изменение цвета
+    document.getElementById("bExpTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdExtTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdProdTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdEtherTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanMeleeTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanDistantTact").style.backgroundColor = 'rgb(56, 56, 56)';
+    document.getElementById("bMigrationTact").style.backgroundColor = 'rgb(92, 92, 92)';
+}
+function clickOnBMigrationTact(){ // миграция
+    tactRightNow[0] = 6;
+
+    // изменение цвета
+    document.getElementById("bExpTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdExtTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdProdTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bProdEtherTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanMeleeTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bCleanDistantTact").style.backgroundColor = 'rgb(92, 92, 92)';
+    document.getElementById("bMigrationTact").style.backgroundColor = 'rgb(56, 56, 56)';
+}
+
+document.getElementById("bExpTact").addEventListener("click", clickOnBExpTact);
+document.getElementById("bProdExtTact").addEventListener("click", clickOnBProdExtTact);
+document.getElementById("bProdProdTact").addEventListener("click", clickOnBProdProdTact);
+document.getElementById("bProdEtherTact").addEventListener("click", clickOnBProdEtherTact);
+document.getElementById("bCleanMeleeTact").addEventListener("click", clickOnBCleanMeleeTact);
+document.getElementById("bCleanDistantTact").addEventListener("click", clickOnBCleanDistantTact);
+document.getElementById("bMigrationTact").addEventListener("click", clickOnBMigrationTact);
+
 // --- Начальные слова ---
 
 // отображение кол-ва доступных отростков, всех клеток к мин. необходимым и эфира
