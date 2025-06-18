@@ -489,25 +489,7 @@ for (let i = 0; i < mapH; i++) {
     mapGround.push(r0);
 }
 
-// 3X массив: геномы ([countOfFractions]x[countOfGenoms]x[14]) // УСТАРЕЛО
-/*const genoms = [];
-let countOfFractions = 4; // кол-во фракций
-let countOfGenoms = 32; // кол-во геномов во фракциях
-for (let i = 0; i < countOfFractions; i++) {
-    const r0 = [];
-    for (let j = 0; j < countOfGenoms; j++) {
-        const r1 = [];
-        for (let t = 0; t < 15; t++) {
-            r1.push(rand(0, 255));
-            if (t === 3 || t === 5) { // ТЕСТОВОЕ ТОЛЬКО СОЗДАНИЕ КЛЕТОК
-                r1.push(105, 255);
-            }
-        }
-        r0.push(r1);
-    }
-    genoms.push(r0);
-}*/
-
+// массивы тактик
 const playerFrac = [expansionTact, prodExtTact, prodProdTact, prodEtherTact, clearMeleeTact, clearDistantTact, migrationTact]; // тактики игрока
 tactics.push(playerFrac);
 const expFrac = [expansionTact, prodExtTact, warMeleeTact, migrationTact]; // тактики экспов
