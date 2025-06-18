@@ -2400,16 +2400,16 @@ function startSprouts(startPos, indent, fraction) {
         let ri, rj;
         if (startPos === 0) {
             ri = rand(indent, mapH / 2 - indent);
-            rj = rand(mapW / 2 + indent, mapW - indent);
+            rj = rand(mapW / 2 + indent, mapW-1 - indent);
         } else if (startPos === 1) {
             ri = rand(indent, mapH / 2 - indent);
             rj = rand(indent, mapW / 2 - indent);
         } else if (startPos === 2) {
-            ri = rand(mapH / 2 + indent, mapH - indent);
+            ri = rand(mapH / 2 + indent, mapH-1 - indent);
             rj = rand(indent, mapW / 2 - indent);
         } else if (startPos === 3) {
-            ri = rand(mapH / 2 + indent, mapH - indent);
-            rj = rand(mapW / 2 + indent, mapW - indent);
+            ri = rand(mapH / 2 + indent, mapH-1 - indent);
+            rj = rand(mapW / 2 + indent, mapW-1 - indent);
         }
         return [ri, rj];
     };
