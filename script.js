@@ -1741,7 +1741,7 @@ const period = setInterval(() => {
                 for (let a = 0; a < 3; a++) {
                     for (let b = 0; b < 3; b++) {
                         if (i-1+a >= 0 && i-1+a < mapH && j-1+a >= 0 && j-1+a < mapH && mapCell[i-1+a][j-1+a][2] === 0) { // если не выходит за карту и пустая
-                            botFactCounterOfEmptyCells[mapCell[i-1+a][j-1+a][3]] += 1; // обновляем счетчик с учетом фракции
+                            botFactCounterOfEmptyCells[mapCell[i][j][3]] += 1; // обновляем счетчик с учетом фракции
                             break; // мы считаем клетки с пустыми вокруг, а не пустые клетки вокруг, поэтому нам не важно их кол-во
                         }
                     }
