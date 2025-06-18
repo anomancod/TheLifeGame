@@ -58,7 +58,7 @@ function handleSelectSpdChange(){
 
 
 // ======== ВСЁ ДЛЯ ИГРОКА ========
-let countOfPlayerSpr = 0; // кол-во доступных для размещения игроком отростков
+let countOfPlayerSpr = 3; // кол-во доступных для размещения игроком отростков (3 - НАЧАЛЬНОЕ КОЛ-ВО)
 let countOfEther = 0; // кол-во эфира у игрока
 let countOfPlayerCells; // кол-во клеток игрока
 
@@ -2431,3 +2431,33 @@ startSprouts(startExpPos, indentExp, 1); // экспы
 startSprouts(startQuaPos, indentQua, 2); // качественники
 startSprouts(startNomPos[0], indentNom, 3); // коченивики 1
 startSprouts(startNomPos[1], indentNom, 3); // коченивики 2
+
+// ======== ДЕЙСТВИЯ ИГРОКА ========
+
+// создание отростков игрока пользователем
+document.querySelectorAll('td').forEach(cell => {
+  cell.addEventListener('click', () => {
+    if(countOfPlayerSpr > 0){ // если есть клетки отростков для размещения
+        let i = cell.parentNode.rowIndex;
+        let j = cell.cellIndex;
+        
+        if(mapCell[i][j][2] === 0){ // если клетка на которую нажали - пустая
+            // то создаем отросток
+            mapCell[i][j][0] = hpPeaceCells;
+            mapCell[i][j][1] = startSproutEnergy;
+            mapCell[i][j][2] = 1;
+            mapCell[i][j][3] = 0;
+            mapCell[i][j][4] = 0;
+            mapCell[i][j][5] = 0;
+            mapCell[i][j][6] = 0;
+            mapCell[i][j][7] = 0;
+            mapCell[i][j][8] = 0;
+            mapCell[i][j][9] = -1;
+            mapCell[i][j][10] = rand(0, 31);
+            mapCell[i][j][11] = 0;
+
+            countOfPlayerSpr -= 1; // и отбавляем кол-во доступных для размещения отростков
+        }
+    }
+  });
+});
