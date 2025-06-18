@@ -2152,6 +2152,9 @@ const period = setInterval(() => {
             }
         }
 
+        // обновляем данные о кол-ве клеток у игрока
+        countOfPlayerCells = factCounters[0][2];
+
         if (botFactCounterOfEmptyCells[1] <= factCounters[1][2] / numInRatioForExp) { // если отростков с пустыми клетками вокруг меньше кол-во всех клеток на константу ДЛЯ ЭКСПОВ
             console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ ЭКСПОВ. ПУСТЫШЕК: " + botFactCounterOfEmptyCells[1]);
             restoreOfSprouts(1); // то восстановливаем отростки экспов
@@ -2459,7 +2462,7 @@ document.querySelectorAll('td').forEach(cell => {
 
             countOfPlayerSpr -= 1; // и отбавляем кол-во доступных для размещения отрост
 
-            console.log('ИГРОК СОЗДАЛ ОТРОСТОК ПО КООРДИНАТАМ:'+i+' '+j);
+            console.log('ИГРОК СОЗДАЛ ОТРОСТОК ПО КООРДИНАТАМ:'+i+' '+j); // вывод в консоль
         }
     }
   });

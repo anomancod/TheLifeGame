@@ -1,4 +1,5 @@
 table{
+    flex-grow: 1;
     border-collapse: collapse;
     margin: 0 auto;
     border: 2px solid grey;
@@ -49,4 +50,20 @@ body{
 
 td:hover{
     background-color: #505050;
+}
+
+/* Стили для контейнера */
+.container {
+    display: flex;
+    justify-content: space-between; /* Распределяет элементы по краям */
+    width: 100%; /* Занимает всю ширину страницы */
+    max-width: 1200px; /* Ограничьте ширину, если нужно */
+    margin: 0 auto; /* Центрирует контейнер на странице */
+}
+
+/* Стили для боковых элементов */
+.left-side, .right-side {
+    width: 200px; /* Фиксированная ширина боковых блоков */
+    text-align: center; /* Центрирование содержимого */
+    color: white; /* Цвет текста, чтобы он был виден на тёмном фоне */
 }
