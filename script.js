@@ -1955,10 +1955,23 @@ function whatAboutTactic(fraction) { // функция-механика для �
 let startExpPos = rand(0, 3); // случайно выбираем в какую четверть расселить экспов
 let startQuaPos = 3;
 let startNomPos = [0, 2];
-if(startExpPos === 0){startQuaPos = 2; startNomPos = [1, 3];} // устанавливаем стартовые четверти других фракций в зависимости от стартовой четверти экспов
-if(startExpPos === 1){startQuaPos = 3; startNomPos = [0, 2];}
-if(startExpPos === 2){startQuaPos = 0; startNomPos = [1, 3];}
-if(startExpPos === 3){startQuaPos = 1; startNomPos = [0, 2];}
+// устанавливаем стартовые четверти других фракций в зависимости от стартовой четверти экспов
+if(startExpPos === 0){
+    startQuaPos = 2;
+    startNomPos = [1, 3];
+}
+if(startExpPos === 1){
+    startQuaPos = 3;
+    startNomPos = [0, 2];
+}
+if(startExpPos === 2){
+    startQuaPos = 0;
+    startNomPos = [1, 3];
+}
+if(startExpPos === 3){
+    startQuaPos = 1;
+    startNomPos = [0, 2];
+}
 
 // устанавливаем отступы для каждой не-игровой тактики
 const indentExp = 3; // экспы
@@ -1975,17 +1988,17 @@ function startSprouts(startPos, indent, fraction) {
     const getRandomCoords = () => {
         let ri, rj;
         if (startPos === 0) {
-            ri = rand(indent, Math.floor(mapH / 2) - indent);
-            rj = rand(Math.ceil(mapW / 2) + indent, mapW / 2 - indent);
+            ri = rand(indent, mapH / 2 - indent);
+            rj = rand(mapW / 2 + indent, mapW / 2 - indent);
         } else if (startPos === 1) {
-            ri = rand(indent, Math.floor(mapH / 2) - indent);
-            rj = rand(indent, Math.floor(mapW / 2) - indent);
+            ri = rand(indent, mapH / 2 - indent);
+            rj = rand(indent, mapW / 2 - indent);
         } else if (startPos === 2) {
-            ri = rand(Math.ceil(mapH / 2) + indent, mapH / 2 - indent);
-            rj = rand(indent, Math.floor(mapW / 2) - indent);
+            ri = rand(mapH / 2 + indent, mapH / 2 - indent);
+            rj = rand(indent, mapW / 2 - indent);
         } else if (startPos === 3) {
-            ri = rand(Math.ceil(mapH / 2) + indent, mapH / 2 - indent);
-            rj = rand(Math.ceil(mapW / 2) + indent, mapW / 2 - indent);
+            ri = rand(mapH / 2 + indent, mapH / 2 - indent);
+            rj = rand(mapW / 2 + indent, mapW / 2 - indent);
         }
         return [ri, rj];
     };
@@ -2019,3 +2032,9 @@ startSprouts(startExpPos, indentExp, 1); // экспы
 startSprouts(startQuaPos, indentQua, 2); // качественники
 startSprouts(startNomPos[0], indentNom, 3); // коченивики 1
 startSprouts(startNomPos[1], indentNom, 3); // коченивики 2
+
+// ПРОВЕРКА
+console.log('Стартовая позиция экзов: ' + startExpPos);
+console.log('Стартовая позиция качественников: ' + startQuaPos);
+console.log('Стартовая позиция кочевников 1: ' + startNomPos[0]);
+console.log('Стартовая позиция кочевников 2: ' + startNomPos[1]);
