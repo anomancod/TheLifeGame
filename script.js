@@ -1849,6 +1849,69 @@ function mainFunc(i, j) {
             mapCell[i][j][4] = mapCell[i][j][4] - 1; // если не компилируем - снижаем не компиляцию на 1
         }
     }
+    if (mapCell[i][j][2] === 9){ // если тип клетки - ближний очиститель
+        if (mapCell[i][j][4] === 0){
+            // счетчики
+            factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+
+            // графика
+            mapTable.rows[i].cells[j].textContent = '%';
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+            // хп, энергия и прочее
+            mapCell[i][j][1] -= energyConsumWar; // трата энергии в ход
+            if (mapCell[i][j][1] <= 0) {
+                mapCell[i][j][0] -= hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
+            }
+            cellDeath(i, j, 1);
+
+            // --
+        }
+        else {
+            mapCell[i][j][4] -= 1; // если не компилируем - снижаем не компиляцию на 1
+        }
+    }
+    if (mapCell[i][j][2] === 10){ // если тип клетки - дальний очиститель
+        if (mapCell[i][j][4] === 0){
+            // счетчики
+            factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+
+            // графика
+            mapTable.rows[i].cells[j].textContent = '&';
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+            // хп, энергия и прочее
+            mapCell[i][j][1] -= energyConsumWar; // трата энергии в ход
+            if (mapCell[i][j][1] <= 0) {
+                mapCell[i][j][0] -= hpMinusPerTurnAtMinusEnergy; // отнимаем ХП за минусовую (или равную 0) энергию
+            }
+            cellDeath(i, j, 1);
+
+            // --
+        }
+        else {
+            mapCell[i][j][4] -= 1; // если не компилируем - снижаем не компиляцию на 1
+        }
+    }
+    if (mapCell[i][j][2] === 11){ // если тип клетки - эфирник
+        if (mapCell[i][j][4] === 0){
+            // счетчики
+            factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
+
+            // графика
+            mapTable.rows[i].cells[j].textContent = '$';
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+
+            // хп, энергия и прочее
+            // производственная клетка не тратит энергии
+            cellDeath(i, j, 0);
+
+            // --
+        }
+        else {
+            mapCell[i][j][4] -= 1; // если не компилируем - снижаем не компиляцию на 1
+        }
+    }
 }
 
 // --- Главный Цикл ---
