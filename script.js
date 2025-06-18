@@ -461,18 +461,37 @@ function mainGenome(i, j) {
     if (gen[3] > 104 && gen[5] > 104) { // если 2 условия не заданы
         for (let a = 0; a < 3; a++) { // повторяем 3 раза (0, 1, 2; для каждой стороны)
             if (gen[0 + a] < 95) { // если ответвление есть
-                if (gen[0 + a] < 30) { // *отросток
-                    createSprout(i, j, a);
-                } else if (gen[0 + a] < 45) { // *манновик
-                    createManaMiner(i, j, a);
-                } else if (gen[0 + a] < 60) { // *органик
-                    createOrgMiner(i, j, a);
-                } else if (gen[0 + a] < 75) { // *энергик
-                    createEnerMiner(i, j, a);
-                } else if (gen[0 + a] < 85) { // *ближняя боевая клетка
-                    createMeleeFighter(i, j, a);
-                } else if (gen[0 + a] < 95) { // *дальняя боевая клетка
-                    createDistantFighter(i, j, a);
+                if(frac != 0){ // !! ЕСЛИ ЭТО НЕ ИГРОК !!
+                    if (gen[0 + a] < 30) { // *отросток
+                        createSprout(i, j, a);
+                    } else if (gen[0 + a] < 45) { // *манновик
+                        createManaMiner(i, j, a);
+                    } else if (gen[0 + a] < 60) { // *органик
+                        createOrgMiner(i, j, a);
+                    } else if (gen[0 + a] < 75) { // *энергик
+                        createEnerMiner(i, j, a);
+                    } else if (gen[0 + a] < 85) { // *ближняя боевая клетка
+                        createMeleeFighter(i, j, a);
+                    } else if (gen[0 + a] < 95) { // *дальняя боевая клетка
+                        createDistantFighter(i, j, a);
+                    }
+                }
+                else{ // !! ЕСЛИ ЭТО ИГРОК !!
+                    if (gen[0 + a] < 30) { // *отросток
+                        createSprout(i, j, a);
+                    } else if (gen[0 + a] < 45) { // *манновик
+                        createManaMiner(i, j, a);
+                    } else if (gen[0 + a] < 60) { // *органик
+                        createOrgMiner(i, j, a);
+                    } else if (gen[0 + a] < 75) { // *энергик
+                        createEnerMiner(i, j, a);
+                    } else if (gen[0 + a] < 85) { // *БЛИЖНИЙ ОЧИСТИТЕЛЬ
+                        createMeleeCleaner(i, j, a);
+                    } else if (gen[0 + a] < 95) { // *ДАЛЬНИЙ ОЧИСТИТЕЛЬ
+                        createDistantCleaner(i, j, a);
+                    } else if (gen[0 + a] < 105){ // *ЭФИРНИК
+                        createEtherMiner(i, j, a);
+                    }
                 }
             }
         }
@@ -797,7 +816,7 @@ function createDistantFighter(i, j, direct) { // создание дальник
 }
 
 // --- СТРОИТЕЛЬНЫЕ ФУНКЦИИ ИГРОКА ---
-function createMeleeCleaner(){ // создание ближнего очистителя (ИНДЕКС )
+function createMeleeCleaner(i, j, direct){ // создание ближнего очистителя (ИНДЕКС )
     let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) // если клетка за границами карты, прерываем функцию
         return;
@@ -825,7 +844,7 @@ function createMeleeCleaner(){ // создание ближнего очисти
     }
 }
 
-function createDistantCleaner(){ // создание дальнего очистителя
+function createDistantCleaner(i, j, direct){ // создание дальнего очистителя
     let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) // если клетка за границами карты, прерываем функцию
         return;
@@ -853,7 +872,7 @@ function createDistantCleaner(){ // создание дальнего очист
     }
 }
 
-function createEtherMiner(){ // создание майнера эфира
+function createEtherMiner(i, j, direct){ // создание майнера эфира
     let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
     if (sDMas === -1) // если клетка за границами карты, прерываем функцию
         return;
