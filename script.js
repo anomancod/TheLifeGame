@@ -58,7 +58,18 @@ function handleSelectSpdChange(){
 
 
 // ======== ВСЁ ДЛЯ ИГРОКА ========
-let countOfPlayerSpr; // кол-во доступных для размещения игроком отростков
+let countOfPlayerSpr = 0; // кол-во доступных для размещения игроком отростков
+let countOfEther = 0; // кол-во эфира у игрока
+let countOfPlayerCells; // кол-во клеток игрока
+
+// --- константы для игрока ---
+const energyToCreateMeleeCleaner = 100; // энергия для создания ближнего очистителя
+const energyToCreateDistantCleaner = 100; // энергия для создания дальнего очистителя
+const energyToCreateEtherMiner = 100; // энергия для создания эфирником
+
+const etherPerTurnByEtherMiner = 10; // эфир в ход производимый эфирником
+const energyPerTurnByEtherMiner = 50; // немного энергии в ход производимой эфирником
+const etherPerTurnByAnyCell = 0.05; // эфир в ход производимый каждой клеткой
 
 // ======== КОНСТАНТЫ ========
 const hpPeaceCells = 1000; // нач. и макс. ХП мирных клеток
@@ -743,7 +754,7 @@ function createMeleeFighter(i, j, direct) { // создание ближника
             console.log('Отросток[' + i + '][' + j + '] создает: Ближника');
 
             mapCell[iC][jC][2] = 7;
-            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
+            mapCell[iC][jC][0] = hpWarCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateMeleeFighter;
             mapCell[iC][jC][1] = Math.round(mapCell[i][j][1] / 3);
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
@@ -771,7 +782,7 @@ function createDistantFighter(i, j, direct) { // создание дальник
             console.log('Отросток[' + i + '][' + j + '] создает: Дальника');
 
             mapCell[iC][jC][2] = 8;
-            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
+            mapCell[iC][jC][0] = hpWarCells; // задаем начальное-максимальное хп
             mapCell[i][j][1] = mapCell[i][j][1] - energyToCreateDistantFighter;
             mapCell[iC][jC][1] = Math.round(mapCell[i][j][1] / 3);
             mapCell[i][j][1] = mapCell[i][j][1] - Math.round(mapCell[i][j][1] / 3);
@@ -781,6 +792,90 @@ function createDistantFighter(i, j, direct) { // создание дальник
 
             mapCell[i][j][2] = 2;
             mapCell[i][j][energyTo + 5] = 1;
+        }
+    }
+}
+
+// --- СТРОИТЕЛЬНЫЕ ФУНКЦИИ ИГРОКА ---
+function createMeleeCleaner(){ // создание ближнего очистителя (ИНДЕКС )
+    let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) // если клетка за границами карты, прерываем функцию
+        return;
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
+
+    if (mapCell[iC][jC][2] === 0){
+        if (mapCell[i][j][1] >= energyToCreateMeleeCleaner){
+            console.log('Отросток[' + i + '][' + j + '] создает: Ближне-Чиста');
+
+            mapCell[iC][jC][2] = 9;
+            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
+            mapCell[i][j][1] -= energyToCreateMeleeCleaner;
+            mapCell[iC][jC][1] = Math.round(mapCell[i][j][1] / 3);
+            mapCell[i][j][1] -= Math.round(mapCell[i][j][1] / 3);
+            mapCell[iC][jC][4] = 1;
+            mapCell[iC][jC][9] = directOfParent;
+            mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
+
+            mapCell[i][j][2] = 2;
+            mapCell[i][j][energyTo + 5] = 1;
+        }
+    }
+}
+
+function createDistantCleaner(){ // создание дальнего очистителя
+    let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) // если клетка за границами карты, прерываем функцию
+        return;
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
+
+    if (mapCell[iC][jC][2] === 0){
+        if (mapCell[i][j][1] >= energyToCreateDistantCleaner){
+            console.log('Отросток[' + i + '][' + j + '] создает: Дальне-Чиста');
+
+            mapCell[iC][jC][2] = 10;
+            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
+            mapCell[i][j][1] -= energyToCreateDistantCleaner;
+            mapCell[iC][jC][1] = Math.round(mapCell[i][j][1] / 3);
+            mapCell[i][j][1] -= Math.round(mapCell[i][j][1] / 3);
+            mapCell[iC][jC][4] = 1;
+            mapCell[iC][jC][9] = directOfParent;
+            mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
+
+            mapCell[i][j][2] = 2;
+            mapCell[i][j][energyTo + 5] = 1;
+        }
+    }
+}
+
+function createEtherMiner(){ // создание майнера эфира
+    let sDMas = specifyDirect(i, j, direct); // определяем кардинаты создаваемой клетки, направление родителя и направление для энергии
+    if (sDMas === -1) // если клетка за границами карты, прерываем функцию
+        return;
+    let iC = sDMas[0];
+    let jC = sDMas[1];
+    let directOfParent = sDMas[2];
+    let energyTo = sDMas[3];
+
+    if (mapCell[iC][jC][2] === 0) {
+        if (mapCell[i][j][1] >= energyToCreateEtherMiner) {
+            console.log('Отросток[' + i + '][' + j + '] создает: Эфировик');
+
+            mapCell[iC][jC][2] = 11;
+            mapCell[iC][jC][0] = hpPeaceCells; // задаем начальное-максимальное хп
+            mapCell[iC][jC][1] = minerConstEnergy; // задаем постоянную энергию майнеров
+            mapCell[i][j][1] -= energyToCreateEtherMiner;
+            mapCell[iC][jC][4] = 1;
+            mapCell[iC][jC][9] = directOfParent;
+            mapCell[iC][jC][directOfParent + 5] = 1; // добывающая клетка передает энергию в сторону родителя
+            mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
+
+            mapCell[i][j][2] = 2;
         }
     }
 }
