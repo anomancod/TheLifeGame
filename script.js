@@ -35,7 +35,7 @@ function rand(min, max) {
 
 
 // ======== ВСЁ СВЯЗАННОЕ С ИНТЕРФЕЙСМ ========
-let IsPlay = false; // идёт ли игра?
+let isPlay = false; // идёт ли игра?
 
 function clickOnPlay(){
     isPlay = true;
@@ -48,6 +48,13 @@ function clickOnStop(){
 
 document.getElementById("PlayB").addEventListener("click", clickOnPlay); // добавляем кнопке "Пуск" ивент-листенер
 document.getElementById("StopB").addEventListener("click", clickOnStop); // добавляем кнопке "Стоп" ивент-листенер
+
+// устанавливаем/обновляем скорость игры из интерфейса
+function handleSelectSpdChange(){
+    const selectedSpd = document.getElementById('speedS');
+    speedOfUpd = selectedSpd.value;
+    console.log("СКОРОСТЬ ТЕПЕРЬ:" + speedOfUpd); 
+}
 
 
 // ======== КОНСТАНТЫ ========
