@@ -1875,7 +1875,7 @@ function mainFunc(i, j) {
                             break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
-                        if (mapCell[i - distant][j][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
+                        if (mapCell[i - distant][j][3] != mapCell[i][j][3] && mapCell[i - distant][j][2] != 0) { // если фракция не наша и клетка не пустая
                             mapCell[i - distant][j][0] -= damageOfDistantCombat; // наносим урон
                             mapTable.rows[i - distant].cells[j].textContent = 'X'; // рисуем нанесение урона
                         }
@@ -1891,7 +1891,7 @@ function mainFunc(i, j) {
                             break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
-                        if (mapCell[i][j + distant][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
+                        if (mapCell[i][j + distant][3] != mapCell[i][j][3] && mapCell[i][j + distant][2] != 0) { // если фракция не наша и клетка не пустая
                             mapCell[i][j + distant][0] -= damageOfDistantCombat; // наносим урон
                             mapTable.rows[i].cells[j + distant].textContent = 'X'; // рисуем нанесение урона
                         }
@@ -1907,7 +1907,7 @@ function mainFunc(i, j) {
                             break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
-                        if (mapCell[i + distant][j][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
+                        if (mapCell[i + distant][j][3] != mapCell[i][j][3] && mapCell[i + distant][j][2] != 0) { // если фракция не наша и клетка не пустая
                             mapCell[i + distant][j][0] -= damageOfDistantCombat; // наносим урон
                             mapTable.rows[i + distant].cells[j].textContent = 'X'; // рисуем нанесение урона
                         }
@@ -2021,7 +2021,7 @@ function mainFunc(i, j) {
                             break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
-                        if (mapCell[i - distant][j][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
+                        if (mapCell[i - distant][j][3] != mapCell[i][j][3] && mapCell[i - distant][j][2] != 0) { // если фракция не наша и клетка не пустая
                             if(mapCell[i - distant][j][2] === 7){ // если очищаемая клетка - ближник
                                 mapCell[i - distant][j][2] = 9; // то не только очищаем, то и меняем тип на ближнего очистителя
                                 mapCell[i - distant][j][3] = 0; // очищаем (присваиваем фракцию игрока)
@@ -2049,7 +2049,7 @@ function mainFunc(i, j) {
                             break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
-                        if (mapCell[i][j + distant][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
+                        if (mapCell[i][j + distant][3] != mapCell[i][j][3] && mapCell[i][j + distant][2] != 0) { // если фракция не наша и клетка не пустая
                             if(mapCell[i][j + distant][2] === 7){ // если очищаемая клетка - ближник
                                 mapCell[i][j + distant][2] = 9; // то не только очищаем, то и меняем тип на ближнего очистителя
                                 mapCell[i][j + distant][3] = 0; // очищаем (присваиваем фракцию игрока)
@@ -2077,7 +2077,7 @@ function mainFunc(i, j) {
                             break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
-                        if (mapCell[i + distant][j][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
+                        if (mapCell[i + distant][j][3] != mapCell[i][j][3] && mapCell[i + distant][j][2] != 0) { // если фракция не наша и клетка не пустая
                             if(mapCell[i + distant][j][2] === 7){ // если очищаемая клетка - ближник
                                 mapCell[i + distant][j][2] = 9; // то не только очищаем, то и меняем тип на ближнего очистителя
                                 mapCell[i + distant][j][3] = 0; // очищаем (присваиваем фракцию игрока)
