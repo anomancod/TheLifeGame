@@ -1856,6 +1856,7 @@ function mainFunc(i, j) {
                     while (stopper === 0) {
                         if (j - distant < 0) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
                             stopper = 1;
+                            break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i][j - distant][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
@@ -1871,6 +1872,7 @@ function mainFunc(i, j) {
                     while (stopper === 0) {
                         if (i - distant < 0) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
                             stopper = 1;
+                            break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i - distant][j][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
@@ -1886,6 +1888,7 @@ function mainFunc(i, j) {
                     while (stopper === 0) {
                         if (j + distant >= mapW) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
                             stopper = 1;
+                            break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i][j + distant][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
@@ -1901,6 +1904,7 @@ function mainFunc(i, j) {
                     while (stopper === 0) {
                         if (i + distant >= mapH) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
                             stopper = 1;
+                            break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i + distant][j][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
@@ -1986,6 +1990,7 @@ function mainFunc(i, j) {
                     while (stopper === 0) {
                         if (j - distant < 0) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
                             stopper = 1;
+                            break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i][j - distant][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
@@ -2013,6 +2018,7 @@ function mainFunc(i, j) {
                     while (stopper === 0) {
                         if (i - distant < 0) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
                             stopper = 1;
+                            break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i - distant][j][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
@@ -2040,6 +2046,7 @@ function mainFunc(i, j) {
                     while (stopper === 0) {
                         if (j + distant >= mapW) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
                             stopper = 1;
+                            break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i][j + distant][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
@@ -2067,6 +2074,7 @@ function mainFunc(i, j) {
                     while (stopper === 0) {
                         if (i + distant >= mapH) { // если клетка за границей карты - просто прерываем цикл, выстрела не будет
                             stopper = 1;
+                            break;
                         }
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i + distant][j][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
