@@ -1652,7 +1652,7 @@ function mainFunc(i, j) {
                     let stopper = 0;
                     let sC = 1;
                     while (stopper === 0) {
-                        if (mapCell[i][j][9] === 0) { // если родитель слева
+                        if (mapCell[i][j][9] === 0 && j-sC >= 0) { // если родитель слева
                             if (j - sC != -1 && mapCell[i][j - sC][2] === 2) { // если слева (с расстоянием sC)
                                 mapCell[i][j - sC][7] = 0; // то не передаем энергию вправо 
                             }
@@ -1660,7 +1660,7 @@ function mainFunc(i, j) {
                                 stopper = 1; // останавливаем цикл
                             }
                         }
-                        if (mapCell[i][j][9] === 1) { // если родитель спереди
+                        if (mapCell[i][j][9] === 1 && i-sC >= 0) { // если родитель спереди
                             if (i - sC != -1 && mapCell[i - sC][j][2] === 2) { // если спереди (с расстоянием sC)
                                 mapCell[i - sC][j][8] = 0; // то не передаем энергию вниз
                             }
@@ -1668,7 +1668,7 @@ function mainFunc(i, j) {
                                 stopper = 1; // останавливаем цикл
                             }
                         }
-                        if (mapCell[i][j][9] === 2) { // если родитель справа
+                        if (mapCell[i][j][9] === 2 && j+sC < mapW) { // если родитель справа
                             if (j + sC != mapW + 1 && mapCell[i][j + sC][2] === 2) { // если справа (с расстоянием sC)
                                 mapCell[i][j + sC][5] = 0; // то не передаем энергию влево
                             }
@@ -1676,7 +1676,7 @@ function mainFunc(i, j) {
                                 stopper = 1; // останавливаем цикл
                             }
                         }
-                        if (mapCell[i][j][9] === 3) { // если родитель снизу
+                        if (mapCell[i][j][9] === 3 && i+sC < mapH) { // если родитель снизу
                             if (i + sC != mapH + 1 && mapCell[i + sC][j][2] === 2) { // если снизу (с расстоянием sC)
                                 mapCell[i + sC][j][6] = 0; // то не передаем энергию вверх
                             }
