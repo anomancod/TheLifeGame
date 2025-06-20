@@ -740,6 +740,13 @@ function createSprout(i, j, direct) { // создание отростка
 
             mapCell[i][j][2] = 2; // меняем данную клетку на стебель
             mapCell[i][j][energyTo + 5] = 1; // передаем энергию по указанному направлению
+
+            // --- графическое отображение ---
+            mapTable.rows[iC].cells[jC].textContent = '@';
+            mapTable.rows[iC].cells[jC].style.color = fractionColors[mapCell[i][j][3]];
+
+            drawTransCell(i, j); // отображаем стебель
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
         }
 
     }
@@ -768,6 +775,13 @@ function createManaMiner(i, j, direct) { // создание манновика
             mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
 
             mapCell[i][j][2] = 2;
+
+            // --- графическое отображение ---
+            mapTable.rows[iC].cells[jC].textContent = 'м';
+            mapTable.rows[iC].cells[jC].style.color = fractionColors[mapCell[i][j][3]];
+
+            drawTransCell(i, j); // отображаем стебель
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
         }
     }
 }
@@ -795,6 +809,13 @@ function createOrgMiner(i, j, direct) { // создание органика
             mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
 
             mapCell[i][j][2] = 2;
+
+            // --- графическое отображение ---
+            mapTable.rows[iC].cells[jC].textContent = 'о';
+            mapTable.rows[iC].cells[jC].style.color = fractionColors[mapCell[i][j][3]];
+
+            drawTransCell(i, j); // отображаем стебель
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
         }
     }
 }
@@ -822,6 +843,13 @@ function createEnerMiner(i, j, direct) { // создание энергика
             mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
 
             mapCell[i][j][2] = 2;
+
+            // --- графическое отображение ---
+            mapTable.rows[iC].cells[jC].textContent = 'э';
+            mapTable.rows[iC].cells[jC].style.color = fractionColors[mapCell[i][j][3]];
+
+            drawTransCell(i, j); // отображаем стебель
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
         }
     }
 }
@@ -850,6 +878,13 @@ function createMeleeFighter(i, j, direct) { // создание ближника
 
             mapCell[i][j][2] = 2;
             mapCell[i][j][energyTo + 5] = 1;
+
+            // --- графическое отображение ---
+            mapTable.rows[iC].cells[jC].textContent = 'б';
+            mapTable.rows[iC].cells[jC].style.color = fractionColors[mapCell[i][j][3]];
+
+            drawTransCell(i, j); // отображаем стебель
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
         }
     }
 }
@@ -878,6 +913,13 @@ function createDistantFighter(i, j, direct) { // создание дальник
 
             mapCell[i][j][2] = 2;
             mapCell[i][j][energyTo + 5] = 1;
+
+            // --- графическое отображение ---
+            mapTable.rows[iC].cells[jC].textContent = '#';
+            mapTable.rows[iC].cells[jC].style.color = fractionColors[mapCell[i][j][3]];
+
+            drawTransCell(i, j); // отображаем стебель
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
         }
     }
 }
@@ -907,6 +949,13 @@ function createMeleeCleaner(i, j, direct){ // создание ближнего 
 
             mapCell[i][j][2] = 2;
             mapCell[i][j][energyTo + 5] = 1;
+
+            // --- графическое отображение ---
+            mapTable.rows[iC].cells[jC].textContent = '%';
+            mapTable.rows[iC].cells[jC].style.color = fractionColors[mapCell[i][j][3]];
+
+            drawTransCell(i, j); // отображаем стебель
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
         }
     }
 }
@@ -935,6 +984,13 @@ function createDistantCleaner(i, j, direct){ // создание дальнег�
 
             mapCell[i][j][2] = 2;
             mapCell[i][j][energyTo + 5] = 1;
+
+            // --- графическое отображение ---
+            mapTable.rows[iC].cells[jC].textContent = '&';
+            mapTable.rows[iC].cells[jC].style.color = fractionColors[mapCell[i][j][3]];
+
+            drawTransCell(i, j); // отображаем стебель
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
         }
     }
 }
@@ -962,6 +1018,13 @@ function createEtherMiner(i, j, direct){ // создание майнера эф
             mapCell[iC][jC][3] = mapCell[i][j][3]; // устанавливаем фракцию равную фракции родителя
 
             mapCell[i][j][2] = 2;
+
+            // --- графическое отображение ---
+            mapTable.rows[iC].cells[jC].textContent = '$';
+            mapTable.rows[iC].cells[jC].style.color = fractionColors[mapCell[i][j][3]];
+
+            drawTransCell(i, j); // отображаем стебель
+            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
         }
     }
 }
@@ -1273,6 +1336,10 @@ function cmdTransformIntoSeed(i, j) { // превратиться в семеч�
         mapCell[i][j][2] = 6;
         mapCell[i][j][9] = -1;
         mapCell[i][j][4] = rand(minTurnsAsSeed, maxTurnsAsSeed);
+
+        // графически отображаем
+        mapTable.rows[i].cells[j].textContent = '*';
+        mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
     }
 }
 
@@ -1302,7 +1369,10 @@ function cmdTransformIntoSeedAndMove(i, j) { // превратится в сем
             let distance = Math.abs(newI - i) + Math.abs(newJ - j);
             mapCell[i][j][1] -= distance * rateEnergyToMoveSeedByCell;
             mapCell[newI][newJ] = [...mapCell[i][j]]; // копируем данные
+            mapTable.rows[newI].cells[newJ].textContent = '*'; // граф. отображаем
+            mapTable.rows[newI].cells[newJ].style.color = fractionColors[mapCell[i][j][3]]; // граф. отображаем
             mapCell[i][j] = [0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0]; // очищаем старую позицию
+             mapTable.rows[i].cells[j].textContent = ''; // граф. отображаем
         }
     }
 }
@@ -1591,14 +1661,14 @@ let counterForUpdFact = 0; // счетчик для отмера ходов об
 
 // --- Главная Функция ---
 function mainFunc(i, j) {
-    if (mapCell[i][j][2] === 0) { // если тип клетки - пустая
+    /*if (mapCell[i][j][2] === 0) { // если тип клетки - пустая
         if (mapCell[i][j][4] === 0) { // если компилируем клетку
             mapTable.rows[i].cells[j].textContent = '';
         }
         else {
             mapCell[i][j][4] = mapCell[i][j][4] - 1;
         }
-    }
+    }*/ 
     if (mapCell[i][j][2] === 1) { // если тип клетки - отросток
         if (mapCell[i][j][4] === 0) { // если компилируем клетку
             // счетчики
@@ -1607,8 +1677,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
 
             // графическое отображение
-            mapTable.rows[i].cells[j].textContent = '@';
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //mapTable.rows[i].cells[j].textContent = '@';
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
             mapCell[i][j][11] = mapCell[i][j][1]; // заполняем энергию в предыдущий ход
 
@@ -1633,8 +1703,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
 
             // графическое отображение
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
-            drawTransCell(i, j); // отображаем графическую форму клетки
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //drawTransCell(i, j); // отображаем графическую форму клетки
 
             // вычет энергии, ХП клетки и проверка на смерть (если надо - смерть)
             mapCell[i][j][1] = mapCell[i][j][1] - energyConsumTrans; // трата энергии в ход
@@ -1708,8 +1778,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
 
             // графика
-            mapTable.rows[i].cells[j].textContent = 'м';
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //mapTable.rows[i].cells[j].textContent = 'м';
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
             // хп, энергия и прочее
             // производственная клетка не тратит энергии
@@ -1735,8 +1805,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
 
             // графика
-            mapTable.rows[i].cells[j].textContent = 'о';
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //mapTable.rows[i].cells[j].textContent = 'о';
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
             // хп, энергия и прочее
             // производственная клетка не тратит энергии
@@ -1763,8 +1833,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][6] += 1; // кол-во мирных клеток
 
             // графика
-            mapTable.rows[i].cells[j].textContent = 'э';
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //mapTable.rows[i].cells[j].textContent = 'э';
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
             // хп, энергия и прочее
             // производственная клетка не тратит энергии
@@ -1786,13 +1856,14 @@ function mainFunc(i, j) {
     if (mapCell[i][j][2] === 6) { // если тип клетки - семя
         if (mapCell[i][j][4] === 0) { // если таймер (а им является не-компиляция) пребывания семенем окончен
             mapCell[i][j][2] = 1; // то делаем клетку отростком
+            mapTable.rows[i].cells[j].textContent = '@'; // и меняем отображение
         }
         else { // иначе отбавляем этот таймер на единицу
             mapCell[i][j][4] = mapCell[i][j][4] - 1;
         }
         // графика
-        mapTable.rows[i].cells[j].textContent = '*';
-        mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+        //mapTable.rows[i].cells[j].textContent = '*';
+        //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
         // семя ничего не тратит будучи семенем (разве что по нему может проходить урон)
     }
@@ -1803,8 +1874,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][4] += 1; // кол-во боевых клеток
 
             // графика
-            mapTable.rows[i].cells[j].textContent = 'б';
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //mapTable.rows[i].cells[j].textContent = 'б';
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
             // хп, энергия и прочее
             mapCell[i][j][1] = mapCell[i][j][1] - energyConsumWar; // трата энергии в ход
@@ -1837,8 +1908,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][4] += 1; // кол-во боевых клеток
 
             // графика
-            mapTable.rows[i].cells[j].textContent = '#';
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //mapTable.rows[i].cells[j].textContent = '#';
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
             // хп, энергия и прочее
             mapCell[i][j][1] = mapCell[i][j][1] - energyConsumWar; // трата энергии в ход
@@ -1861,7 +1932,7 @@ function mainFunc(i, j) {
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i][j - distant][3] != mapCell[i][j][3] && mapCell[i][j - distant][2] != 0) { // если фракция не наша и клетка не пустая
                             mapCell[i][j - distant][0] -= damageOfDistantCombat; // наносим урон
-                            mapTable.rows[i].cells[j - distant].textContent = 'X'; // рисуем нанесение урона
+                            //mapTable.rows[i].cells[j - distant].textContent = 'X'; // рисуем нанесение урона
                         }
                         distant++;
                     }
@@ -1877,7 +1948,7 @@ function mainFunc(i, j) {
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i - distant][j][3] != mapCell[i][j][3] && mapCell[i - distant][j][2] != 0) { // если фракция не наша и клетка не пустая
                             mapCell[i - distant][j][0] -= damageOfDistantCombat; // наносим урон
-                            mapTable.rows[i - distant].cells[j].textContent = 'X'; // рисуем нанесение урона
+                            //mapTable.rows[i - distant].cells[j].textContent = 'X'; // рисуем нанесение урона
                         }
                         distant++;
                     }
@@ -1893,7 +1964,7 @@ function mainFunc(i, j) {
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i][j + distant][3] != mapCell[i][j][3] && mapCell[i][j + distant][2] != 0) { // если фракция не наша и клетка не пустая
                             mapCell[i][j + distant][0] -= damageOfDistantCombat; // наносим урон
-                            mapTable.rows[i].cells[j + distant].textContent = 'X'; // рисуем нанесение урона
+                            //mapTable.rows[i].cells[j + distant].textContent = 'X'; // рисуем нанесение урона
                         }
                         distant++;
                     }
@@ -1909,7 +1980,7 @@ function mainFunc(i, j) {
                         mapCell[i][j][1] -= energyToDistantCombat; // вычитаем энергию за выстрел
                         if (mapCell[i + distant][j][3] != mapCell[i][j][3] && mapCell[i + distant][j][2] != 0) { // если фракция не наша и клетка не пустая
                             mapCell[i + distant][j][0] -= damageOfDistantCombat; // наносим урон
-                            mapTable.rows[i + distant].cells[j].textContent = 'X'; // рисуем нанесение урона
+                            //mapTable.rows[i + distant].cells[j].textContent = 'X'; // рисуем нанесение урона
                         }
                         distant++;
                     }
@@ -1926,8 +1997,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
 
             // графика
-            mapTable.rows[i].cells[j].textContent = '%';
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //mapTable.rows[i].cells[j].textContent = '%';
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
             // хп, энергия и прочее
             mapCell[i][j][1] -= energyConsumWar; // трата энергии в ход
@@ -1971,8 +2042,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
 
             // графика
-            mapTable.rows[i].cells[j].textContent = '&';
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //mapTable.rows[i].cells[j].textContent = '&';
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
             // хп, энергия и прочее
             mapCell[i][j][1] -= energyConsumWar; // трата энергии в ход
@@ -2108,8 +2179,8 @@ function mainFunc(i, j) {
             factCounters[mapCell[i][j][3]][2] += 1; // кол-во клеток принадлежащих фракции
 
             // графика
-            mapTable.rows[i].cells[j].textContent = '$';
-            mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
+            //mapTable.rows[i].cells[j].textContent = '$';
+            //mapTable.rows[i].cells[j].style.color = fractionColors[mapCell[i][j][3]];
 
             // хп, энергия и прочее
             // производственная клетка не тратит энергии
