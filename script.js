@@ -2536,6 +2536,10 @@ document.querySelectorAll('td').forEach(cell => {
 
             countOfPlayerSpr -= 1; // и отбавляем кол-во доступных для размещения отрост
 
+            // графически отображаем
+            mapTable.rows[i].cells[j].textContent = '@';
+            mapTable.rows[i].cells[j].style.color = fractionColors[0];
+
             //console.log('ИГРОК СОЗДАЛ ОТРОСТОК ПО КООРДИНАТАМ:'+i+' '+j); // вывод в консоль
         }
     }
