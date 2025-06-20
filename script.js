@@ -1371,8 +1371,8 @@ function cmdTransformIntoSeedAndMove(i, j) { // превратится в сем
             mapCell[newI][newJ] = [...mapCell[i][j]]; // копируем данные
             mapTable.rows[newI].cells[newJ].textContent = '*'; // граф. отображаем
             mapTable.rows[newI].cells[newJ].style.color = fractionColors[mapCell[i][j][3]]; // граф. отображаем
-            mapCell[i][j] = [0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0]; // очищаем старую позицию
-             mapTable.rows[i].cells[j].textContent = ''; // граф. отображаем
+            mapCell[i][j] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // очищаем старую позицию
+            mapTable.rows[i].cells[j].textContent = ''; // граф. отображаем
         }
     }
 }
@@ -1549,18 +1549,7 @@ function cellDeath(i, j, relate) { // смерть
         console.log(mapCell[i][j]); // данные перед смертью
 
         // убиваем клетку
-        mapCell[i][j][0] = 0;
-        mapCell[i][j][1] = 0;
-        mapCell[i][j][2] = 0;
-        mapCell[i][j][3] = 0;
-        mapCell[i][j][4] = 0;
-        mapCell[i][j][5] = 0;
-        mapCell[i][j][6] = 0;
-        mapCell[i][j][7] = 0;
-        mapCell[i][j][8] = 0;
-        mapCell[i][j][9] = -1;
-        mapCell[i][j][10] = 0;
-        mapCell[i][j][11] = 0;
+        mapCell[i][j] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         // отображаем как пустую
         mapTable.rows[i].cells[j].textContent = '';
