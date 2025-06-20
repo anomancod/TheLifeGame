@@ -1891,7 +1891,7 @@ function mainFunc(i, j) {
                     for (let b = 0; b < 3; b++) {
                         if (i - 1 + a >= 0 && i - 1 + a < mapH && j - 1 + a >= 0 && j - 1 + a < mapH && mapCell[i - 1 + a][j - 1 + a][2] != 0 && mapCell[i - 1 + a][j - 1 + a][3] != mapCell[i][j][3]) { // если не выходит за карту, атакуемая клетка не пустая и атакуемая клетка другой фракции
                             mapCell[i - 1 + a][j - 1 + a][0] = mapCell[i - 1 + a][j - 1 + a][0] - damageOfMeleeCombat; // то наносим урон
-                            mapTable.rows[i - 1 + a].cells[j - 1 + a].textContent = 'X'; // отображаем атаку ближника
+                            //mapTable.rows[i - 1 + a].cells[j - 1 + a].textContent = 'X'; // отображаем атаку ближника
                         }
                     }
                 }
@@ -2251,7 +2251,7 @@ const period = setInterval(() => {
         document.getElementById("CountCells").innerHTML = "Клетки: " + countOfPlayerCells + "/1728";
         document.getElementById("CountEther").innerHTML = "Эфир: " + countOfEther.toFixed(2); // тут округляем значени до 2 знаков после запятой
 
-        // --- Всё не связанное с игроком
+        // --- Всё не связанное с игроком ---
         if (botFactCounterOfEmptyCells[1] <= factCounters[1][2] / numInRatioForExp) { // если отростков с пустыми клетками вокруг меньше кол-во всех клеток на константу ДЛЯ ЭКСПОВ
             console.log("ВОССТАНАВЛИВАЕМ ОТРОСТКИ ЭКСПОВ. ПУСТЫШЕК: " + botFactCounterOfEmptyCells[1]);
             restoreOfSprouts(1); // то восстановливаем отростки экспов
