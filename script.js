@@ -59,7 +59,7 @@ function handleSelectSpdChange(){
 
 // ======== ВСЁ ДЛЯ ИГРОКА ========
 let countOfPlayerSpr = 3; // кол-во доступных для размещения игроком отростков (3 - НАЧАЛЬНОЕ КОЛИЧЕСТВО)
-let countOfEther = 0; // кол-во эфира у игрока
+let countOfEther = 0.00; // кол-во эфира у игрока
 let countOfPlayerCells = 0; // кол-во клеток игрока
 
 // --- константы для игрока ---
