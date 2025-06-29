@@ -2178,22 +2178,11 @@ function mainFunc(i, j) {
 // --- Главный Цикл ---
 const period = setInterval(() => {
     if (isPlay === true) { // если игра в данный момент идёт
-        let whatMainSide = rand(0, 1); // рандом для выбора стороны компилирования
-        if (whatMainSide === 0) { // слева-направо, сверху-вниз
-            for (let i = 0; i < mapH; i++) { // проходимся по всем элементам карты
-                for (let j = 0; j < mapW; j++) {
-                    mainFunc(i, j);
-                }
+        for (let i = 0; i < mapH; i++) { // проходимся по всем элементам карты
+            for (let j = 0; j < mapW; j++) {
+                mainFunc(i, j);
             }
         }
-        else { // справа-налево, снизу-вверх
-            for (let i = mapH - 1; i > 0; i--) { // проходимся по всем элементам карты
-                for (let j = mapW - 1; j > 0; j--) {
-                    mainFunc(i, j);
-                }
-            }
-        }
-
         turnsFromStart += 1; // обновление счетчика ходов с запуска игры
 
         // восстановление отростков для каждой фракции
